@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Generator Overview - Torque</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+          @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Thomas Fischer"></meta><meta name="email" content="fischer@seitenbau.de"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="./images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/generator/" id="projectLogo"><img alt="Torque generator" src="./images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../index.html">Overview</a></li><li class="none"><a href="../../../status.html">News and Status</a></li><li class="none"><a href="../../../download.html">Downloads</a></li><li class="none"><a href="../../../addons.html">Addons</a></li><li class="none"><a href="../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="expanded"><strong><a href="index.html">Generator</a></strong><ul><li class="none"><a href="tasks-reference.html">Tasks Reference</a></li><li class="none"><a href="schema-reference.html">Schema Reference</a></li><li class="none"><a href="properties-reference.html">Properties Reference</a></li><li class="none"><a href="database.dtd.txt" class="newWindow" title="New Window" target="_blank">database.dtd</a></li><li class="none"><a href="how-templates-work.html">How Templates work</a></li><li class="none"><a href="custom-templates.html">Custom Templates</a></li><li class="none"><a href="dependencies.html">Dependencies</a></li><li class="collapsed"><a href="maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="collapsed"><a href="../runtime/index.html">Runtime</a></li><li class="collapsed"><a href="../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Introduction"></a><h2>Introduction</h2>
+    
+    <p>
+      The Torque generator consists of a collection of ant tasks. The core tasks
+      generate java classes and sql scripts from an xml description of
+      the database, but there are other tasks available. See the 
+      <a href="schema-reference.html">Schema Reference</a> for the format of
+      the xml file, and the
+      <a href="tasks-reference.html">Tasks reference</a> for a complete list
+      of available tasks. 
+    </p>
+    
+    <p>
+      The generator can be configured using a properties file, 
+      <code>build.properties</code>. See the 
+      <a href="properties-reference.html">Properties reference</a> for a 
+      list of available properties and their purposes.
+    </p>
+  </div><div class="section"><a name="Usage"></a><h2>Usage</h2>
+    <p>
+      This section will give a short introduction of how to use the 
+      Torque generator using ant. For using the generator with maven, see the
+      <a href="../maven-plugin/index.html">Maven plugin docs</a>.
+    </p>
+    
+    <p>
+      The following is just a suggestion to get you started using the generator.
+      Once you found out how it is working, feel free to change the suggestion
+      to fit your specific needs.
+    </p>
+  
+    <p>
+      To use the generator, download the tar.gz or zip binary distribution
+      of the Torque generator from the
+      <a href="../../../download.html">Torque download page</a>. Unpack it in
+      the root directory of your project. This will create a directory called
+      <code>torque-gen-3.3</code> in the root directory of your project.
+      You also need to have <a href="http://ant.apache.org" class="externalLink" title="External Link">ant</a> 
+      installed and available in your path.
+    </p>
+    
+    <p>
+      Change into the <code>torque-gen-3.3</code> directory and edit the file
+      <code>build.properties</code>. Look through the properties and 
+      modify them to fit your specific set-up.
+      Afterwards, assuming you want to keep your schema
+      files in the <code>src/schema</code> subdirectory of the project
+      root directory, and generate your java
+      classes in the <code>target/java</code> and the sql scripts in the 
+      <code>target/sql</code> subdirectories of the project root directory, add
+      the following properties:
+
+    <div class="source"><pre>
+torque.output.dir = ../target
+torque.schema.dir = ../src/schema
+</pre></div>
+  
+    </p>
+    
+    <p>
+      Now create the <code>src/schema</code> subdirectory of your project
+      root directory. Create a schema.xml file describing your database in the
+      newly create directory (for example you might use the 
+      <code>bookstore-schema.xml</code> file from the 
+      <a href="../tutorial/step2.html">Tutorial</a>) for a start. 
+      Note that the names of the schema file(s) needs to end with 
+      <code>schema.xml</code>.
+    </p>
+    
+    <p>
+      If you want to use the id broker (a Torque runtime service which creates
+      primary keys in a database independent manner), also copy the file
+      <code>torque-gen-3.3/src/schema/id-table-schema.xml</code> to the 
+      <code>src/schema</code> subdirectory of your project root.
+    </p>
+
+    <p>
+      Now change into the <code>torque-gen-3.3</code> directory, and type
+      the command
+    </p>
+    
+
+    <div class="source"><pre>
+ant -f build-torque.xml
+</pre></div>
+  
+
+    <p>
+      This will create the <code>target/java</code> subdirectory in your
+      project root directory containing the generated java classes,
+      and the <code>target/sql</code> directory containing the generated
+      sql scripts.
+    </p>
+
+    <p>
+      If you want to create your database using torque (this does not work for
+      all databases), you first need to copy the database driver jar 
+      into the <code>torque-gen-3.3/lib</code> directory.
+      Then make sure that the database user you have configured in the 
+      build.properties has sufficient rights to create a database.
+      When everything is ready, type the command
+    </p>
+    
+
+    <div class="source"><pre>
+ant -f build-torque.xml create-db
+</pre></div>
+  
+    
+    <p>
+      To create the tables in your database, you also need the database driver 
+      jar in the <code>torque-gen-3.3/lib</code> directory. Type the command
+    </p>
+    
+
+    <div class="source"><pre>
+ant -f build-torque.xml insert-sql
+</pre></div>
+  
+    
+    <p>
+      You can repeat the steps above if you have changed your 
+      <code>schema.xml</code>. However, be aware that the insert-sql task drops
+      all table and creates them anew, so all data in the tables is lost.
+    </p>
+    
+    <p>
+      Now you have finished the short course in using the generator.
+      To learn about how to use your generated java classes, you can 
+      either look at the <a href="../runtime/index.html">Torque Runtime Docs</a>
+      or continue with the Tutorial at 
+      <a href="../tutorial/step4.html">Step 4</a>, ignoring all
+      maven-specific parts, especially the bits about a file called
+      <code>project.xml</code>. (As you use ant, you need to set up your own 
+      project build tasks.)
+    </p>
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

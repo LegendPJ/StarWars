@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Managers and Caching - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="John McNally"></meta><meta name="email" content="jmcnally@collab.net"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><a href="../reference/read-from-db.html">Reading from the DB</a></li><li class="none"><a href="../reference/write-to-db.html">Writing to the DB</a></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><a href="../reference/connections-transactions.html">Connections</a></li><li class="none"><strong><a href="../reference/managers-cache.html">Managers and Cache</a></strong></li><li class="none"><a href="../reference/beans.html">Beans</a></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><a href="../reference/new-database-support.html">Supporting a new DB</a></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Managers_-_Intro"></a><h2>Managers - Intro</h2>
+  
+    <p>
+      To use Managers in Torque, you need to generate your object model 
+      with the generator option <code>torque.useManagers = true</code>. 
+    </p>
+  
+    <p>
+      A manager is responsible for instantiating new objects, retrieving stored
+      objects, and possibly caching these objects.  Managers provide static
+      accessors for much of its functionality, so usage examples are:
+    </p>
+
+
+    <div class="source"><pre>
+Foo foo = FooManager.getInstance(); // gets a new Foo.
+// id is an ObjectKey that identifies the object in the db
+foo = FooManager.getInstance(id);
+// ids is a List of ObjectKey's that identifies objects in the db
+List foos = FooManager.getInstances(ids);
+</pre></div>
+  
+
+    
+    
+    <p>
+      Note that the cache is global and is not Transaction-aware.
+      This implies that isolation of different transactions will be difficult
+      to achieve. For example, you might read uncommited data out of the 
+      cache even if you database transaction isolation is set to 
+      <code>READ_COMMITTED</code>.
+    </p>
+
+  </div><div class="section"><a name="Business_Object_Cache"></a><h2>Business Object Cache</h2>
+
+    <p>
+      If no-arg constructor of FooManager,
+      calls setRegion(region) where the String region is the key used to
+      determine the cache, the manager will cache instances of Foo retrieved
+      via the getInstance(ObjectKey id) and getInstances(List ids) methods.
+      One possibility for the region key is the
+      fully qualified classname with dots replaced by underscores.
+    </p>
+
+
+    <div class="source"><pre>
+public FooManager()
+    throws TorqueException
+{
+    setRegion("net_bar_om_Foo");
+}
+</pre></div>
+  
+
+    <p>
+      The key given for the region is used in a JCS
+      configuration file, cache.ccf, to set up a cache that the manager uses
+      to store objects for which it is responsible. See the JCS
+      <a href="http://jakarta.apache.org/jcs/" class="externalLink" title="External Link">
+      documentation</a> for details on configuring JCS.  But here is a
+      simple section that creates an in-memory only LRU cache for FooManager.
+    </p>
+
+
+    <div class="source"><pre>
+jcs.region.net_bar_om_Foo=
+jcs.region.net_bar_om_Foo.cacheattributes=
+    org.apache.jcs.engine.CompositeCacheAttributes
+jcs.region.net_bar_om_Foo.cacheattributes.MaxObjects=1200
+jcs.region.net_bar_om_Foo.cacheattributes.MemoryCacheName=
+    org.apache.jcs.engine.memory.lru.LRUMemoryCache
+</pre></div>
+  
+
+    <p>
+      It is a good idea to set a region for each manager, but this behavior
+      is optional.  There also will be no caching if JCS is
+      not configured for the region given in the Constructor.
+    </p>
+
+    <p>
+      The generated object model classes have methods for getting objects
+      that are related by foreign keys.  If the FOO table contains an fk to
+      the BAR table then Foo.getBar() will exist.  This method uses
+      BarManager.getInstance(bar_id) and therefore will return a cached
+      Bar, if the Bar has been previously requested (and it still exists in
+      the cache.)
+    </p>
+
+  </div><div class="section"><a name="Method_Result_Cache"></a><h2>Method Result Cache</h2>
+
+    <p>
+      The above fk relationship will also generate a Bar.getFoos(Criteria).  It
+      would be preferrable that repeated requests to this method returned
+      cached results as opposed to hitting the db for each call.  It could be
+      possible to add such caching to the generated method, and Criteria
+      implements an equals() method that would make this possible.  But
+      determining the equality of a Criteria is complex and possibly buggy (this
+      is the perception of the author of this doc, there are no known bugs).
+      Invalidating the results has also not been reduced to templated Java code.
+      So whether to cache these kinds of results is left to the developer
+      who is using torque.
+    </p>
+
+    <p>
+      It is a good practice to write methods within Bar that wrap the
+      getFoos(Criteria) method.  The conversion from application parameters
+      to a Criteria is then implemented in a more maintainable manner.  For
+      example:
+    </p>
+
+
+    <div class="source"><pre>
+public List getFoos(FooType type, boolean deleted)
+{
+    List result = null;
+
+    Criteria crit = new Criteria();
+    crit.add(FooPeer.TYPE_ID, type.getId());
+    crit.add(FooPeer.DELETED, deleted);
+    result = getFoos(crit);
+
+    return result;
+}
+</pre></div>
+  
+
+    <p>
+      In the above code the database will be hit for every call to the method.
+      BarManager provides some convenience code to add caching to the above
+      method, so it can be rewritten as:
+    </p>
+
+    
+    <div class="source"><pre>
+public List getFoos(FooType type, boolean deleted)
+{
+    List result = null;
+    Boolean b = (deleted ? Boolean.TRUE : Boolean.FALSE);
+    Object obj = BarManager.getMethodResult().get(this, "getFoos", type, b);
+    if ( obj == null )
+    {
+        Criteria crit = new Criteria();
+        crit.add(FooPeer.TYPE_ID, type.getId());
+        crit.add(FooPeer.DELETED, deleted);
+        result = getFoos(crit);
+
+        BarManager.getMethodResult().put(result, this, "getFoos", type, b);
+    }
+    else
+    {
+        result = (List)obj;
+    }
+    return result;
+}
+    </pre></div>
+  
+
+    <p>
+      The getMethodResult() method returns a MethodResultCache object, which
+      creates a key from the arguments given in the get method.  All the
+      arguments must be Serializable.  The first object should be the business
+      object on which the method was called.  If the object is not Serializable
+      or the method is static, a String as given by Object.toString() method or
+      the className might be used.  The second argument is the method name.
+      There are versions of the get method that take up to 3 additional 
+      arguments that will be the arguments to the method, or if they are not 
+      Serializable some Serializable proxy.  
+      There is also a get method that takes an Object[] that can be used for 
+      methods that have more than 3 arguments; the
+      first two objects in the array should be the instance and method name.
+      The reason for not just having the Object[] format is that keys are pooled
+      and since most methods will be less than 4 arguments, object creation
+      related to the cache is minimized.  Now the method will return cached
+      results as long as the results remain in the cache. So there must be some
+      way to invalidate these results, if the database changes in a way that
+      is likely to affect the result that should be returned by the method.
+    </p>
+
+  </div><div class="section"><a name="Invalidating_the_Cache"></a><h2>Invalidating the Cache</h2>
+
+    <p>
+      An event model exists for invalidating cached method results.  Continuing
+      the example from above, BarManager should register itself as a listener
+      with the FooManager.
+      Then FooManager will notify BarManager, if a foo.save() is called
+      that might affect its cached results.  The following code is added to
+      BarManager.java which implements the CacheListener interface.
+    </p>
+
+
+    <div class="source"><pre>
+/**
+ * Method should be overridden to notify other managers with
+ * relevant CacheEvents.
+ */
+protected void registerAsListener()
+{
+    FooManager.addCacheListener(this);
+    XManager.addCacheListener(this);
+    ...
+}
+
+// -------------------------------------------------------------------
+// CacheListener implementation
+
+public void addedObject(Persistent om)
+{
+    if (om instanceof Foo)
+    {
+        getMethodResult().removeAll(om, "getFoos");
+    }
+    else if (om instanceof X)
+    {
+        getMethodResult().remove(om, GET_URLS);
+        getMethodResult().removeAll(om, GET_COMMENTS);
+    }
+    ...
+}
+
+public void refreshedObject(Persistent om)
+{
+    addedObject(om);
+}
+
+/** fields which interest us with respect to cache events */
+public List getInterestedFields()
+{
+    List interestedCacheFields = new LinkedList();
+    interestedCacheFields.add(FooPeer.BAR_ID);
+    interestedCacheFields.add(XPeer.X_ID);
+    ...
+    return interestedCacheFields;
+}
+</pre></div>
+  
+
+    <p>
+      When a foo which is of interest to BarManager is saved, the instance is
+      passed to the appropriate listener method.  This object may contain 
+      information that could result in no action or possibly more precise
+      repair of the cached data.  In the above examples the cache is just
+      cleared of all data that is potentially invalid.
+      Some code is also added to FooManager to support the invalidation.
+    </p>
+
+
+    <div class="source"><pre>
+/**
+ * Creates a new &lt;code&gt;FooManager&lt;/code&gt; instance.
+ */
+public FooManager()
+    throws TorqueException
+{
+    setRegion("net_bar_om_Foo");
+    validFields = new HashMap();
+    validFields.put(FooPeer.BAR_ID, null);
+}
+
+protected Persistent putInstanceImpl(Persistent om)
+    throws TorqueException
+{
+    Persistent oldOm = super.putInstanceImpl(om);
+    List listeners = (List)listenersMap.get(FooPeer.BAR_ID);
+    notifyListeners(listeners, oldOm, om);
+    return oldOm;
+}
+</pre></div>
+  
+
+    <p>
+      Now FooManager will notify BarManager when foo's are modified.
+    </p>
+
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

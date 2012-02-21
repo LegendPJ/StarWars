@@ -1,0 +1,37 @@
+
+
+
+  Platform used: org.apache.torque.engine.platform.PlatformPostgresqlImpl
+
+
+  SQL file to be created: base5a00-schema.sql
+
+    Primary Key: Yes       
+    Primary Key: Yes       
+    Primary Key: Yes       
+    Primary Key: Yes       
+    Primary Key: Yes       
+    Primary Key: Yes       
+    Primary Key: Yes       
+
+      
+      
+      
+      
+      
+      
+      
+
+
+
+
+  Platform used: org.apache.torque.engine.platform.PlatformPostgresqlImpl
+
+
+  SQL file to be created: id-table-schema.sql
+
+    Primary Key: Yes       
+
+      
+
+

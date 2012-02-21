@@ -1,0 +1,90 @@
+
+targetdatabase = postgresql
+
+correctGetters = 
+
+             
+
+
+
+
+
+
+
+
+
+    Peers generated in package torque.generated
+    Objects generated in package torque.generated
+    Managers generated in package torque.generated
+    Beans generated in package torque.generated.bean
+
+    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/torque/generated/
+
+    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/torque/generated/
+
+
+
+
+        vaisseaux
+
+        
+
+
+
+
+
+
+        caracteristiques
+
+        
+
+
+
+
+
+
+        objets
+
+        
+
+
+
+
+
+
+        objets_vaisseaux
+
+        
+
+
+
+
+
+
+        parties
+
+        
+
+
+
+
+
+
+        parties_vaisseaux
+
+        
+
+
+
+
+
+
+        objets_parties
+
+        
+
+
+
+
+
+

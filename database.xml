@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+
+<!DOCTYPE database SYSTEM
+ "http://db.apache.org/torque/dtd/database_3_3.dtd">
+
+<database
+  name="starwars"
+  defaultIdMethod="none">
+  
+<!-- TABLE VAISSEAUX -->  
+  
+  <table name="vaisseaux" description="vaisseaux">
+    <column
+      name="nom"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="attaque"
+      required="true"
+      type="INTEGER"
+      size="2"
+      default="0"
+      description="attaque du vaisseau"/>
+    <column
+      name="degats"
+      required="true"
+      type="INTEGER"
+      size="2"
+      default="0"
+      description="degats du vaisseau"/>
+    <column
+      name="champ"
+      required="true"
+      type="INTEGER"
+      size="2"
+      default="0"
+      description="champ du vaisseau"/>
+    <column
+      name="energie"
+      required="true"
+      type="INTEGER"
+      size="2"
+      default="0"
+      description="energie du vaisseau"/>
+   <column
+      name="pa"
+      required="true"
+      type="INTEGER"
+      size="1"
+      default="6"
+      description="points d'action du vaisseau"/>
+  </table>
+  
+<!-- TABLE CARACTERISTIQUES -->
+  
+  <table name="caracteristiques" description="caracteristiques">
+  	<column 
+  	  name="nom"
+  	  required="true"
+  	  primaryKey="true"
+  	  type="VARCHAR"
+  	  size="60"
+  	  description="..." />
+  </table>
+  
+<!-- TABLE OBJETS -->
+ 
+  <table name="objets" description="objets">
+  	<column
+      name="nom"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de l'objet"/>
+    <column
+      name="points"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="points de gain"/>
+    <column
+      name="carac"
+      required="true"
+      default="0"
+      description="caracteritique améliorée"/>
+    <foreign-key foreignTable="caracteristiques">
+      <reference
+        local="carac"
+        foreign="nom"/>
+    </foreign-key>
+  </table>
+ 
+<!-- TABLE OBJETS_VAISSEAUX -->
+ 
+  <table name="objets_vaisseaux" description="objets_vaisseaux">
+  	<column
+      name="nom_vaisseau"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="nom_objet"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de l'objet"/>
+    <foreign-key foreignTable="vaisseaux">
+      <reference
+        local="nom_vaisseau"
+        foreign="nom"/>
+    </foreign-key>
+    <foreign-key foreignTable="objets">
+      <reference
+        local="nom_objets"
+        foreign="nom"/>
+    </foreign-key>
+  </table>  
+  
+<!-- TABLE PARTIES -->
+  
+  <table name="parties" description="parties">
+  	<column
+      name="id"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Une partie"/>
+    <column
+      name="nom"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de la partie"/>
+  </table>  
+  
+<!-- TABLE PARTIES_VAISSEAUX -->
+  
+  <table name="parties_vaisseaux" description="parties_vaisseaux">
+  	<column
+      name="id_partie"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Une partie"/>
+    <column
+      name="nom_vaisseau"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="coord_x"
+      required="true"
+      type="INTEGER"
+      size="3"
+      description="coordonnées en X"/>
+    <column
+      name="coord_y"
+      required="true"
+      type="INTEGER"
+      size="3"
+      description="coordonnées en Y"/>
+      
+    <foreign-key foreignTable="parties">
+      <reference
+        local="id_partie"
+        foreign="id"/>
+    </foreign-key>    
+    <foreign-key foreignTable="vaisseaux">
+      <reference
+        local="nom_vaisseau"
+        foreign="nom"/>
+    </foreign-key>    
+  </table>
+
+
+<!-- TABLE PARTIES_VAISSEAUX -->
+  
+  <table name="objets_parties" description="objets_parties">
+  	<column
+      name="id_partie"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Une partie"/>
+    <column
+      name="nom_objet"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de l'objet"/>
+    <column
+      name="coord_x"
+      required="true"
+      type="INTEGER"
+      size="3"
+      description="coordonnées en X"/>
+    <column
+      name="coord_y"
+      required="true"
+      type="INTEGER"
+      size="3"
+      description="coordonnées en Y"/>
+      
+    <foreign-key foreignTable="parties">
+      <reference
+        local="id_partie"
+        foreign="id"/>
+    </foreign-key>    
+    <foreign-key foreignTable="objets">
+      <reference
+        local="nom_objet"
+        foreign="nom"/>
+    </foreign-key>    
+  </table>
+</database>

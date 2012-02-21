@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+-->
+
+<!-- Build configuration file for Torque -->
+
+<project name="props-maker" default="generate-props" basedir=".">
+
+  <!-- Give user a chance to override without editing this file
+      (and without typing -D each time it compiles it -->
+  <property file="${user.home}/build.properties" />
+  <property file="default.properties" />
+
+  <property name="master.home" value="."/>
+  <property name="conf.home" value="../"/>
+  <property name="target.dir" value="../"/>
+
+  <property file="${conf.home}/database/${database.type}"/>
+
+  <property name="master" value="${master.home}/Torque.master"/>
+  <property name="copy" value="${target.dir}/Torque.properties"/>
+
+  <!-- =================================================================== -->
+  <!-- G E N E R A T E   P R O P S                                         -->
+  <!-- =================================================================== -->
+
+  <target name="generate-props" depends="configure"
+          description="--> generate properties file for Torque">
+
+    <echo message="Creating Torque.properties ..."/>
+    <delete file="${copy}"/>
+    <copy file="${master}" tofile="${copy}" filtering="on"/>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- C O N F I G U R E  D A T A B A S E  P R O P E R T I E S             -->
+  <!-- =================================================================== -->
+
+  <target name="configure">
+
+    <filter token="DATABASE" value="${torque.database.type}"/>
+    <filter token="DATABASE_DRIVER" value="${torque.database.driver}"/>
+    <filter token="DATABASE_URL" value="${torque.database.url}"/>
+    <filter token="DATABASE_ADAPTOR" value="${torque.database.adaptor}"/>
+    <filter token="DATABASE_USER" value="${torque.database.user}"/>
+    <filter token="DATABASE_PASSWORD" value="${torque.database.password}"/>
+    <filter token="DATABASE_DEFAULT" value="${torque.database.name}"/>
+    <filter token="PROJECT" value="${torque.project}"/>
+    <filter token="APPLICATION_ROOT" value="${application.root}"/>
+    <filter token="VALIDATION_QUERY" value="${torque.database.validationQuery}"/>
+
+  </target>
+
+</project>

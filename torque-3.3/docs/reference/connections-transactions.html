@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Reading from the database - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Thomas Fischer"></meta><meta name="email" content="fischer@seitenbau.de"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><a href="../reference/read-from-db.html">Reading from the DB</a></li><li class="none"><a href="../reference/write-to-db.html">Writing to the DB</a></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><strong><a href="../reference/connections-transactions.html">Connections</a></strong></li><li class="none"><a href="../reference/managers-cache.html">Managers and Cache</a></li><li class="none"><a href="../reference/beans.html">Beans</a></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><a href="../reference/new-database-support.html">Supporting a new DB</a></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Connection_and_transaction_handling"></a><h2>Connection and transaction handling</h2>
+    <p>
+      To read data from  or write data to the database, a connection to the
+      database is required. To be able to connect to a database,
+      you need to add the relevant information to Torque's configuration, 
+      see the section about 
+      <a href="initialisation-configuration.html">initialisation and configuration</a>.
+    </p>
+    
+    <p>
+      Connection and Transaction handling cannot be treated separately
+      from each other. Some databases, e.g. oracle, may automatically start
+      a transaction on an sql command, so you might not be able to
+      get a database connection without a transaction. Then, transactions live
+      in database connections, so it is not possible to get a transaction
+      without a database connection.
+    </p>
+    
+    <p>
+      There are two ways of connection and transaction handling:
+      <ul>
+        <li>Let Torque take care of it.</li>
+        <li>Do it yourself.</li>
+      </ul>
+      Unless you know what you are doing, the first approach is recommended.
+      If you choose the second approach and write incorrect code, this may lead
+      to connection leaks and/or blocked connections.  You have been warned.
+    </p>
+  </div><div class="section"><a name="Torque_s_connection_and_transaction_handling"></a><h2>Torque's connection and transaction handling</h2>
+
+    <p>
+      When you use Torque, you need not bother about connections and 
+      transactions.  The only thing you have to do is to configure Torque 
+      correctly, then Torque is able to create a database connection whenever
+      it needs one.  For example, if you call the save() method of some object,
+      Torque retrieves a connection from its internal connection pool, 
+      uses it to save the connection, and returns it to the pool. 
+    </p>
+    
+    <p>
+      If the database supports transactions and autocommit is turned off,
+      one Transaction is used for every method which needs a database 
+      connection. See the source code for details.
+    </p>
+
+  </div><div class="section"><a name="Handle_connections_and_transactions_yourself"></a><h2>Handle connections and transactions yourself</h2>
+
+    <p>
+      If you want to manipulate the database in some way which is not
+      incorporated into Torque, or want to execute several commands in one
+      transaction, you need to handle connections and transaction 
+      yourself.  This is potentially dangerous, as incorrect handling of
+      connections and transaction may lead to connection leaks 
+      (resulting in errors because no more connections can be opened to the 
+      database) or blocked connections (because some transaction has been 
+      left open).  Typically, these conditions appear if a database operation
+      fails, because error handling is insufficient.
+    </p>
+    
+    <p>
+      The following code is recommended if you need to handle connections 
+      and/or transactions yourself:
+    </p>
+
+
+    <div class="source"><pre>
+Connection connection = null;
+try
+{
+    connection = Transaction.begin();
+
+    // do something with connection, e.g.
+    // someObject.save(connection);
+
+    Transaction.commit(connection);
+    connection = null;
+}
+finally
+{
+    if (connection != null)
+    {
+        Transaction.safeRollback(connection);
+    }
+}
+</pre></div>
+  
+
+    <p>
+      This code ensures that if any error occurs within the try block,
+      an attempt is made to rollback the transaction and return it into the
+      pool.
+    </p>
+
+    <p>
+      If the database supports transactions and autocomit is turned off,
+      all database operations are executed in a single transaction. 
+      This has the following effect: For example, you execute two saves in the
+      try block, and the second save fails. The first save operation will be
+      rolled back, i.e. the database reverts the changes made by the first save.
+      If you do not like this behaviour, the safe way is to wrap everything in 
+      its own try ... finally block.
+      The alternative is to use
+      <code>Transaction.beginOptional(Torque.getDefaultDB(), false)</code>
+      instead of <code>Transaction.begin()</code> and make sure your 
+      connection pool returns connections in autocommit mode. This might
+      not work with CLOB and BLOB data fields, however.
+    </p>
+    
+    <p>
+      If you use more than one database, you might want to use 
+      <code>Transaction.begin(String databaseName)</code> instead of
+      <code>Transaction.begin()</code>.
+    </p>
+    
+    <p>
+      The following code is <em>NOT</em> recommended, as some databases
+      (like Oracle) start transactions automatically, and some pools 
+      (like dbcp, Torque's default pool) do not rollback automatically if
+      a connection is returned to the pool.  So under certain conditions,
+      you might have leftovers from the last transaction in a "fresh" 
+      connection from the pool, or, even worse, the connection blocks 
+      because the pool attempts to set some transaction property which 
+      needs to be set as first command in a transaction.
+    </p>
+
+
+    <div class="source"><pre>
+Connection connection = null;
+try
+{
+    // Bad ! No defined transaction state afterwards !
+    connection = Torque.getConnection();
+
+    // do something with connection, e.g.
+    // someObject.save(connection);
+
+    Transaction.commit(connection);
+    connection = null;
+}
+finally
+{
+    if (connection != null)
+    {
+        // Bad ! No rollback or commit !
+        Torque.closeConnection(connection);
+    }
+}
+</pre></div>
+  
+
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

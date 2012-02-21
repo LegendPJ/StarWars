@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Beans - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Thomas Fischer"></meta><meta name="email" content="fischer@seitenbau.de"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><a href="../reference/read-from-db.html">Reading from the DB</a></li><li class="none"><a href="../reference/write-to-db.html">Writing to the DB</a></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><a href="../reference/connections-transactions.html">Connections</a></li><li class="none"><a href="../reference/managers-cache.html">Managers and Cache</a></li><li class="none"><strong><a href="../reference/beans.html">Beans</a></strong></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><a href="../reference/new-database-support.html">Supporting a new DB</a></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Introduction"></a><h2>Introduction</h2>
+
+    <p>
+      Bean creation is turned off by default. To enable bean creation,
+      you have to generate your object model with the property 
+      <code>torque.generateBeans</code> set to <code>true</code>.
+    </p>
+    
+    <p>
+      Creating beans from Torque objects creates a bridge between
+      an environment which knows Torque and has access to a database,
+      and another environment which does not know anything about Torque
+      and databases.
+    </p>
+
+    <p>
+      For example, you might have a server using Torque, and a java client
+      without database access where you want to use data supplied by
+      Torque, but do not want to include Torque in any way.
+    </p>
+
+    <p>
+      If this is the case, you can create simple beans from Torque objects
+      in the server, send them over the network to your client,
+      manipulate them there, send them back over the network,
+      create Torque objects from the beans,
+      and save the objects generated from the beans.
+    </p>
+
+  </div><div class="section"><a name="Creation_of_beans_from_Torque_objects_and_vice_versa"></a><h2>Creation of beans from Torque objects and vice versa</h2>
+
+    <div class="subsection"><a name="Created_bean_classes"></a><h3>Created bean classes</h3>
+
+      <p>
+        If bean creation is turned on, the beans are automatically created
+        by torque in the bean subpackage of your target package. 
+        E.g. in the bookstore example in the tutorial, the classes
+        are generated in the com.kazmier.om package, so the beans 
+        will be generated in the package com.kazmier.om.bean.
+        Each bean has getters and setters for all the properties defined
+        in the schema.xml.
+      </p>
+
+      <p>
+        Also, getters and setters for two boolean values, namely
+        isNew(), setNew(), isModified() and setModified() are generated, 
+        which keep track of which changes have already made it into the
+        database. You should not normally need to use these.
+      </p>
+
+    </div>
+
+    <div class="subsection"><a name="Additional_methods_in_the_Torque_objects"></a><h3>Additional methods in the Torque objects</h3>
+
+      <p>
+        If bean creation is enabled, every Torque object gets some
+        additional methods. E.g, the author class from the bookstore example
+        in the tutorial gets the additional methods
+      </p>
+
+
+    <div class="source"><pre>
+public AuthorBean createBean();
+
+public static Author createAuthor(AuthorBean bean);
+</pre></div>
+  
+
+      <p>
+        These methods are used to create an AuthorBean from an Author 
+        or vice versa.
+      </p>
+
+    </div>
+
+    <div class="subsection"><a name="Beans_and_database_state"></a><h3>Beans and database state</h3>
+
+      <p>
+        If a bean is created from an object, the beans gets knowledge about
+        whether the object it was created from already exists in the database,
+        or whether it was changed after redaing it from the database
+        (that is what the isNew() and isModified() methods are for).
+        So assuming we have at least one author stored in the database,
+        the following code works as expected
+      </p>
+
+
+    <div class="source"><pre>
+List authors = AuthorPeer.doSelect(new Criteria());
+Author author = (Author) authors.get(0);
+
+AuthorBean authorBean = author.getBean();
+
+// e.g. send the authorBean over the network
+authorBean.setFirstName("Joshua");
+// e.g. send the authorBean back over the network
+
+Author authorFromBean = Author.createAuthor(authorBean);
+authorFromBean.save();
+</pre></div>
+  
+
+      <p>
+        This reads an author from the database,
+        creates a bean from the author,
+        manipulates the bean,
+        and saves the manipulated data back into the database.
+      </p>
+
+    </div>
+
+    <div class="subsection"><a name="Object_relations"></a><h3>Object relations</h3>
+
+      <p>
+        The bean creation process preserves object relations.
+        Consider again the bookstore example from the tutorial:
+        Each book has an author, and an author can have serveral books.
+        So if you have created an author-book relation, e.g. by
+      </p>
+
+
+    <div class="source"><pre>
+Author author = new Author();
+// fill author data here
+Book book = new Book();
+// fill book data here();
+author.addBook(book);
+
+AuthorBean authorBean = author.getBean();
+</pre></div>
+  
+
+      <p>
+        then the related bookBean is automatically created,
+        and can be retrieved by
+      </p>
+
+
+    <div class="source"><pre>
+BookBean bookBean = (BookBean) authorBean.getBookBeans().get(0);
+</pre></div>
+  
+
+      <p>
+        This is also true in the reverse direction. If you create an
+        author from this authorBean, the corresponding book can also
+        be retrieved:
+      </p>
+
+
+    <div class="source"><pre>
+Author authorFromBean = Author.createAuthor(authorBean);
+Book bookFromBean = (Book) author.getBooks().get(0);
+</pre></div>
+  
+
+      <p>
+        Note that only newly created or cached related objects are considered
+        in bean creation.
+        To elaborate that, consider the case where one author which is related
+        to several books is stored in the database.
+      </p>
+
+      <p>
+        The following code will NOT transfer the related books into the bean:
+      </p>
+
+
+    <div class="source"><pre>
+List authorList = AuthorPeer.doSelect(new Criteria());
+Author author = (Author) authorList.get(0);
+AuthorBean authorBean = author.getBean();
+</pre></div>
+  
+
+      <p>
+        This is because the related books are never read from the database,
+        and thus are not included in bean conversion. To include the
+        related books into the author bean, you have to assure that the
+        related books are read into memory. This can be done as follows:
+      </p>
+
+
+    <div class="source"><pre>
+List authorList = AuthorPeer.doSelect(new Criteria());
+Author author = (Author) authorList.get(0);
+
+// the following reads all books related to the author into memory
+author.getBooks();
+
+AuthorBean authorBean = author.getBean();
+</pre></div>
+  
+
+    </div>
+
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

@@ -1,0 +1,118 @@
+# -------------------------------------------------------------------
+# $Id: Torque.master 229759 2005-07-08 18:06:03Z tfischer $
+#
+# This is the configuration file for Torque.
+#
+# Note that strings containing "," (comma) characters must backslash
+# escape the comma (i.e. '\,')
+#
+# -------------------------------------------------------------------
+
+# -------------------------------------------------------------------
+#
+#  D E F A U L T S
+#
+# -------------------------------------------------------------------
+#
+# These values kick in, if you don't explicitly override them in your
+# various database settings. At the moment they're only used if you
+# configure the SharedPoolDataSourceFactory of the PerUserDataSourceFactory
+# as your data source provider. It does not work with JNDI.
+#
+# The example is shown for SharedPoolDataSource.
+#
+# -------------------------------------------------------------------
+
+# Time to wait for a connection to the database in milliseconds.
+torque.defaults.pool.maxWait = 10000
+
+# Maximum number of idle and active connections cached in a database 
+# definition. 
+# Note that, if you have multiple database definitions which access the
+# same database URL, they don't share the connections but you have
+# multiple pools and each has this maximum number. So if you have a
+# connection licensed database engine, you must multiply this number by
+# the number of times you use a specific database URL.
+torque.defaults.pool.maxIdle = 8
+torque.defaults.pool.maxActive = 10
+
+# How often the pool is checked for connection which stayed in the pool 
+# for too long. Defaults to 5 minutes (5 * 60 * 1000)
+# remove property if the idle object evictor should not be run
+torque.defaults.pool.timeBetweenEvictionRunsMillis= 300000
+
+# Lifetime of an idle connection in the pool in milliseconds.
+# Defaults to one hour (1000 * 60 * 60)
+torque.defaults.pool.minEvictableIdleTimeMillis = 3600000
+
+# Sets the driver for the data sources.
+torque.defaults.connection.driver = @DATABASE_DRIVER@
+
+# Sets the URL for the datasources
+torque.defaults.connection.url = @DATABASE_URL@
+
+# Sets login and password for the data sources.
+torque.defaults.connection.user = @DATABASE_USER@
+torque.defaults.connection.password = @DATABASE_PASSWORD@
+
+# -------------------------------------------------------------------
+#
+#  T O R Q U E  P R O P E R T I E S
+#
+# -------------------------------------------------------------------
+# These are your database settings. Look in the
+# org.apache.torque.pool.* packages for more information.
+#
+# The parameters to connect to the default database.  You MUST
+# configure these properly.
+# -------------------------------------------------------------------
+
+torque.database.default=@DATABASE_DEFAULT@
+torque.database.@DATABASE_DEFAULT@.adapter=@DATABASE@
+
+## Using commons-dbcp 
+torque.dsfactory.@DATABASE_DEFAULT@.factory=org.apache.torque.dsfactory.SharedPoolDataSourceFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.factory=org.apache.torque.dsfactory.PerUserPoolDataSourceFactory
+torque.dsfactory.@DATABASE_DEFAULT@.pool.maxIdle=8
+torque.dsfactory.@DATABASE_DEFAULT@.pool.maxActive=10
+torque.dsfactory.@DATABASE_DEFAULT@.pool.testOnBorrow=true
+torque.dsfactory.@DATABASE_DEFAULT@.pool.validationQuery=@VALIDATION_QUERY@
+torque.dsfactory.@DATABASE_DEFAULT@.connection.driver = @DATABASE_DRIVER@
+torque.dsfactory.@DATABASE_DEFAULT@.connection.url = @DATABASE_URL@
+torque.dsfactory.@DATABASE_DEFAULT@.connection.user = @DATABASE_USER@
+torque.dsfactory.@DATABASE_DEFAULT@.connection.password = @DATABASE_PASSWORD@
+
+
+## Using jndi
+#torque.dsfactory.@DATABASE_DEFAULT@.factory=org.apache.torque.dsfactory.JndiDataSourceFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.path=jdbc/@DATABASE_DEFAULT@
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.java.naming.factory.initial = org.apache.naming.java.javaURLContextFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.java.naming.factory.url.pkgs = org.apache.naming
+
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.dataSourceName=jdbc/DB@DATABASE_DEFAULT@
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.jndiEnvironment.java.naming.factory.initial = org.apache.naming.java.javaURLContextFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.jndiEnvironment.java.naming.factory.url.pkgs = org.apache.naming
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.maxIdle=8
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.maxActive=10
+
+## ConnectionPoolDataSource
+#torque.dsfactory.@DATABASE_DEFAULT@.factory=org.apache.torque.dsfactory.JndiDataSourceFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.path=jdbc/DB@DATABASE_DEFAULT@
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.java.naming.factory.initial = org.apache.naming.java.javaURLContextFactory
+#torque.dsfactory.@DATABASE_DEFAULT@.jndi.java.naming.factory.url.pkgs = org.apache.naming
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.classname=org.apache.commons.dbcp.cpdsadapter.DriverAdapterCPDS
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.driver = @DATABASE_DRIVER@
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.url = @DATABASE_URL@
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.user = @DATABASE_USER@
+#torque.dsfactory.@DATABASE_DEFAULT@.datasource.password = @DATABASE_PASSWORD@
+
+# Determines if the quantity column of the IDBroker's id_table should
+# be increased automatically if requests for ids reaches a high
+# volume.
+
+torque.idbroker.clever.quantity=true
+
+# Determines whether the managers cache instances of the business objects.
+# And also whether the MethodResultCache will really cache results.
+
+torque.manager.useCache = true

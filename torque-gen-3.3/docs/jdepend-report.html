@@ -1,0 +1,913 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>JDepend Source Code Analysis - Torque</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+          @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><style type="text/css">.jdepend td ul, .jdepend td ul li { margin:0; padding:0; list-style-type: none; }</style></head><body class="jdepend"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="./images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/generator/" id="projectLogo"><img alt="Torque generator" src="./images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../index.html">Overview</a></li><li class="none"><a href="../../../status.html">News and Status</a></li><li class="none"><a href="../../../download.html">Downloads</a></li><li class="none"><a href="../../../addons.html">Addons</a></li><li class="none"><a href="../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="expanded"><a href="index.html">Generator</a><ul><li class="none"><a href="tasks-reference.html">Tasks Reference</a></li><li class="none"><a href="schema-reference.html">Schema Reference</a></li><li class="none"><a href="properties-reference.html">Properties Reference</a></li><li class="none"><a href="database.dtd.txt" class="newWindow" title="New Window" target="_blank">database.dtd</a></li><li class="none"><a href="how-templates-work.html">How Templates work</a></li><li class="none"><a href="custom-templates.html">Custom Templates</a></li><li class="none"><a href="dependencies.html">Dependencies</a></li><li class="expanded"><a href="maven-reports.html">Project Reports</a><ul><li class="none"><strong><a href="jdepend-report.html">Metrics</a></strong></li><li class="none"><a href="checkstyle-report.html">Checkstyle</a></li><li class="none"><a href="changelog-report.html">Change Log</a></li><li class="none"><a href="file-activity-report.html">File Activity</a></li><li class="none"><a href="developer-activity-report.html">Developer Activity</a></li><li class="none"><a href="apidocs/index.html" class="newWindow" title="New Window" target="_blank">JavaDocs</a></li><li class="none"><a href="javadoc.html">JavaDoc Report</a></li><li class="none"><a href="javadoc-warnings-report.html">JavaDoc Warnings Report</a></li><li class="none"><a href="xref/index.html" class="newWindow" title="New Window" target="_blank">Source Xref</a></li><li class="none"><a href="xref-test/index.html" class="newWindow" title="New Window" target="_blank">Test Xref</a></li><li class="none"><a href="junit-report.html">Unit Tests</a></li><li class="none"><a href="license.html">Project License</a></li><li class="none"><a href="task-list.html">Task List</a></li><li class="none"><a href="pmd-report.html">PMD Report</a></li><li class="none"><a href="simian-report.html">Simian Report</a></li><li class="none"><a href="jcoverage/index.html" class="newWindow" title="New Window" target="_blank">JCoverage</a></li><li class="none"><a href="findbugs-report.html">FindBugs Report</a></li><li class="none"><a href="linkcheck.html">Link Check Report</a></li></ul></li></ul></li><li class="collapsed"><a href="../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="collapsed"><a href="../runtime/index.html">Runtime</a></li><li class="collapsed"><a href="../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Metric_Results"></a><h2>Metric Results</h2>
+      <p>[
+        <a href="#Summary">summary</a>] [
+        <a href="#Packages">packages</a>] [
+        <a href="#Cycles">cycles</a>] [
+        <a href="#Explanations">explanations</a>]</p>
+      <p>The following document contains the results of a
+        <a href="http://www.clarkware.com/software/JDepend.html" class="externalLink" title="External Link">JDepend</a>metric analysis. The various metrics are defined at the bottom of this document.</p>
+    </div><div class="section"><a name="Summary"></a><h2>Summary</h2>
+      <p>[
+        <a href="#Summary">summary</a>] [
+        <a href="#Packages">packages</a>] [
+        <a href="#Cycles">cycles</a>] [
+        <a href="#Explanations">explanations</a>]</p>
+      <table class="bodyTable">
+        <thead>
+          <tr class="b">
+            <th title="Package">Package</th>
+            <th style="text-align:right">
+              <acronym title="Total Classes">TC</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Abstract Classes">AC</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Concrete Classes">CC</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Afferent Couplings">AC</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Efferent Couplings">EC</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Abstractness">A</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Instability">I</acronym>
+            </th>
+            <th style="text-align:right">
+              <acronym title="Distance">D</acronym>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="a">
+            <td>
+              <a href="#org_apache_torque_engine">org.apache.torque.engine</a>
+            </td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">3</td>
+            <td style="text-align:right">2</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">40%</td>
+            <td style="text-align:right">60%</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+            </td>
+            <td style="text-align:right">17</td>
+            <td style="text-align:right">2</td>
+            <td style="text-align:right">15</td>
+            <td style="text-align:right">3</td>
+            <td style="text-align:right">9</td>
+            <td style="text-align:right">0,12</td>
+            <td style="text-align:right">75%</td>
+            <td style="text-align:right">13%</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="#org_apache_torque_engine_database_transform">org.apache.torque.engine.database.transform</a>
+            </td>
+            <td style="text-align:right">7</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">7</td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">12</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">92%</td>
+            <td style="text-align:right">8%</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="#org_apache_torque_engine_platform">org.apache.torque.engine.platform</a>
+            </td>
+            <td style="text-align:right">17</td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">16</td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">4</td>
+            <td style="text-align:right">0,06</td>
+            <td style="text-align:right">80%</td>
+            <td style="text-align:right">14%</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="#org_apache_torque_engine_sql">org.apache.torque.engine.sql</a>
+            </td>
+            <td style="text-align:right">3</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">3</td>
+            <td style="text-align:right">1</td>
+            <td style="text-align:right">3</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">75%</td>
+            <td style="text-align:right">25%</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="#org_apache_torque_task">org.apache.torque.task</a>
+            </td>
+            <td style="text-align:right">15</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">15</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">24</td>
+            <td style="text-align:right">0</td>
+            <td style="text-align:right">100%</td>
+            <td style="text-align:right">0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div><div class="section"><a name="Packages"></a><h2>Packages</h2>
+      <p>[
+        <a href="#Summary">summary</a>] [
+        <a href="#Packages">packages</a>] [
+        <a href="#Cycles">cycles</a>] [
+        <a href="#Explanations">explanations</a>]</p>
+      <div class="subsection"><a name="org_apache_torque_engine"></a><h3>org.apache.torque.engine</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>3</td>
+              <td>2</td>
+              <td>0%</td>
+              <td>40%</td>
+              <td>60%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <em>None</em>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/EngineException.html">EngineException</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_transform">org.apache.torque.engine.database.transform</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_task">org.apache.torque.task</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_lang_exception">org.apache.commons.lang.exception</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model"></a><h3>org.apache.torque.engine.database.model</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>3</td>
+              <td>9</td>
+              <td>12%</td>
+              <td>75%</td>
+              <td>13%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/IDMethod.html">IDMethod</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/NameGenerator.html">NameGenerator</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Column.html">Column</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/ConstraintNameGenerator.html">ConstraintNameGenerator</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Database.html">Database</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Domain.html">Domain</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/ForeignKey.html">ForeignKey</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/IdMethodParameter.html">IdMethodParameter</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Index.html">Index</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Inheritance.html">Inheritance</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/JavaNameGenerator.html">JavaNameGenerator</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/NameFactory.html">NameFactory</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/SchemaType.html">SchemaType</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/SizedForBitDataDomain.html">SizedForBitDataDomain</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Table.html">Table</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/TypeMap.html">TypeMap</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/model/Unique.html">Unique</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_transform">org.apache.torque.engine.database.transform</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_platform">org.apache.torque.engine.platform</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_task">org.apache.torque.task</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#java_util">java.util</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_collections_map">org.apache.commons.collections.map</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_lang">org.apache.commons.lang</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_lang_enums">org.apache.commons.lang.enums</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_logging">org.apache.commons.logging</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine">org.apache.torque.engine</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_platform">org.apache.torque.engine.platform</a>
+                  </li>
+                  <li>
+                    <a href="#org_xml_sax">org.xml.sax</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform"></a><h3>org.apache.torque.engine.database.transform</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>1</td>
+              <td>12</td>
+              <td>0%</td>
+              <td>92%</td>
+              <td>8%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <em>None</em>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/DTDResolver.html">DTDResolver</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html">SQLToAppData</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/XmlToAppData.html">XmlToAppData</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/XmlToAppData.html">XmlToAppData$ParseStackElement</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html">XmlToData</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html">XmlToData$ColumnValue</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html">XmlToData$DataRow</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#org_apache_torque_task">org.apache.torque.task</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_io">java.io</a>
+                  </li>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#java_net">java.net</a>
+                  </li>
+                  <li>
+                    <a href="#java_util">java.util</a>
+                  </li>
+                  <li>
+                    <a href="#javax_xml_parsers">javax.xml.parsers</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_lang">org.apache.commons.lang</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_logging">org.apache.commons.logging</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine">org.apache.torque.engine</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_sql">org.apache.torque.engine.sql</a>
+                  </li>
+                  <li>
+                    <a href="#org_xml_sax">org.xml.sax</a>
+                  </li>
+                  <li>
+                    <a href="#org_xml_sax_helpers">org.xml.sax.helpers</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_platform"></a><h3>org.apache.torque.engine.platform</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>1</td>
+              <td>4</td>
+              <td>6%</td>
+              <td>80%</td>
+              <td>14%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/Platform.html">Platform</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformAxionImpl.html">PlatformAxionImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformCloudscapeImpl.html">PlatformCloudscapeImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformDb2400Impl.html">PlatformDb2400Impl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformDb2Impl.html">PlatformDb2Impl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformDefaultImpl.html">PlatformDefaultImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformDerbyImpl.html">PlatformDerbyImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformFactory.html">PlatformFactory</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformHypersonicImpl.html">PlatformHypersonicImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformInterbaseImpl.html">PlatformInterbaseImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformMsaccessImpl.html">PlatformMsaccessImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformMssqlImpl.html">PlatformMssqlImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformMysqlImpl.html">PlatformMysqlImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformOracleImpl.html">PlatformOracleImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformPostgresqlImpl.html">PlatformPostgresqlImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformSapdbImpl.html">PlatformSapdbImpl</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/platform/PlatformSybaseImpl.html">PlatformSybaseImpl</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#java_util">java.util</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_logging">org.apache.commons.logging</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_sql"></a><h3>org.apache.torque.engine.sql</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>1</td>
+              <td>3</td>
+              <td>0%</td>
+              <td>75%</td>
+              <td>25%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <em>None</em>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/sql/ParseException.html">ParseException</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/sql/SQLScanner.html">SQLScanner</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/engine/sql/Token.html">Token</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_transform">org.apache.torque.engine.database.transform</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_io">java.io</a>
+                  </li>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#java_util">java.util</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task"></a><h3>org.apache.torque.task</h3>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Afferent Couplings</th>
+              <th>Efferent Couplings</th>
+              <th>Abstractness</th>
+              <th>Instability</th>
+              <th>Distance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>0</td>
+              <td>24</td>
+              <td>0%</td>
+              <td>100%</td>
+              <td>0%</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="bodyTable">
+          <thead>
+            <tr class="a">
+              <th>Abstract Classes</th>
+              <th>Concrete Classes</th>
+              <th>Used by Packages</th>
+              <th>Uses Packages</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="b">
+              <td>
+                <em>None</em>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="xref/org/apache/torque/task/PackageAsPathTask.html">PackageAsPathTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataDumpTask.html">TorqueDataDumpTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataDumpTask.html">TorqueDataDumpTask$TableTool</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataModelTask.html">TorqueDataModelTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataModelTask.html">TorqueDataModelTask$TorqueClasspathResourceLoader</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataModelTask.html">TorqueDataModelTask$TorqueFileResourceLoader</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDataSQLTask.html">TorqueDataSQLTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueDocumentationTask.html">TorqueDocumentationTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueJDBCTransformTask.html">TorqueJDBCTransformTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLExec.html">TorqueSQLExec</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLExec.html">TorqueSQLExec$DelimiterType</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLExec.html">TorqueSQLExec$OnError</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLExec.html">TorqueSQLExec$Transaction</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLTask.html">TorqueSQLTask</a>
+                  </li>
+                  <li>
+                    <a href="xref/org/apache/torque/task/TorqueSQLTransformTask.html">TorqueSQLTransformTask</a>
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <em>None</em>
+              </td>
+              <td>
+                <ul>
+                  <li>
+                    <a href="#java_io">java.io</a>
+                  </li>
+                  <li>
+                    <a href="#java_lang">java.lang</a>
+                  </li>
+                  <li>
+                    <a href="#java_sql">java.sql</a>
+                  </li>
+                  <li>
+                    <a href="#java_util">java.util</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_collections">org.apache.commons.collections</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_commons_lang">org.apache.commons.lang</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_texen">org.apache.texen</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_texen_ant">org.apache.texen.ant</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_tools_ant">org.apache.tools.ant</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_tools_ant_types">org.apache.tools.ant.types</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine">org.apache.torque.engine</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_model">org.apache.torque.engine.database.model</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_torque_engine_database_transform">org.apache.torque.engine.database.transform</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity">org.apache.velocity</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_anakia">org.apache.velocity.anakia</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_app">org.apache.velocity.app</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_context">org.apache.velocity.context</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_exception">org.apache.velocity.exception</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_runtime_resource_loader">org.apache.velocity.runtime.resource.loader</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_velocity_util">org.apache.velocity.util</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_xerces_dom">org.apache.xerces.dom</a>
+                  </li>
+                  <li>
+                    <a href="#org_apache_xml_serialize">org.apache.xml.serialize</a>
+                  </li>
+                  <li>
+                    <a href="#org_w3c_dom">org.w3c.dom</a>
+                  </li>
+                  <li>
+                    <a href="#org_xml_sax">org.xml.sax</a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><div class="section"><a name="Cycles"></a><h2>Cycles</h2>
+      <p>[
+        <a href="#Summary">summary</a>] [
+        <a href="#Packages">packages</a>] [
+        <a href="#Cycles">cycles</a>] [
+        <a href="#Explanations">explanations</a>]</p>
+      <table class="bodyTable">
+        <thead>
+          <tr class="a">
+            <th>Package</th>
+            <th>Cyclic Dependencies</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="b">
+            <td>org.apache.torque.engine.database.model</td>
+            <td>
+              <ul>
+                <li>org.apache.torque.engine.platform</li>
+                <li>org.apache.torque.engine.database.model</li>
+              </ul>
+            </td>
+          </tr>
+          <tr class="a">
+            <td>org.apache.torque.engine.database.transform</td>
+            <td>
+              <ul>
+                <li>org.apache.torque.engine.database.model</li>
+                <li>org.apache.torque.engine.platform</li>
+                <li>org.apache.torque.engine.database.model</li>
+              </ul>
+            </td>
+          </tr>
+          <tr class="b">
+            <td>org.apache.torque.engine.platform</td>
+            <td>
+              <ul>
+                <li>org.apache.torque.engine.database.model</li>
+                <li>org.apache.torque.engine.platform</li>
+              </ul>
+            </td>
+          </tr>
+          <tr class="a">
+            <td>org.apache.torque.task</td>
+            <td>
+              <ul>
+                <li>org.apache.torque.engine.database.model</li>
+                <li>org.apache.torque.engine.platform</li>
+                <li>org.apache.torque.engine.database.model</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><div class="section"><a name="Explanations"></a><h2>Explanations</h2>
+      <p>[
+        <a href="#Summary">summary</a>] [
+        <a href="#Packages">packages</a>] [
+        <a href="#Cycles">cycles</a>] [
+        <a href="#Explanations">explanations</a>]</p>
+      <p>The following explanations are for quick reference and are lifted directly from the original
+        <a href="http://www.clarkware.com/software/JDepend.html" class="externalLink" title="External Link">JDepend documentation</a>.</p>
+      <table class="bodyTable">
+        <thead>
+          <tr class="b">
+            <th>Term</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="a">
+            <td>Number of Classes</td>
+            <td>The number of concrete and abstract classes (and interfaces) in the package is an indicator of the extensibility of the package.</td>
+          </tr>
+          <tr class="b">
+            <td>Afferent Couplings</td>
+            <td>The number of other packages that depend upon classes within the package is an indicator of the package's responsibility.</td>
+          </tr>
+          <tr class="a">
+            <td>Efferent Couplings</td>
+            <td>The number of other packages that the classes in the package depend upon is an indicator of the package's independence.</td>
+          </tr>
+          <tr class="b">
+            <td>Abstractness</td>
+            <td>The ratio of the number of abstract classes (and interfaces) in the analyzed package to the total number of classes in the analyzed package. The range for this metric is 0 to 1, with A=0 indicating a completely concrete package and A=1 indicating a completely abstract package.</td>
+          </tr>
+          <tr class="a">
+            <td>Instability</td>
+            <td>The ratio of efferent coupling (Ce) to total coupling (Ce / (Ce + Ca)). This metric is an indicator of the package's resilience to change. The range for this metric is 0 to 1, with I=0 indicating a completely stable package and I=1 indicating a completely instable package.</td>
+          </tr>
+          <tr class="b">
+            <td>Distance</td>
+            <td>The perpendicular distance of a package from the idealized line A + I = 1. This metric is an indicator of the package's balance between abstractness and stability. A package squarely on the main sequence is optimally balanced with respect to its abstractness and stability. Ideal packages are either completely abstract and stable (x=0, y=1) or completely concrete and instable (x=1, y=0). The range for this metric is 0 to 1, with D=0 indicating a package that is coincident with the main sequence and D=1 indicating a package that is as far from the main sequence as possible.</td>
+          </tr>
+          <tr class="a">
+            <td>Cycles</td>
+            <td>Packages participating in a package dependency cycle are in a deadly embrace with respect to reusability and their release cycle. Package dependency cycles can be easily identified by reviewing the textual reports of dependency cycles. Once these dependency cycles have been identified with JDepend, they can be broken by employing various object-oriented techniques.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

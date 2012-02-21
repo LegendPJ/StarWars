@@ -1,0 +1,1131 @@
+2012-02-21 11:03:26,293 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:03:26,293 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:03:26,293 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:03:26,293 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:03:26,296 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:03:26,298 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:03:26,298 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:03:26,305 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:03:26,332 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:03:26,333 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:03:26,339 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:03:26,343 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:03:26,348 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:03:26,352 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:03:26,451 - Created '20' parsers.
+2012-02-21 11:03:26,472 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:03:26,473 - Velocimacro : Default library not found.
+2012-02-21 11:03:26,473 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:03:26,473 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:03:26,473 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:03:26,473 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:03:40,879 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:03:40,880 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:03:40,880 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:03:40,880 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:03:40,882 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:03:40,884 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:03:40,884 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:03:40,891 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:03:40,917 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:03:40,918 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:03:40,924 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:03:40,928 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:03:40,933 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:03:40,937 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:03:41,034 - Created '20' parsers.
+2012-02-21 11:03:41,056 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:03:41,056 - Velocimacro : Default library not found.
+2012-02-21 11:03:41,056 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:03:41,056 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:03:41,056 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:03:41,056 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:05:08,348 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:05:08,349 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:05:08,349 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:05:08,349 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:05:08,351 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:05:08,356 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:08,356 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:08,364 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:05:08,391 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:05:08,393 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:05:08,399 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:05:08,404 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:05:08,409 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:05:08,413 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:05:08,517 - Created '20' parsers.
+2012-02-21 11:05:08,539 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:05:08,540 - Velocimacro : Default library not found.
+2012-02-21 11:05:08,540 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:05:08,540 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:05:08,540 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:05:08,540 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:05:08,786 - ResourceManager : found sql/base/Control.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:08,871 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,153 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,160 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,176 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,190 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,192 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,198 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,204 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,215 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,217 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,222 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,232 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,235 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,236 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,239 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,253 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,260 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,262 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,277 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,280 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,282 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,284 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,286 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,307 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,315 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,325 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,328 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,330 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,340 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,342 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,344 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,347 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,372 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,375 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,376 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,378 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,380 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,388 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,390 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,393 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,405 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,413 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,418 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,420 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,423 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,424 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,426 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,429 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,438 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,439 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,441 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,442 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,444 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,445 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,446 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,448 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,451 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,453 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,455 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,472 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,474 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,476 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,478 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,480 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,482 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,484 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,485 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,487 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,489 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,491 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,497 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,505 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,506 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,508 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,509 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,510 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,512 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,514 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,514 - Left side ($table.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 17, column 35]
+2012-02-21 11:05:09,514 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:05:09,514 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:05:09,514 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:05:09,514 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:05:09,516 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:09,519 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:10,792 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:05:10,792 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:05:10,792 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:05:10,792 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:05:10,795 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:05:10,796 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:10,796 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:10,803 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:05:10,829 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:05:10,830 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:05:10,836 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:05:10,840 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:05:10,845 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:05:10,848 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:05:10,947 - Created '20' parsers.
+2012-02-21 11:05:10,969 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:05:10,970 - Velocimacro : Default library not found.
+2012-02-21 11:05:10,970 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:05:10,970 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:05:10,970 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:05:10,970 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:05:11,240 - ResourceManager : found om/Control.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,292 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,294 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:05:11,299 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,307 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,312 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,317 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,322 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,326 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,337 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,347 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,359 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,370 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,380 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,388 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,398 - ResourceManager : found om/ExtensionObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,407 - ResourceManager : found om/ExtensionPeer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,426 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:05:11,426 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:05:11,427 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:05:11,427 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:05:11,428 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:05:11,428 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:05:11,430 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:05:11,430 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:05:11,431 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:05:11,431 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:05:11,432 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:11,432 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:11,433 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:11,433 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:05:11,434 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:05:11,434 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:05:11,436 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:05:11,436 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:05:11,437 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:05:11,437 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:05:11,438 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:05:11,438 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:05:11,440 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:05:11,440 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:05:11,441 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:05:11,441 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:05:11,442 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:05:11,442 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:05:11,445 - Created '20' parsers.
+2012-02-21 11:05:11,445 - Created '20' parsers.
+2012-02-21 11:05:11,446 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:05:11,446 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:05:11,448 - Velocimacro : Default library not found.
+2012-02-21 11:05:11,448 - Velocimacro : Default library not found.
+2012-02-21 11:05:11,449 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:05:11,449 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:05:11,451 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:05:11,451 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:05:11,452 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:05:11,452 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:05:11,453 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:05:11,453 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:05:11,517 - ResourceManager : found om/ControlBase.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,517 - ResourceManager : found om/ControlBase.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,735 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,735 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,821 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:11,821 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,209 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,209 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,411 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,411 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,440 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,440 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,705 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,705 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,825 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,825 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,856 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:12,856 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,025 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,025 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,141 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,141 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,158 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,158 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,293 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,293 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,375 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,375 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,396 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,396 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,502 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,502 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,511 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,511 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,517 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,517 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,553 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,553 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,582 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,582 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,665 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,665 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,669 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:05:13,669 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:05:13,673 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,673 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,675 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,675 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,713 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,713 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,730 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,730 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,811 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,811 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,820 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:05:13,820 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:05:13,829 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,829 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:05:13,837 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,837 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:05:13,841 - ResourceManager : found om/DatabaseMapInit.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,841 - ResourceManager : found om/DatabaseMapInit.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,850 - ResourceManager : found om/DatabaseMapInitLinkageObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:05:13,850 - ResourceManager : found om/DatabaseMapInitLinkageObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,319 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:18:00,319 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:18:00,319 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:18:00,319 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:18:00,322 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:18:00,323 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:00,323 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:00,331 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:18:00,357 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:18:00,358 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:18:00,364 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:18:00,368 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:18:00,373 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:18:00,376 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:18:00,477 - Created '20' parsers.
+2012-02-21 11:18:00,498 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:18:00,499 - Velocimacro : Default library not found.
+2012-02-21 11:18:00,499 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:18:00,499 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:18:00,499 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:18:00,499 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:18:00,725 - ResourceManager : found sql/base/Control.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,790 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,796 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,799 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,808 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,821 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,823 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,826 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,829 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,836 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,838 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,840 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,842 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,845 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,847 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,850 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,853 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,861 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,863 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,866 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,868 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,870 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,872 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,874 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,879 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,886 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,888 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,890 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,892 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,894 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,896 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,898 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,901 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,909 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,911 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,913 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,915 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,917 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,919 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,921 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,923 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,930 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,932 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,934 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,936 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,939 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,941 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,943 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,945 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,952 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,954 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,956 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,958 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,959 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,961 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,963 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,966 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,968 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,971 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,973 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,976 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,979 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,982 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,984 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,987 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,990 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,993 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,995 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:00,998 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,000 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,004 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,010 - ResourceManager : found sql/base/postgresql/table.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,013 - ResourceManager : found sql/base/postgresql/drop.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,014 - ResourceManager : found sql/base/postgresql/sequence.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,016 - ResourceManager : found sql/base/postgresql/columns.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,017 - ResourceManager : found sql/base/postgresql/primarykey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,018 - ResourceManager : found sql/base/postgresql/unique.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,020 - ResourceManager : found sql/base/postgresql/index.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,022 - ResourceManager : found sql/base/postgresql/comment.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,022 - Left side ($table.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 17, column 35]
+2012-02-21 11:18:01,022 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:18:01,022 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:18:01,022 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:18:01,022 - Left side ($col.description.length()) of '>' operation has null value. Operation not possible. sql/base/postgresql/comment.vm [line 22, column 33]
+2012-02-21 11:18:01,024 - ResourceManager : found sql/base/postgresql/tablefk.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:01,026 - ResourceManager : found sql/base/postgresql/foreignkey.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,241 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:18:02,241 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:18:02,241 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:18:02,241 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:18:02,243 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:18:02,245 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,245 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,252 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:18:02,278 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:18:02,280 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:18:02,285 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:18:02,289 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:18:02,294 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:18:02,298 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:18:02,396 - Created '20' parsers.
+2012-02-21 11:18:02,418 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:18:02,418 - Velocimacro : Default library not found.
+2012-02-21 11:18:02,418 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:18:02,418 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:18:02,418 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:18:02,418 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:18:02,648 - ResourceManager : found om/Control.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,696 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,697 - RHS of #set statement is null. Context will not be modified. om/Control.vm [line 105, column 1]
+2012-02-21 11:18:02,710 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:18:02,710 - Log4JLogChute initialized using file 'velocity.log'
+2012-02-21 11:18:02,710 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:18:02,710 - Starting Apache Velocity v1.5 (compiled: 2007-02-22 08:52:29)
+2012-02-21 11:18:02,711 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:18:02,711 - Default Properties File: org/apache/velocity/runtime/defaults/velocity.properties
+2012-02-21 11:18:02,713 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:18:02,713 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2012-02-21 11:18:02,714 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:18:02,714 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogChute or necessary supporting classes in classpath.
+java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:169)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:76)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:95)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:147)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:208)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:728)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:240)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:116)
+	at org.apache.torque.task.TorqueDataModelTask.execute(TorqueDataModelTask.java:475)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.helper.SingleCheckExecutor.executeTargets(SingleCheckExecutor.java:38)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.taskdefs.Ant.execute(Ant.java:441)
+	at org.apache.tools.ant.taskdefs.CallTarget.execute(CallTarget.java:105)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at org.apache.tools.ant.Task.perform(Task.java:348)
+	at org.apache.tools.ant.Target.execute(Target.java:390)
+	at org.apache.tools.ant.Target.performTasks(Target.java:411)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1360)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1329)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1212)
+	at org.apache.tools.ant.Main.runBuild(Main.java:801)
+	at org.apache.tools.ant.Main.startAnt(Main.java:218)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:280)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:109)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.tools.ant.AntClassLoader.findClassInComponents(AntClassLoader.java:1386)
+	at org.apache.tools.ant.AntClassLoader.findClass(AntClassLoader.java:1336)
+	at org.apache.tools.ant.AntClassLoader.loadClass(AntClassLoader.java:1074)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:247)
+	... 52 more
+2012-02-21 11:18:02,716 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,716 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,717 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,717 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2012-02-21 11:18:02,719 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:18:02,719 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2012-02-21 11:18:02,721 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:18:02,721 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl)
+2012-02-21 11:18:02,722 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:18:02,722 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2012-02-21 11:18:02,724 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:18:02,724 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2012-02-21 11:18:02,725 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:18:02,725 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2012-02-21 11:18:02,727 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:18:02,727 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2012-02-21 11:18:02,728 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:18:02,728 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2012-02-21 11:18:02,732 - Created '20' parsers.
+2012-02-21 11:18:02,732 - Created '20' parsers.
+2012-02-21 11:18:02,734 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:18:02,734 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2012-02-21 11:18:02,735 - Velocimacro : Default library not found.
+2012-02-21 11:18:02,735 - Velocimacro : Default library not found.
+2012-02-21 11:18:02,736 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:18:02,736 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2012-02-21 11:18:02,736 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:18:02,736 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2012-02-21 11:18:02,738 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:18:02,738 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2012-02-21 11:18:02,739 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:18:02,739 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2012-02-21 11:18:02,791 - ResourceManager : found om/ControlBase.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,791 - ResourceManager : found om/ControlBase.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,901 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,901 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,972 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:02,972 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,206 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,206 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,349 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,349 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,395 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,395 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,713 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,713 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,793 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,793 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,810 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,810 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,949 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:03,949 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,017 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,017 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,036 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,036 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,111 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,111 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,168 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,168 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,175 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,175 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,238 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,238 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,247 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,247 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,253 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,253 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,288 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,288 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,297 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,297 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,370 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,370 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,374 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:18:04,374 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:18:04,379 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,379 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,381 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,381 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,412 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,412 - ResourceManager : found om/Peer.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,428 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,428 - ResourceManager : found om/MapBuilder.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,495 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,495 - ResourceManager : found om/Object.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,509 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:18:04,509 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 365, column 1]
+2012-02-21 11:18:04,514 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,514 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1901, column 1]
+2012-02-21 11:18:04,524 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,524 - RHS of #set statement is null. Context will not be modified. om/Object.vm [line 1986, column 1]
+2012-02-21 11:18:04,526 - ResourceManager : found om/DatabaseMapInit.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,526 - ResourceManager : found om/DatabaseMapInit.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,531 - ResourceManager : found om/DatabaseMapInitLinkageObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:18:04,531 - ResourceManager : found om/DatabaseMapInitLinkageObject.vm with loader org.apache.velocity.runtime.resource.ResourceCacheImpl
+2012-02-21 11:19:37,044 - Log4JLogChute initialized using file 'velocity.log'

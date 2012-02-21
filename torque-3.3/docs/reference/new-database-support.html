@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Support for new Databases - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Jon S. Stevens"></meta><meta name="email" content="jon@latchkey.com"></meta><meta name="author" content="Thomas Fischer"></meta><meta name="email" content="fischer@seitenbau.de"></meta><meta name="author" content="Thomas Vandahl"></meta><meta name="email" content="tv@apache.org"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><a href="../reference/read-from-db.html">Reading from the DB</a></li><li class="none"><a href="../reference/write-to-db.html">Writing to the DB</a></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><a href="../reference/connections-transactions.html">Connections</a></li><li class="none"><a href="../reference/managers-cache.html">Managers and Cache</a></li><li class="none"><a href="../reference/beans.html">Beans</a></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><strong><a href="../reference/new-database-support.html">Supporting a new DB</a></strong></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Introduction"></a><h2>Introduction</h2>
+
+    <p>
+      In the Torque Runtime, all information about a specific Database is
+      gathered in a so-called Database adapter class.  So if you want to
+      support a new database in the runtime, you need to provide a
+      Database Adapter class for this database.
+    </p>
+    
+    <p>
+      If you are adding support for a new RDBMS, then you will probably also
+      want to support the database in the Torque generator. 
+      To do this, you need to create a set of Velocity templates--used 
+      by Torque to generate a SQL schema for your RDBMS--in the templates 
+      component. The recommend method for doing this is to copy an existing set
+      of templates and adapt them to your RDBMS as needed.  This is not
+      elaborated further here.
+    </p>
+
+  </div><div class="section"><a name="Database_Adapters"></a><h2>Database Adapters</h2>
+
+    <p>
+      A database adapter class is a class that implements
+      <code>org.apache.torque.adapter.DB</code> and encapsulates access
+      to a specific RDBMS implementation. Database adapter classes already
+      found in Torque include DBOracle, DBMM, DBSybase, etc. 
+      These classes allow Torque to gain access to a wide range of databases
+      in a uniform manner. This allows you to easily swap between databases
+      without any modification to Torque or the application built
+      on top of Torque.
+    </p>
+
+    <p>
+      Why is this necessary if Java already offers uniform database access
+      in the form of JDBC? Unfortunately, underlying databases still
+      use different SQL implementations and conventions. For example, the use
+      of single and double quotes varies. The use of database adapter classes in
+      Torque endeavors to overcome this problem.
+    </p>
+
+    <p>
+      To add a new database adapter class to Torque you must follow these
+      steps:
+    </p>
+
+    <p>
+      <ul>
+        <li>
+          Create a new class DB&lt;dbname&gt; that implements
+          <code>org.apache.torque.adapter.DB</code> (where dbname is the name of
+          the database or database driver you wish to add to Torque). An abstract
+          implementation, <code>org.apache.torque.adapter.AbstractDBAdapter</code> is
+          provided which sets some defaults so that you only need to implement a 
+          number of methods.
+        </li>
+
+        <li>
+          Implement getStringDelimiter(). This method has to return
+          the character that the specific database implementation uses to
+          indicate string literals in SQL. This will usually be a single qoute
+          (').
+        </li>
+
+        <li>
+          Implement generateLimits(). This method has to provide the special
+          SQL expressions to limit the number of records returned and/or the
+          offset into the result set. This is only needed if supportsNativeLimit()
+          or supportsNativeOffset() return true.
+        </li>
+
+        <li>
+          Implement getIdMethodType(). This method should return the method
+          the database uses to generates unique Ids.  Valid return values are
+          <code>org.apache.torque.adapter.IDMethod.AUTO_INCREMENT</code>,
+          <code>org.apache.torque.adapter.IDMethod.SEQUENCE</code>, and
+          <code>org.apache.torque.adapter.IDMethod.NO_ID_METHOD</code>.  
+        </li>
+
+        <li>
+          Implement String getIDMethodSQL(Object obj). Databases that use 
+          sequences for Id generation should return the SQL to get the next Id 
+          from the sequence, where <code>obj</code> is the name of the sequence.
+          Databases that use auto increment fields should return the last
+          generated id; <code>obj</code> is the name of the table in this case.
+          Databases that do not support this must return null.
+        </li>
+
+        <li>
+          Implement lockTable(Connection con, String table). This method
+          should place a lock on a database table, if this is possible for the 
+          database.  This method is not used internally by Torque, and was only
+          retained to provide backwards compatibility.
+        </li>
+
+        <li>
+          Implement unlockTable(Connection con, String table). This method
+          should release the table lock acquired by the above-mentioned method,
+          if possible.  This method is not used internally by Torque, 
+          and was only retained to provide backwards compatibility.
+        </li>
+
+        <li>
+          Implement ignoreCase(String in). This method should implement
+          a mechanism for case insensitive comparisons in the database. 
+          Usually this converts the string to Uppercase, for example UPPER 
+          (&lt;in&gt;). 
+          If such a mechanism does not exist in your database, 
+          simply return the in parameter without any modification. 
+          DO NOT return in.toUpper().
+        </li>
+
+        <li>
+          Some databases (for example Interbase) do not support the function
+          returned by their implementation of ignoreCase() in the ORDER BY
+          clause of SELECT statements. If your database falls into this
+          category you should override the default implementation of
+          String ignoreCaseInOrderBy(String in). It is NOT required to override
+          this method for other databases--the default implementation calls
+          ignoreCase() and respectCase().
+        </li>
+      </ul>
+    </p>
+
+  </div><div class="section"><a name="Configuring_Torque_to_use_the_new_adapter"></a><h2>Configuring Torque to use the new adapter</h2>
+    <p>
+      The adapter you wrote does not need to be compiled into Torque but
+      it can be referenced in the configuration. Just use a new short name for 
+      the adapter and provide the class name in the configuration file. See the
+      following example:
+    </p>
+    
+    <div class="source"><pre>
+torque.database.mydatabase.adapter=myadapter
+torque.database.mydatabase.adapter.myadapter.className=com.acme.DBMyAdapter
+    </pre></div>
+  
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

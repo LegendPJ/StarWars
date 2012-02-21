@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Writing to the database - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Leon Messerschmidt"></meta><meta name="email" content="leon@opticode.co.za"></meta><meta name="author" content="Jason van Zyl"></meta><meta name="email" content="jvanzyl@periapt.com"></meta><meta name="author" content="Scott Eade"></meta><meta name="email" content="seade@backstagetech.com.au"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><a href="../reference/read-from-db.html">Reading from the DB</a></li><li class="none"><strong><a href="../reference/write-to-db.html">Writing to the DB</a></strong></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><a href="../reference/connections-transactions.html">Connections</a></li><li class="none"><a href="../reference/managers-cache.html">Managers and Cache</a></li><li class="none"><a href="../reference/beans.html">Beans</a></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><a href="../reference/new-database-support.html">Supporting a new DB</a></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Saving_an_object__inserts_and_updates_"></a><h2>Saving an object (inserts and updates)</h2>
+
+    <p>
+      To write an object into the database, call its save() method.  Depending 
+      on whether the data object was newly created or was read from the
+      database, the corresponding row in the database table is inserted or 
+      updated.  If the object is new, its primary key(s) is/are generated 
+      automatically if the id method was set to "idbroker" or
+      "native" in the schema.xml.
+    </p>
+    
+    <p>
+      As an example, consider the following code, which creates an Author 
+      object and inserts it into the database. Then the object is loaded again,
+      modified. and updates the corresponding row in the databse.
+    </p>
+
+
+    <div class="source"><pre>
+Author stevens = new Author();
+stevens.setFirstName("W.");
+stevens.setLastName("Stevens");
+stevens.save();
+</pre></div>
+  
+    
+    <p>
+      If the generator properties "torque.complexObjectModel" and 
+      "torque.objectIsCaching" were not set to false at generation 
+      time, any objects which are referenced in the foreign key Lists of the
+      object are also saved.  
+    </p>
+
+    <p>
+      For example, in the following code, calling
+      book.save() also saves the author added to the book:
+    </p>
+    
+
+    <div class="source"><pre>
+Author bloch = new Author();
+bloch.setFirstName("Joshua");
+bloch.setLastName("Bloch");
+Book effective = new Book();
+effective.setTitle("Effective Java");
+effective.setISBN("0-618-12902-2");
+effective.setPublisher(addison);
+bloch.addBook(effective);
+bloch.save(); //also saves the book "effective"
+</pre></div>
+  
+
+    <p>
+      Note that the save is only propagated in the 1-&gt;n directions of foreign 
+      keys, not in the n-&gt;1 direction. I.e. in the above example, calling 
+      <code>effective.save()</code> would NOT save the corresponding author.
+    </p>
+
+    <p>
+      If the object which save method is called is neither new nor modified,
+      it is not saved. Internally, this is handled via the <code>isNew</code>
+      and <code>modifed</code> flags of the object.
+    </p>
+      
+    <p>
+      There are alternative ways to insert or update an object in the database:
+      you can pass the objects to the <code>doInsert()</code> or 
+      <code>doUpdate</code> methods of their corresponding Peers, or you can 
+      create a criteria object which contains the data of the object and pass
+      the Criteria object to the <code>doInsert()</code> or 
+      <code>doUpdate</code> methods of the Peer class.  
+      Note that if you construct a criteria, the id field is not added to the 
+      Criteria.  It is taken care of by underlying database system (or perhaps 
+      the ID BROKER when it is in use).
+      The object that is returned by doInsert is the id of the newly added row.
+    </p>
+
+  </div><div class="section"><a name="Deleting_objects"></a><h2>Deleting objects</h2>
+    <p>
+      Deletes work much in the same way as a select. If you, for example,
+      want to delete the author with id = 3 then you simply add it to the
+      Criteria and call doDelete.
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+crit.add(AuthorPeer.AUTHOR_ID, 3);
+AuthorPeer.doDelete(criteria);
+</pre></div>
+  
+
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>FindBugs Results - Torque</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+          @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="./images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/generator/" id="projectLogo"><img alt="Torque generator" src="./images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../index.html">Overview</a></li><li class="none"><a href="../../../status.html">News and Status</a></li><li class="none"><a href="../../../download.html">Downloads</a></li><li class="none"><a href="../../../addons.html">Addons</a></li><li class="none"><a href="../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="expanded"><a href="index.html">Generator</a><ul><li class="none"><a href="tasks-reference.html">Tasks Reference</a></li><li class="none"><a href="schema-reference.html">Schema Reference</a></li><li class="none"><a href="properties-reference.html">Properties Reference</a></li><li class="none"><a href="database.dtd.txt" class="newWindow" title="New Window" target="_blank">database.dtd</a></li><li class="none"><a href="how-templates-work.html">How Templates work</a></li><li class="none"><a href="custom-templates.html">Custom Templates</a></li><li class="none"><a href="dependencies.html">Dependencies</a></li><li class="expanded"><a href="maven-reports.html">Project Reports</a><ul><li class="none"><a href="jdepend-report.html">Metrics</a></li><li class="none"><a href="checkstyle-report.html">Checkstyle</a></li><li class="none"><a href="changelog-report.html">Change Log</a></li><li class="none"><a href="file-activity-report.html">File Activity</a></li><li class="none"><a href="developer-activity-report.html">Developer Activity</a></li><li class="none"><a href="apidocs/index.html" class="newWindow" title="New Window" target="_blank">JavaDocs</a></li><li class="none"><a href="javadoc.html">JavaDoc Report</a></li><li class="none"><a href="javadoc-warnings-report.html">JavaDoc Warnings Report</a></li><li class="none"><a href="xref/index.html" class="newWindow" title="New Window" target="_blank">Source Xref</a></li><li class="none"><a href="xref-test/index.html" class="newWindow" title="New Window" target="_blank">Test Xref</a></li><li class="none"><a href="junit-report.html">Unit Tests</a></li><li class="none"><a href="license.html">Project License</a></li><li class="none"><a href="task-list.html">Task List</a></li><li class="none"><a href="pmd-report.html">PMD Report</a></li><li class="none"><a href="simian-report.html">Simian Report</a></li><li class="none"><a href="jcoverage/index.html" class="newWindow" title="New Window" target="_blank">JCoverage</a></li><li class="none"><strong><a href="findbugs-report.html">FindBugs Report</a></strong></li><li class="none"><a href="linkcheck.html">Link Check Report</a></li></ul></li></ul></li><li class="collapsed"><a href="../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="collapsed"><a href="../runtime/index.html">Runtime</a></li><li class="collapsed"><a href="../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="FindBugs_Results"></a><h2>FindBugs Results</h2>
+      <p>The following document contains the results of
+        <a href="http://findbugs.sourceforge.net/" class="externalLink" title="External Link">FindBugs</a>.</p>
+    </div><div class="section"><a name="Summary"></a><h2>Summary</h2>
+      <table class="bodyTable">
+        <tr class="b">
+          <th>Files</th>
+          <th>Errors</th>
+        </tr>
+        <tr class="a">
+          <td>21</td>
+          <td>42</td>
+        </tr>
+      </table>
+    </div><div class="section"><a name="Files"></a><h2>Files</h2>
+      <table class="bodyTable">
+        <tr class="b">
+          <th>Files</th>
+          <th>Violations</th>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_task_TorqueDataDumpTask$TableTool">org.apache.torque.task.TorqueDataDumpTask$TableTool</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_task_TorqueDataDumpTask">org.apache.torque.task.TorqueDataDumpTask</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_task_TorqueDataModelTask">org.apache.torque.task.TorqueDataModelTask</a>
+          </td>
+          <td>2</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_task_TorqueDataSQLTask">org.apache.torque.task.TorqueDataSQLTask</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_task_TorqueDocumentationTask">org.apache.torque.task.TorqueDocumentationTask</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_task_TorqueSQLExec$Transaction">org.apache.torque.task.TorqueSQLExec$Transaction</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_task_TorqueSQLExec">org.apache.torque.task.TorqueSQLExec</a>
+          </td>
+          <td>6</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_task_TorqueSQLTask">org.apache.torque.task.TorqueSQLTask</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_task_TorqueSQLTransformTask">org.apache.torque.task.TorqueSQLTransformTask</a>
+          </td>
+          <td>2</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_platform_PlatformFactory">org.apache.torque.engine.platform.PlatformFactory</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_model_Column">org.apache.torque.engine.database.model.Column</a>
+          </td>
+          <td>2</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_database_model_ForeignKey">org.apache.torque.engine.database.model.ForeignKey</a>
+          </td>
+          <td>4</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_model_JavaNameGenerator">org.apache.torque.engine.database.model.JavaNameGenerator</a>
+          </td>
+          <td>2</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_database_model_Table">org.apache.torque.engine.database.model.Table</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_DTDResolver">org.apache.torque.engine.database.transform.DTDResolver</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_SQLToAppData">org.apache.torque.engine.database.transform.SQLToAppData</a>
+          </td>
+          <td>9</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_XmlToAppData">org.apache.torque.engine.database.transform.XmlToAppData</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_XmlToData">org.apache.torque.engine.database.transform.XmlToData</a>
+          </td>
+          <td>2</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_model_IdMethodParameter">org.apache.torque.engine.database.model.IdMethodParameter</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="b">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_XmlToData$ColumnValue">org.apache.torque.engine.database.transform.XmlToData$ColumnValue</a>
+          </td>
+          <td>1</td>
+        </tr>
+        <tr class="a">
+          <td>
+            <a href="#org_apache_torque_engine_database_transform_XmlToData$DataRow">org.apache.torque.engine.database.transform.XmlToData$DataRow</a>
+          </td>
+          <td>1</td>
+        </tr>
+      </table>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueDataDumpTask$TableTool"></a><h3>org.apache.torque.task.TorqueDataDumpTask$TableTool</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">SQL: Method org.apache.torque.task.TorqueDataDumpTask$TableTool.fetch(String) passes a nonconstant String to an execute method on an SQL statement</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDataDumpTask.html#273">273</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueDataDumpTask"></a><h3>org.apache.torque.task.TorqueDataDumpTask</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#ISC_INSTANTIATE_STATIC_CLASS" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">ISC: Method org.apache.torque.task.TorqueDataDumpTask.initControlContext() needlessly instantiates a class that only supplies static methods</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDataDumpTask.html#209">209</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueDataModelTask"></a><h3>org.apache.torque.task.TorqueDataModelTask</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_BOOLEAN_CTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: org.apache.torque.task.TorqueDataModelTask.execute() invokes dubious Boolean constructor; use Boolean.valueOf(...) instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDataModelTask.html#541">541</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">EI: org.apache.torque.task.TorqueDataModelTask.getDataModelDbMap() may expose internal representation by returning org.apache.torque.task.TorqueDataModelTask.dataModelDbMap</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDataModelTask.html#153">153</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueDataSQLTask"></a><h3>org.apache.torque.task.TorqueDataSQLTask</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#OS_OPEN_STREAM_EXCEPTION_PATH" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">OS: org.apache.torque.task.TorqueDataSQLTask.initControlContext() may fail to close stream on exception</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDataSQLTask.html#189">189</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueDocumentationTask"></a><h3>org.apache.torque.task.TorqueDocumentationTask</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#ISC_INSTANTIATE_STATIC_CLASS" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">ISC: Method org.apache.torque.task.TorqueDocumentationTask.initControlContext() needlessly instantiates a class that only supplies static methods</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueDocumentationTask.html#65">65</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueSQLExec$Transaction"></a><h3>org.apache.torque.task.TorqueSQLExec$Transaction</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#OS_OPEN_STREAM_EXCEPTION_PATH" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">OS: org.apache.torque.task.TorqueSQLExec$Transaction.runTransaction(java.io.PrintStream) may fail to close stream on exception</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#925">925</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueSQLExec"></a><h3>org.apache.torque.task.TorqueSQLExec</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.task.TorqueSQLExec.setRdbms(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#362">362</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.task.TorqueSQLExec.setVersion(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#372">372</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.task.TorqueSQLExec.isValidRdbms(java.sql.Connection) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#728">728</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#OS_OPEN_STREAM_EXCEPTION_PATH" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">OS: org.apache.torque.task.TorqueSQLExec.execute() may fail to close stream on exception</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#421">421</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#WMI_WRONG_MAP_ITERATOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">WMI: Method org.apache.torque.task.TorqueSQLExec.execute() makes inefficient use of keySet iterator instead of entrySet iterator</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#438">438</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#WMI_WRONG_MAP_ITERATOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">WMI: Method org.apache.torque.task.TorqueSQLExec.execute() makes inefficient use of keySet iterator instead of entrySet iterator</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLExec.html#463">463</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueSQLTask"></a><h3>org.apache.torque.task.TorqueSQLTask</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#OS_OPEN_STREAM_EXCEPTION_PATH" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">OS: org.apache.torque.task.TorqueSQLTask.createSqlDbMap() may fail to close stream on exception</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLTask.html#138">138</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_task_TorqueSQLTransformTask"></a><h3>org.apache.torque.task.TorqueSQLTransformTask</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#OS_OPEN_STREAM_EXCEPTION_PATH" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">OS: org.apache.torque.task.TorqueSQLTransformTask.execute() may fail to close stream on exception</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLTransformTask.html#106">106</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#REC_CATCH_EXCEPTION" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">REC: Method org.apache.torque.task.TorqueSQLTransformTask.execute() catches Exception, but Exception is not thrown in the try block and RuntimeException is not explicitly caught</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/task/TorqueSQLTransformTask.html#115">115</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_platform_PlatformFactory"></a><h3>org.apache.torque.engine.platform.PlatformFactory</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.platform.PlatformFactory.getClassnameFor(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/platform/PlatformFactory.html#86">86</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model_Column"></a><h3>org.apache.torque.engine.database.model.Column</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.model.Column.getPeerJavaName() invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/Column.html#331">331</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.model.Column.setTypeFromString(String,String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/Column.html#945">945</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model_ForeignKey"></a><h3>org.apache.torque.engine.database.model.ForeignKey</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.model.ForeignKey.normalizeFKey(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/ForeignKey.html#83">83</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.model.ForeignKey.onDelete</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/ForeignKey.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.model.ForeignKey.onUpdate</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/ForeignKey.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.model.ForeignKey.parentTable</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/ForeignKey.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model_JavaNameGenerator"></a><h3>org.apache.torque.engine.database.model.JavaNameGenerator</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.model.JavaNameGenerator.underscoreMethod(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/JavaNameGenerator.html#107">107</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.model.JavaNameGenerator.underscoreOmitSchemaMethod(String) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/JavaNameGenerator.html#151">151</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model_Table"></a><h3>org.apache.torque.engine.database.model.Table</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_BOOLEAN_CTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: org.apache.torque.engine.database.model.Table.toString() invokes dubious Boolean constructor; use Boolean.valueOf(...) instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/Table.html#1017">1017</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_DTDResolver"></a><h3>org.apache.torque.engine.database.transform.DTDResolver</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UI_INHERITANCE_UNSAFE_GETRESOURCE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UI: Usage of GetResource in org.apache.torque.engine.database.transform.DTDResolver.readFromClasspath(String) may be unsafe if class is extended</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/DTDResolver.html#103">103</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_SQLToAppData"></a><h3>org.apache.torque.engine.database.transform.SQLToAppData</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create() invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#150">150</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create_Table_Column(org.apache.torque.engine.database.model.Table) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#206">206</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create_Table_Column_Primary(org.apache.torque.engine.database.model.Table) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#232">232</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create_Table_Column_Unique(org.apache.torque.engine.database.model.Table) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#279">279</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create_Table_Column_Foreign(org.apache.torque.engine.database.model.Table) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#314">314</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.create_Table_Column_Data(org.apache.torque.engine.database.model.Table) invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#402">402</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#DM_CONVERT_CASE" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">Dm: Method org.apache.torque.engine.database.transform.SQLToAppData.execute() invokes dubious String.toUpperCase() or String.toLowerCase; use the Locale parameterized version instead</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#570">570</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.transform.SQLToAppData.appDataDB</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.transform.SQLToAppData.tokens</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/SQLToAppData.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_XmlToAppData"></a><h3>org.apache.torque.engine.database.transform.XmlToAppData</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#REC_CATCH_EXCEPTION" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">REC: Method org.apache.torque.engine.database.transform.XmlToAppData.startElement(String,String,String,org.xml.sax.Attributes) catches Exception, but Exception is not thrown in the try block and RuntimeException is not explicitly caught</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/XmlToAppData.html#327">327</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_XmlToData"></a><h3>org.apache.torque.engine.database.transform.XmlToData</h3>
+        <table class="bodyTable">
+          <tr class="b">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="a">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#RI_REDUNDANT_INTERFACES" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">RI: Class org.apache.torque.engine.database.transform.XmlToData implements same interface as superclass.</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.transform.XmlToData.data</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_model_IdMethodParameter"></a><h3>org.apache.torque.engine.database.model.IdMethodParameter</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">UwF: Field not initialized in constructor: org.apache.torque.engine.database.model.IdMethodParameter.parentTable</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/model/IdMethodParameter.html#-1">-1</a>
+            </td>
+            <td>Low</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_XmlToData$ColumnValue"></a><h3>org.apache.torque.engine.database.transform.XmlToData$ColumnValue</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">SIC: Should org.apache.torque.engine.database.transform.XmlToData$ColumnValue be a _static_ inner class?</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html#-1">-1</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection"><a name="org_apache_torque_engine_database_transform_XmlToData$DataRow"></a><h3>org.apache.torque.engine.database.transform.XmlToData$DataRow</h3>
+        <table class="bodyTable">
+          <tr class="a">
+            <th>Violation</th>
+            <th>Line</th>
+            <th>Priority</th>
+          </tr>
+          <tr class="b">
+            <td>
+              <a href="http://findbugs.sourceforge.net/bugDescriptions.html#SIC_INNER_SHOULD_BE_STATIC" class="newWindow" target="_blank" alt="Bug Description" title="Bug Description">SIC: Should org.apache.torque.engine.database.transform.XmlToData$DataRow be a _static_ inner class?</a>
+            </td>
+            <td>
+              <a href="xref/org/apache/torque/engine/database/transform/XmlToData.html#-1">-1</a>
+            </td>
+            <td>Normal</td>
+          </tr>
+        </table>
+      </div>
+    </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Creating and Using Custom Generator Add-ons - Torque</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+          @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Greg Monroe"></meta><meta name="email" content="monroe@dukece.com"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="./images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/generator/" id="projectLogo"><img alt="Torque generator" src="./images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../index.html">Overview</a></li><li class="none"><a href="../../../status.html">News and Status</a></li><li class="none"><a href="../../../download.html">Downloads</a></li><li class="none"><a href="../../../addons.html">Addons</a></li><li class="none"><a href="../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="expanded"><a href="index.html">Generator</a><ul><li class="none"><a href="tasks-reference.html">Tasks Reference</a></li><li class="none"><a href="schema-reference.html">Schema Reference</a></li><li class="none"><a href="properties-reference.html">Properties Reference</a></li><li class="none"><a href="database.dtd.txt" class="newWindow" title="New Window" target="_blank">database.dtd</a></li><li class="none"><a href="how-templates-work.html">How Templates work</a></li><li class="none"><strong><a href="custom-templates.html">Custom Templates</a></strong></li><li class="none"><a href="dependencies.html">Dependencies</a></li><li class="collapsed"><a href="maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="collapsed"><a href="../runtime/index.html">Runtime</a></li><li class="collapsed"><a href="../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Table_of_Contents"></a><h2>Table of Contents</h2>
+    <p>
+      <ol>
+        <li>
+          <a href="#Overview_of_Customization">Overview of Customization</a>
+        </li>
+        <li>
+          <a href="#Setting_up_to_use_create_Overrides">
+            Setting up to use/create Overrides
+          </a>
+        </li>
+        <li>
+          <a href="#Installing_an_existing_add-on">
+            Installing an existing add-on
+          </a>
+        </li>
+        <li>
+          <a href="#Creating_an_add-on_or_local_customization">
+            Creating an add-on or local customization
+          </a>
+        </li>
+
+      </ol>
+    </p>
+  </div><div class="section"><a name="Overview_of_Customization"></a><h2>Overview of Customization</h2>
+    <p>
+    The Torque Generator component as distributed (the "distro") is designed to 
+    support a large number of database servers in stable generic way.  For most
+    users, the distro is perfectly fine.  However, there are some users who want
+    the generator to behave differently.  Some examples of these are:
+    </p>
+    <ul>
+    <li>
+    Making the Torque generated SQL include DB server type and/or version
+    specific items.  E.g., MySQL Table types or MS SQL Version 7 SQL syntax.
+      <br></br>
+    </li>
+    <li>
+	Making the generated Java classes include application specific code in
+	addition to the core Torque code.<br></br>   
+    </li>
+    <li>
+    Using the generator to maintain other configuration files that are effected
+    by changes to the DB schema, e.g. custom DTDs, betwixt map files.<br></br>
+    </li>
+    </ul>
+    <p>
+    Torque has always supported customizing its generator thru creating
+    complete template file replacement directorys/jar and/or a custom Java
+    class generator jar.  However, starting with version 3.3, the Torque 
+    build scripts (Maven 1.0 and Ant, Maven 2.0 is coming), support an
+    "override" method that is intended to allow specific templates and classes
+    to be customized, rather than a complete replacement.
+    </p>
+    <p>
+    The override method supports two main objectives.  First, to make it 
+    easier to maintain local modifications as versions change. Rather
+    than having to merge two complete template sets, the override 
+    method clearly identifies the subset that needs to be checked/merged.
+    Second, support user contributed add-ons that may not be part of the 
+    core Torque purpose but are generally usefull.  For example, there is 
+    an XML import/export tool based on the Apache Commons Betwixt package 
+    that is packaged as an add-on.  
+    </p>  
+    <p>
+    This document shows how to set up your Torque project to use overrides,
+    general information on how to install packaged add-ons, and how to get
+    started in creating custom templates.
+    
+    </p>
+  </div><div class="section"><a name="Setting_up_to_use_create_Overrides"></a><h2>Setting up to use/create Overrides</h2>
+    <p>
+    The first step is to create a directory in your project that will contain
+    any override files.  This can be anywhere under your main project directory.
+    Some suggestions are to create a <i>toque-local-lib</i> directory under the 
+    project root if you are just using add-ons or under your <i>src</i> 
+    directory if you are planning to create your own.
+    </p>
+    <p>
+    Next, you need to set the torque.override.dir property to this new directory
+    in your Torque build properties.  For Maven users, this is done in the 
+    project.properties file.  For Ant users, this is done in the 
+    build.properties file.  In the appropriate file, add a 
+    torque.override.dir property that points to your override directory.  For
+    example to point to a top level torque-local-lib use:
+    </p>
+    <ul>
+    <pre>
+    # Define the Override directory location
+    torque.override.dir = ${basedir}/toque-local-lib
+    </pre>
+    </ul>
+    <p>
+    If you are going to be creating override templates, create a
+    <i>templates</i> directory under the the override directory.
+    </p>
+    <p>
+    Once you have finished these steps, the Torque generator build scripts will
+    now use the following to find its templates and classes:
+    </p>
+    <ul>
+    <li>
+    For individual template files, the ${torque.override.dir}/template directory
+    is searched first.<br></br>
+    </li>
+    <li>
+    Next, all *override.jar files in the ${torque.override.dir} directory are
+    searched for templates and class files.<br></br>
+    </li>
+    <li>
+    Finally, the distribution files are searched for Templates and jars.<br></br>
+    </li>
+    </ul>
+  </div><div class="section"><a name="Installing_an_existing_add-on"></a><h2>Installing an existing add-on</h2>
+
+    <p>
+    To install a single existing add-on, simply place any *override.jar files 
+    in the torque.override.dir location.  Then follow any special configuration
+    setup the contributor has specified.
+    </p>
+    <p>
+    If you want to modify the templates in the add-on, simply un-jar the 
+    templates into the ${torque.override.dir}/templates directory and modify
+    them there.
+    </p>
+    <p>
+    If you need to install more than one add-on, the add-ons might have modified
+    the same file.  You will have to check the jars (or compare contributor 
+    instructions) for any conflicts.  If there are none, there is not problem 
+    using both add-ons.  If there are conflicts, you will have to resolve/merge 
+    the differences in these files and use the modified version.
+    </p>
+
+  </div><div class="section"><a name="Creating_an_add-on_or_local_customization"></a><h2>Creating an add-on or local customization</h2>
+    <p>
+    If you want to modify the generated sql files or java classes, 
+    first look at the overview 
+    <a href="how-templates-work.html">"How Templates Work"</a> if you are not
+    familiar with the way Torque uses velocity templates.
+    After doing that, proceed as follows:
+    </p>
+    <p>
+    First, create a <i>templates</i> directory under the torque.override.dir.
+    Then create the directory structure required to locate the template file(s)
+    you are planning to modify.  E.g., for the mysql table.vm template file, 
+    create a directory structure like: <i>sql\base\mysql</i> and then put the 
+    table.vm file in this directory.
+    </p>
+    <p>
+    Now you can modify the template file(s) to meet your needs.  The Ant and
+    Maven 1 generators will look in the {torque.override.dir}/template directory
+    first for templates, so you do not need to remove the modified templates
+    from the Torque distribution.
+    </p>
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

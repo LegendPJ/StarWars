@@ -1,0 +1,888 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Torque Runtime Reference - Reading from the database - Torque</title><style type="text/css" media="all">
+          @import url("../style/maven-base.css");
+          
+          @import url("../style/maven-theme.css");</style><link rel="stylesheet" href="../style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Leon Messerschmidt"></meta><meta name="email" content="leon@opticode.co.za"></meta><meta name="author" content="Jason van Zyl"></meta><meta name="email" content="jvanzyl@periapt.com"></meta><meta name="author" content="Scott Eade"></meta><meta name="email" content="seade@backstagetech.com.au"></meta><meta name="author" content="Thomas Fischer"></meta><meta name="email" content="fischer@seitenbau.de"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="../images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/runtime/" id="projectLogo"><img alt="Torque" src="../images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../../index.html">Overview</a></li><li class="none"><a href="../../../../status.html">News and Status</a></li><li class="none"><a href="../../../../download.html">Downloads</a></li><li class="none"><a href="../../../../addons.html">Addons</a></li><li class="none"><a href="../../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="collapsed"><a href="../../generator/index.html">Generator</a></li><li class="collapsed"><a href="../../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="expanded"><a href="../index.html">Runtime</a><ul><li class="expanded"><a href="../reference/index.html">Reference</a><ul><li class="none"><a href="../reference/initialisation-configuration.html">Initialisation</a></li><li class="none"><strong><a href="../reference/read-from-db.html">Reading from the DB</a></strong></li><li class="none"><a href="../reference/write-to-db.html">Writing to the DB</a></li><li class="none"><a href="../reference/extend-classes.html">Extending classes</a></li><li class="none"><a href="../reference/connections-transactions.html">Connections</a></li><li class="none"><a href="../reference/managers-cache.html">Managers and Cache</a></li><li class="none"><a href="../reference/beans.html">Beans</a></li><li class="none"><a href="../reference/relevant-classes.html">Relevant classes</a></li><li class="none"><a href="../reference/new-database-support.html">Supporting a new DB</a></li></ul></li><li class="none"><a href="../dependencies.html">Dependencies</a></li><li class="collapsed"><a href="../maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="../images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Reading_from_the_Database"></a><h2>Reading from the Database</h2>
+    <p>
+      To read data from the database, you need to specify which datasets
+      you want to read from which tables. In Torque, this is done by
+      constructing a Criteria object, which is a
+      Java representation of a SQL Query. After you have done that, pass the 
+      Criteria object to a Peer class, which will query the database 
+      and convert the retrieved table rows into Data Objects.
+    </p>
+
+  </div><div class="section"><a name="Reading_all_Objects"></a><h2>Reading all Objects</h2>
+
+    <p>
+      To read all Datasets from a table in the datasets, create an empty 
+      Criteria object and pass it to the doSelect Method of the Peer class
+      for the table.  In SQL, this would be equivalent to the command
+      "SELECT * FROM SOME_TABLE"
+    </p>
+  
+    <p>  
+      For example, the following code can be used to read all 
+      Authors from the Author table.
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+List authors = AuthorPeer.doSelect(critieria);
+</pre></div>
+  
+
+  </div><div class="section"><a name="Specifying_which_objects_should_be_read"></a><h2>Specifying which objects should be read</h2>
+
+    <p>
+      To read only the datasets which fulfil certain conditions, add the
+      conditions to the criteria object before you pass the criteria to the
+      select method.  In SQL, this would correspond to adding a "WHERE"-clause
+      to the select command.
+    </p>
+    
+    <p> 
+      As an example, to read all Authors which have the LAST_NAME field filled 
+      with "Stevens", the following code can be used: 
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.LAST_NAME, "Stevens");
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    <p>
+      To use another comparison operator than EQUAL (=), you need to specify 
+      which operator should be used. Valid comparison operators are:
+      <ul>
+        <li>
+          <code>Criteria.EQUAL</code> (Default)
+        </li>
+        <li>
+          <code>Criteria.NOT_EQUAL</code> (&lt;&gt;)
+        </li>
+        <li>
+          <code>Criteria.ALT_NOT_EQUAL</code> (!=)
+        </li>
+        <li>
+          <code>Criteria.EQUALS</code> (Default)
+        </li>
+        <li>
+          <code>Criteria.GREATER_THAN</code>
+        </li>
+        <li>
+          <code>Criteria.LESS_THAN</code>
+        </li>
+        <li>
+          <code>Criteria.GREATER_EQUAL</code>
+        </li>
+        <li>
+          <code>Criteria.LESS_EQUAL</code>
+        </li>
+        <li>
+          <code>Criteria.IN</code>
+        </li>
+        <li>
+          <code>Criteria.NOT_IN</code>
+        </li>
+        <li>
+          <code>Criteria.LIKE</code>
+        </li>
+        <li>
+          <code>Criteria.NOT_LIKE</code>
+        </li>
+      </ul>
+    </p>
+    
+    <p>
+      For example, to read all authors with an id less than 5, use
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.AUTHOR_ID, 5, Criteria.LESS_THAN);
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+  </div><div class="section"><a name="Foreign_keys"></a><h2>Foreign keys</h2>
+
+    <p>
+      Foreign keys define a link between rows in different tables.  They are
+      defined in the database schema on generation time.  If the generator
+      option <code>complexObjectModel</code> is not set to false, getters
+      and setters are generated for linked objects.
+    </p>
+    
+    <p>
+      For example, in the Bookstore schema, a foreign key is defined which
+      creates a link between the book and the author tables:
+    </p>
+
+
+    <div class="source"><pre>
+&lt;database ...&gt;
+
+  &lt;table name="author"&gt;
+    &lt;column
+      name="author_id"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Author Id"/&gt;
+    ...
+  &lt;/table&gt;
+  &lt;table name="book" description="Book Table"&gt;
+    ...
+    &lt;column
+      name="author_id"
+      required="true"
+      type="INTEGER"
+      description="Foreign Key Author"/&gt;
+    ...
+    &lt;foreign-key foreignTable="author"&gt;
+      &lt;reference
+        local="author_id"
+        foreign="author_id"/&gt;
+    &lt;/foreign-key&gt;
+  &lt;/table&gt;
+&lt;/database&gt;
+</pre></div>
+  
+
+    <p>
+      The foreign key defines that a book is associated to an author by setting
+      the <code>author_id</code> column of the author to the id of the 
+      corresponding author.
+    </p>
+    
+    <p>
+      In the Book Object, the Torque generator generates the methods
+      <code>getAuthor()</code> and <code>setAuthor(Author author)</code> 
+      which can be used to access and set the corresponding author object.
+      In the Author object, the methods <code>getBooks()</code> and 
+      <code>addBook()</code> are generated. 
+    </p>
+    
+    <p>
+      Note that by default, the getters query the database for the 
+      corresponding objects if they hev not been read already.  For example,
+      the method <code>Author.getBooks()</code> silently queries the database 
+      for the books for the author, if they have not been read before.
+      If you do not like this behaviour (e.g. if you want to make sure that
+      all reads occur within one database transaction), set the generator option
+      <code>torque.silentDbFetch</code> to <code>false</code>.
+    </p>
+
+  </div><div class="section"><a name="Joins"></a><h2>Joins</h2>
+
+    <p>
+      In the database, Joins can be used for two purposes.  First, they
+      can be used to read corresponding rows in other tables along with
+      the original row.  Second, Joins can be used to qualify which 
+      objects in one table should be read, or how the objects in one
+      table should be ordered, depending on the content 
+      of another table.  In Torque, these two uses of joins are treated
+      differently.
+    </p>
+    
+    <div class="subsection"><a name="Joins_to_read_corresponding_rows"></a><h3>Joins to read corresponding rows</h3>
+
+      <p>
+        To read corresponding rows, <code>doSelectJoin&lt;tablename&gt;</code>
+        methods are generated for the foreign keys in the Peer classes.
+        To keep the public API of the Peer classes reasonable, 
+        these methods are generated as protected methods.  
+        To make them visible publicly, override them in the Peer class
+        with a public access modifier.
+      </p>
+    
+      <p>
+        For example, to read all Authors and their corresponding Books,
+        override the <code>doSelectJoinBooks()</code> method in the 
+        Author peer with the following code:
+      </p>
+
+
+    <div class="source"><pre>
+public List doSelectJoinBooks(Criteria criteria) throws TorqueException
+{
+    return super.doSelectJoinBooks(criteria);
+}
+</pre></div>
+  
+
+      <p>
+        Then, you can read the author with the last Name "Stevens" and all his 
+        books using the following code: 
+      </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.LAST_NAME, "Stevens");
+List authorAndBooks = AuthorPeer.doSelectJoinBooks(criteria);
+</pre></div>
+  
+
+      <p>
+        Note that an inner join is used for reading the datasets, so no authors
+        are returned if no book is found.
+      </p>
+    
+      <p>
+        You can also put constraints on the related books.  For example, to read 
+        only the related book witht the title 
+        "TCP/IP Illustrated, Volume 1":
+      </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.LAST_NAME, "Stevens");
+criteria.add(BookPeer.NAME, "TCP/IP Illustrated, Volume 1");
+List authorAndBooks = AuthorPeer.doSelectJoinBooks(criteria);
+</pre></div>
+  
+
+      <p>
+        The <code>doSelectJoin&lt;tablename&gt;</code> only read one related
+        table at once.  If there are more than 2 foreign keys in one table,
+        also <code>doSelectJoinAllExcept&lt;tablename&gt;</code> methods 
+        are generated, which read all related objects except the one
+        in the method names.
+      </p>
+    
+      <p>  
+        At the moment, there is no method which can read nested data which are 
+        more than one foreign key relation apart.  For example,
+        if a table A has a foreign key reference to a table B,
+        which has a foreign key reference to a table C, there is no way
+        to read the data in table A and the related datasests in table B
+        <em>and</em> table C in one single select.
+      </p>
+      
+    </div>
+    
+    <div class="subsection"><a name="Inner_joins_for_qualifying"></a><h3>Inner joins for qualifying</h3>
+    
+      <p>
+        In the following subsections, the joins are not used for reading 
+        additional data, but for qualifying which data should be read in one
+        table by looking at the content of other tables.
+      </p>
+    
+      <p>
+        For example, we want to know all authors which have published at least 
+        one book.  This can be achieved using the following code:
+      </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID, Criteria.INNER_JOIN);
+
+List bookAuthors = AuthorPeer.doSelect(criteria);</pre></div>
+  
+
+      <p>
+        This method creates a so called "inner join", i.e. only author entries
+        which have a corresponding book entry are selected.
+      </p>
+
+      <table class="bodyTable">
+        <tr class="b">
+          <th>Details</th>
+        </tr>
+        <tr class="a">
+          <td>
+            Also, in SQL, there are two different ways to state an inner join.
+            The first way is a statement like
+
+    <div class="source"><pre>
+SELECT BOOK.* FROM BOOK INNER JOIN AUTHOR ON BOOK.AUTHOR_ID=AUTHOR.AUTHOR_ID
+</pre></div>
+  
+            SQL like this is produced if the join type is stated explicitly
+            (as above).<br></br>
+            The second way to create an inner join is
+
+    <div class="source"><pre>
+SELECT BOOK.* FROM BOOK,AUTHOR WHERE BOOK.AUTHOR_ID=AUTHOR.AUTHOR_ID
+</pre></div>
+  
+            A SQL statement like this is created by not supplying the join type,
+            for example in
+
+    <div class="source"><pre>
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID);</pre></div>
+  
+            Note that both SQL statements return the same result set.<br></br>
+            It is not possible to combine both ways of creating a join
+            in most databases, i.e. code like
+
+    <div class="source"><pre>
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID);
+criteria.addJoin(BookPeer.PUBLISHER_ID, PublisherPeer.PUBLISHER_ID, Criteria.INNER_JOIN);
+</pre></div>
+  
+            produces an SQL error in most databases.
+            In most circumstances, it is recommended to state t
+            the join type explicitly.
+            However, if the "INNER JOIN" syntax is not supported by your
+            database, try not to state the join type explicitly.
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="subsection"><a name="Outer_joins_for_qualifying"></a><h3>Outer joins for qualifying</h3>
+      <p>
+        To discuss the difference between inner joins and outer joins, 
+        consider the following code fragments. Joins will be used there 
+        just for discussing the effects of the different join types, 
+        but for no other reason.
+      </p>
+
+      <p>
+        First, let us reconsider the inner join code:
+      </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID, Criteria.INNER_JOIN);
+
+List bookAuthors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+  	  <p>
+  	    For an inner join, the database only returns an entry
+  	    in one table if there is a corresponding entry in the other table.
+  	    In the example above, this means that only authors
+  	    with a book are read.
+  	    In contrast, with an outer join, an entry in one table is also returned
+  	    even if there is no corresponding entry in the other table:
+  	  </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID, Criteria.LEFT_JOIN);
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+      <p>
+        The above code uses a left (outer) join. There, authors
+        which have no books also appear in the list of authors.
+        There are two kinds of outer joins: left joins and right joins.
+        In a left join, entries in the first table are returned even if
+        no entry in the second table is found, whereas in a right join,
+        entries in the second table are returned even if there are no
+        entries in the first table. Both kinds are supported in Torque
+        via the constants Criteria.LEFT_JOIN and Criteria.RIGHT_JOIN.
+      </p>
+
+      <p>
+        Usually, outer joins are used for reading in several tables at once
+        (not ?yet? supported by Torque), or for ordering the contents
+        of one table by the contents of another table.
+      </p>
+    </div>
+
+  </div><div class="section"><a name="Using_DISTINCT_with_Criteria"></a><h2>Using DISTINCT with Criteria</h2>
+
+    <p>
+      All of the examples in the section "joins" can return multiples
+      of the desired table rows, as one row may be linked to multiple
+      rows in the joined table.
+    </p>
+    
+    <p>
+      In the first example in the section 
+      "Inner joins for qualifying", the author will appear 
+      for every book that is attached to it. 
+      If an author has published 10 books, the author will appear
+      in the returned List 10 times.
+      To avoid this problem so that our returned List only returns one author
+      once despite the number of times it appears, we can use the setDistinct()
+      method in Criteria. For instance:
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID, Criteria.INNER_JOIN);
+criteria.setDistinct();
+
+List bookAuthors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    <p>
+      Note that distinct only has an effect if there are entries where 
+      <em>all</em> column values are the same.  It is not possible to specify
+      DISTINCT for single columns only. 
+    </p>
+
+  </div><div class="section"><a name="Ordering_the_Results"></a><h2>Ordering the Results</h2>
+
+   <p>
+     One of the common clauses in an SQL Query is the ORDER BY clause.
+     With the criteria object, the results can be ordered via the
+     addAscendingOrderByColumn(String columnname) and
+     addDescendingOrderByColumn(String columnname) methods.
+     As an example, consider the book table from the tutorial. 
+     To get all books ordered by their title and ISBN 
+     (where the ISBN should only be taken into accout for equal titles),
+     use the following code:
+   </p>
+
+   
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addAscendingOrderByColumn(BookPeer.TITLE);
+criteria.addAscendingOrderByColumn(BookPeer.ISBN);
+
+List books = BookPeer.doSelect(criteria);</pre></div>
+  
+
+  </div><div class="section"><a name="AND_and_OR_operators"></a><h2>AND and OR operators</h2>
+  
+    <p>
+      If you add multiple constraints to a Criteria, they are linked by default 
+      by a logical "AND" operator. For example, the code
+    </p>
+    
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+Criteria.add(AuthorPeer.LAST_NAME, "Stevens");
+Criteria.add(AuthorPeer.FIRST_NAME, "W.");
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+      
+    <p>
+      results in the following SQL query:
+    </p>
+    
+
+    <div class="source"><pre>
+SELECT ... from AUTHOR where LAST_NAME='Stevens' AND FIRST_NAME='W.'
+</pre></div>
+  
+
+    <p>
+      To exlicitly specify which operator should be used to link the constraints
+      in a Criteria, use the methods 
+      <code>Criteria.Criterion.and()</code> and 
+      <code>Criteria.Criterion.or()</code>.
+    </p>
+
+    <p>
+      For example, the criterion which corresponds to the SQL query
+    </p>
+
+
+    <div class="source"><pre>
+select * from abc where (a &lt; 1 and b &gt; 2) or (a &gt; 5 and b &lt; 3)
+</pre></div>
+  
+
+    <p>
+      is
+    </p>
+
+
+    <div class="source"><pre>
+Criteria crit = new Criteria();
+Criteria.Criterion a1 = crit.getNewCriterion(ABC.A, 1, Criteria.LESS_THAN);
+Criteria.Criterion b2 = crit.getNewCriterion(ABC.B, 2, Criteria.GREATER_THAN);
+Criteria.Criterion a5 = crit.getNewCriterion(ABC.A, 5, Criteria.GREATER_THAN);
+Criteria.Criterion b3 = crit.getNewCriterion(ABC.B, 3, Criteria.LESS_THAN);
+
+crit.add(a1.and(b2).or(a5.and(b3)));
+</pre></div>
+  
+
+    <p>
+      Note that the tables used in the last example are not defined
+      in the bookstore schema in the tutorial.
+    </p>
+
+  </div><div class="section"><a name="Case_insensitivity"></a><h2>Case insensitivity</h2>
+
+    <p>
+      String comparisons is are usually case sensitive (unless the underlying
+      database only provides case sensitive LIKE clauses - e.g. MySQL).  To get
+      a case insensitive comparison, you need to tell the criteria that it 
+      should ignore the case thus:
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(InvoicePeer.TABLE_NAME, searchField,
+        (Object) ("%" + searchCriteria + "%"), Criteria.LIKE);
+criteria.getCriterion(InvoicePeer.TABLE_NAME, searchField).setIgnoreCase(true);
+
+List invoices = InvoicePeer.doSelect(criteria);
+</pre></div>
+  
+
+    <p>
+      For PostgreSQL this will use ILIKE, for other databases it will use the
+      SQL upper() function on the column and search string (for Oracle you may
+      want to define a function index to make this efficient).
+    </p>
+    
+    <p>
+      You can also use <code>Criteria.setIgnoreCase(true)</code> to make all 
+      Criterions in the Criteria object case insensitive.
+    </p>
+    
+  </div><div class="section"><a name="Using_the_CUSTOM_modifier_to_use_custom_SQL"></a><h2>Using the CUSTOM modifier to use custom SQL</h2>
+
+    <p>
+      Although Criteria provide for the most common SQL queries, some queries
+      can not be created using standard Criteria methods.
+      With the CUSTOM modifier, the specified SQL is directly used 
+      in the where clause.  For internal reasons, you must still specify
+      a column on which the query part is acting.
+    </p>
+    <p>
+      For demonstration purposes, let us construct a query which retrieves
+      the author with the AUTHOR_ID of 5 using the CUSTOM modifier: 
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.AUTHOR_ID, (Object)"AUTHOR_ID=5", Criteria.CUSTOM);
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    <p>
+      Note that in this specific example, there was no need for the CUSTOM
+      modifier. The same query could have been created by:
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.AUTHOR_ID, 5);
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    <p>
+      It is recommended <em>not</em> to use the CUSTOM modifier whenever
+      you can avoid it.  If you use the CUSTOM modifier,  your code will be
+      less portable to other databases, and the compiler
+      will not alert you if you change your data model and access a column 
+      which no longer exists.
+    </p>
+    
+  </div><div class="section"><a name="Using_Criterion_to_use_a_Column_twice_in_a_Criteria"></a><h2>Using Criterion to use a Column twice in a Criteria</h2>
+
+    <p>
+      The Criteria Object extends the functionality of a Hashtable and as such
+      suffers from the Hashtable limitation of the key having to be unique in 
+      the Hashtable.  When a Criteria is set to use the same column twice, it
+      overwrites the previous key.  The way around this is to use the Criterion
+      Object.  The Criterion is a final inner class of Criteria.  Because it is 
+      a member class the Criterion can "look" into Criteria's instance fields
+      and methods including ones declared private.  The Criterion also carries 
+      the default package visibility which means it can be used in a sub-class 
+      of Criteria.
+   </p>
+
+    <p>
+      For example, we may want to search for authors which Author Ids are 
+      within a certain Range, such as 5 and 10. For this
+      we would need to use the Criterion:
+    </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.add(AuthorPeer.AUTHOR_ID, 5, Criteria.GREATER_EQUAL);
+
+Criteria.Criterion criterion = criteria.getCriterion(AuthorPeer.AUTHOR_ID);
+criterion.and(
+        criteria.getNewCriterion(
+                 criterion.getTable(),
+                 criterion.getColumn(),
+                 new Integer(10),
+                 Criteria.LESS_EQUAL)
+             );
+</pre></div>
+  
+
+  </div><div class="section"><a name="Encapsulating_and_Re-using_Criteria_code"></a><h2>Encapsulating and Re-using Criteria code</h2>
+
+    <p>
+      The Criteria Object can be verbose to use directly in your code. 
+      Often in an application the 80:20 rule applies when dealing with queries.
+      The same 20% of queries are used 80% of the time. While Criteria 
+      and Criterion offer a tonne of flexibility, often having something
+      simple to use is easier.
+    </p>
+    
+    <p>
+      Also, it is often desirable in an application to separate code which is
+      used to accesss the database from the other application code.
+      For example, the application may need to retrieve an author by his last
+      name.  One can, of course, construct a Criteria in the 
+      application code and use <code>AuthorPeer</code>'s <code>doSelect()</code>
+      method, but from an encapsulation point of view, this would better be done
+      in the database layer of the application.
+    </p>
+    
+    <p>
+      So there are basically two approaces to this. The first one is adding
+      additional methods to the Peer classes, the second one is writing 
+      custom filter classes, and the third one is inheriting
+      from the Criteria object.  Usually, the first approach is preferable 
+      because it offers better encapsulation.  The second approach is good if 
+      you want more flexibility but still want to retain encapsulation of the
+      database layer, and the third is good if you want all flexibility
+      of the Criteria object but still want to re-use code.
+    </p>
+    
+    <div class="subsection"><a name="Additional_methods_in_Peers"></a><h3>Additional methods in Peers</h3>
+      
+      <p>
+        To achieve encapsulation and code reuse for queries, you can
+        extend the Peer classes. For example, if you need to select authors
+        by last name, you could extend the author class in the following way:
+      </p>
+      
+
+    <div class="source"><pre>
+/**
+ *  Returns all the authors with a last name equal to lastName.
+ *  @param lastName the last name of the authors to select.
+ */
+public static List doSelectByLastName(String lastName)
+{
+    Criteria criteria = new Criteria();
+    criteria.add(AuthorPeer.LAST_NAME, lastName);
+    List result = AuthorPeer.doSelect(criteria);
+    return result;
+}
+</pre></div>
+  
+
+    </div>
+
+    <div class="subsection"><a name="Custom_filter_classes"></a><h3>Custom filter classes</h3>
+      
+      <p>
+        Custom filter classes are an encapsulation of the data one searches 
+        for.  They can create a criteria from their data.
+        Custom filter classes are often used if you present a "search mask"
+        to the user, where you want to retain the information the user has 
+        entered anyway.  For example, if you have a search mask for looking
+        for authors using their first and last name, you would use the
+        following code: 
+      </p>
+      
+
+    <div class="source"><pre>
+/**
+ *  Contains the data needed to find authors using their names.
+ *  Can create a criteria object which can be used to find the desired 
+ *  authors in the database.
+ */
+public class AuthorFilter
+{
+    /** the first name to look for. */
+    private String firstName = null;
+    
+    /** the last name to look for. */
+    private String LastName = null;
+    
+    /**
+     *  Creates a AuthorFilter looking for the firstName and lastName of the 
+     *  author.
+     *  @param firstName the first name of the authors to look for, 
+     *         or null for all first names
+     *  @param lastName the last name of the authors to look for,
+     *         or null for all last names 
+     */
+    public AuthorFilter(String firstName, String lastName)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
+    /**
+     *  returns the Criteria for the data in the filter.
+     *  @return the Criteria which returns the specified authors
+     */
+    public Criteria getCriteria()
+    {
+        Criteria result = new Criteria();
+        if (firstName != null)
+        {
+            result.add(AuthorPeer.FIRST_NAME, firstName);
+        }
+        if (lastName != null)
+        {
+            result.add(AuthorPeer.LAST_NAME, lastName);
+        }
+        return criteria;
+    }
+}
+</pre></div>
+  
+
+      <p>
+        In reality, you would also add getters and setters for first and
+        last name, and allow for wildcards and case-insensitive serach, 
+        but this example should show the basic idea.
+      </p>
+
+    </div>
+
+    <div class="subsection"><a name="Inheriting_from_Criteria"></a><h3>Inheriting from Criteria</h3>
+    
+      <p>
+        Another way to achieve code-reuse is to create a class that extends
+        Criteria and add convenience methods for your application.
+        In this case the example Object will be the SimpleCriteria with the 
+        methods that allow access to the examples above.
+      </p>
+
+
+    <div class="source"><pre>
+//Turbine
+import org.apache.torque.util.Criteria;
+
+/**
+ * SimpleCriteria is a simple case of the more powerful Criteria
+ * Object.
+ */
+
+public class SimpleCriteria extends Criteria
+{
+    /** currently used as DEFAULT_CAPACITY in Criteria is private */
+    private static final int DEFAULT_CAPACITY = 10;
+
+    /*
+     * Constructor
+     */
+    public SimpleCriteria()
+    {
+        super(DEFAULT_CAPACITY);
+    }
+
+    /*
+     * Represents the Greater Than in the WHERE
+     * clause of an SQL Statement
+     *
+     * @param columnname the column name
+     * @param columnvalue the column value to be compared against
+     */
+    public SimpleCriteria greaterThan(String columnname, int columnvalue)
+    {
+        super.add(columnname, columnvalue, Criteria.GREATER_THAN);
+        return this;
+    }
+
+   /*
+     * Represents the Between in the WHERE
+     * clause of an SQL Statement
+     *
+     * @param columnname the column name
+     */
+    public SimpleCriteria isBetween(String columnname, int min, int max)
+    {
+        super.add(columnname, min, Criteria.GREATER_THAN);
+        super.Criterion criterion = criteria.getCriterion(columnname);
+        criterion.and(
+                   super.getNewCriterion(
+                              criterion.getTable(),
+                              criterion.getColumn(),
+                              new Integer(max),
+                              Criteria.LESS_EQUAL )
+                    );
+        return this;
+    }
+
+}
+</pre></div>
+  
+
+     <p>
+       This will simplify the code being written in the Business Objects or
+       Actions and condense all the Criteria knowledge into the SimpleCriteria
+       Object. The SimpleCriteria Object used in the same manner as Criteria.
+       For example, the example from the section 
+       "Using Criterion to use a Column twice in a Criteria"
+       above would be 
+     </p>
+
+
+    <div class="source"><pre>
+SimpleCriteria criteria = new SimpleCriteria();
+criteria.isBetween(AuthorPeer.AUTHOR_ID, 5, 10);
+
+List authors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    </div>
+
+  </div><div class="section"><a name="Debugging_Criteria_s"></a><h2>Debugging Criteria's</h2>
+
+    <p>
+      Criteria contains a toString() method which will output a representation
+      of the Criteria as a String. A Criteria to a large extent represents the
+      statements in a WHERE clause of SQL.  To see the queries being processed
+      by your application you can configure the logging system to capture
+      the SQL by adding the following to your <code>log4j.properties</code>
+      file:
+    </p>
+
+
+    <div class="source"><pre>
+log4j.logger.org.apache.torque.util = DEBUG
+</pre></div>
+  
+
+  </div><div class="section"><a name="Examples"></a><h2>Examples</h2>
+
+    <div class="subsection"><a name="Putting_JOIN__DISTINCT_and_ORDER_BY_together"></a><h3>Putting JOIN, DISTINCT and ORDER BY together</h3>
+      <p>
+        To put all the above together, we can query the bookstore
+        database for all authors which have published a book,
+        and order them by the author's name. This requires a
+        join between the book table and the author table.
+      </p>
+
+
+    <div class="source"><pre>
+Criteria criteria = new Criteria();
+criteria.addJoin(AuthorPeer.AUTHOR_ID, BookPeer.AUTHOR_ID, Criteria.INNER_JOIN);
+criteria.setDistinct();
+criteria.addAscendingOrderByColumn(AuthorPeer.NAME);
+
+List bookAuthors = AuthorPeer.doSelect(criteria);
+</pre></div>
+  
+
+    </div>
+
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>

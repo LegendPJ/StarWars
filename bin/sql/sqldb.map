@@ -1,0 +1,4 @@
+#Sqlfile -> Database map
+#Tue Feb 21 11:24:40 CET 2012
+base5a00-schema.sql=base5a00
+id-table-schema.sql=@DATABASE_DEFAULT@

@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title>Schema Reference - Torque</title><style type="text/css" media="all">
+          @import url("./style/maven-base.css");
+          
+          @import url("./style/maven-theme.css");</style><link rel="stylesheet" href="./style/print.css" type="text/css" media="print"></link><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta><meta name="author" content="Warner Onstine"></meta><meta name="email" content="warner@warneronstine.com"></meta><meta name="author" content="Jason van Zyl"></meta><meta name="email" content="jvanzyl@apache.org"></meta><meta name="author" content="Ville Skyttä"></meta><meta name="email" content="ville.skytta@iki.fi"></meta><meta name="author" content="Thomas Vandahl"></meta><meta name="email" content="tv@apache.org"></meta></head><body class="composite"><div id="banner"><a href="http://db.apache.org/" id="organizationLogo"><img alt="Apache Software Foundation" src="./images/db-logo-white.png"></img></a><a href="http://db.apache.org/torque/releases/torque-3.3/generator/" id="projectLogo"><img alt="Torque generator" src="./images/torque-logo-new.png"></img></a><div class="clear"><hr></hr></div></div><div id="breadcrumbs"><div class="xleft">Last published: 28 February 2008
+                <span class="separator">|</span> Doc for  3.3
+                </div><div class="xright"></div><div class="clear"><hr></hr></div></div><div id="leftColumn"><div id="navcolumn"><div id="menuTorque"><h5>Torque</h5><ul><li class="none"><a href="../../../index.html">Overview</a></li><li class="none"><a href="../../../status.html">News and Status</a></li><li class="none"><a href="../../../download.html">Downloads</a></li><li class="none"><a href="../../../addons.html">Addons</a></li><li class="none"><a href="../../../changes-report.html">Changes</a></li><li class="none"><a href="http://wiki.apache.org/db-torque/" class="externalLink" title="External Link">Wiki</a></li><li class="none"><a href="../../../issue-tracking.html">Issue tracker</a></li><li class="none"><a href="../../../mail-lists.html">Mailing lists</a></li><li class="none"><a href="../../../tools/index.html">Tools</a></li><li class="collapsed"><a href="../../../developer-info/index.html">Developer Information</a></li></ul></div><div id="menuModule_Documentation"><h5>Module Documentation</h5><ul><li class="none"><a href="../../../documentation/index.html">Overview</a></li><li class="expanded"><a href="../../../documentation/torque-3.3.html">Torque 3.3</a><ul><li class="expanded"><a href="index.html">Generator</a><ul><li class="none"><a href="tasks-reference.html">Tasks Reference</a></li><li class="none"><strong><a href="schema-reference.html">Schema Reference</a></strong></li><li class="none"><a href="properties-reference.html">Properties Reference</a></li><li class="none"><a href="database.dtd.txt" class="newWindow" title="New Window" target="_blank">database.dtd</a></li><li class="none"><a href="how-templates-work.html">How Templates work</a></li><li class="none"><a href="custom-templates.html">Custom Templates</a></li><li class="none"><a href="dependencies.html">Dependencies</a></li><li class="collapsed"><a href="maven-reports.html">Project Reports</a></li></ul></li><li class="collapsed"><a href="../maven-plugin/index.html">Maven 1 Plugin</a></li><li class="none"><a href="../maven2-plugin/index.html" class="newWindow" title="New Window" target="_blank">Maven 2 Plugin</a></li><li class="collapsed"><a href="../runtime/index.html">Runtime</a></li><li class="collapsed"><a href="../tutorial/index.html">Tutorial</a></li><li class="collapsed"><a href="../village/index.html">Village</a></li></ul></li><li class="collapsed"><a href="../../../documentation/previous-releases.html">Previous releases</a></li></ul></div><div id="menuOther_Documentation"><h5>Other Documentation</h5><ul><li class="none"><a href="../../../version-specific/supported-databases.html">Supported Databases</a></li><li class="collapsed"><a href="../../../version-specific/database-howtos/index.html">Database Howtos</a></li><li class="collapsed"><a href="../../../version-specific/other-howtos/index.html">Other Howtos</a></li></ul></div><div id="menuProject_Documentation"><h5>Project Documentation</h5><ul><li class="collapsed"><a href="../../../project-info.html">Project info</a></li><li class="collapsed"><a href="../../../project-reports.html">Site Project Reports</a></li></ul></div><div id="legend"><h5>Legend</h5><ul><li class="externalLink">External Link</li><li class="newWindow">Opens in a new window</li></ul></div><a href="http://maven.apache.org/" title="Built by Maven" id="poweredBy"><img alt="Built by Maven" src="./images/logos/maven-button-1.png"></img></a></div></div><div id="bodyColumn"><div class="contentBox"><div class="section"><a name="Torque_Schema_Reference"></a><h2>Torque Schema Reference</h2>
+    <p>
+      The Torque Database Schema Reference attempts to explain what the
+      different elements and attributes are when defining your own database
+      schema. In addition I will attempt to explain which attributes mean what
+      in the different databases that are currently supported.
+    </p>
+   </div><div class="section"><a name="Elements_and_their_attributes"></a><h2>Elements and their attributes</h2>
+     <p>
+       <img src="images/schema.png" alt=""></img>
+     </p>
+     <p>
+       Some of the following examples are taken from the project-schema.xml
+       document in the src/conf/torque/schema.
+     </p>
+   </div><div class="section"><a name="Element:_database"></a><h2>Element: database</h2>
+       <p>
+         The database element and its relevant attributes.
+       </p>
+       
+    <div class="source"><pre>
+         &lt;database
+           name="MY_DATABASE"
+           defaultIdMethod="idBroker"
+           package="com.myapp.om"
+           baseClass="com.myapp.om.BaseClass"
+           basePeer="com.myapp.om.BasePeer"&gt;
+
+           &lt;table name="SIMPLE"&gt;
+             &lt;!-- table info goes here --&gt;
+           &lt;/table&gt;
+         &lt;/database&gt;
+       </pre></div>
+  
+       <p>
+         The database element has 8 attributes associated with it, they are:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="a">
+             <td>name</td>
+             <td>The name of the database being referenced</td>
+           </tr>
+           <tr class="b">
+             <td>defaultIdMethod</td>
+             <td>How will the primary keys be created, defaults to "none"</td>
+           </tr>
+           <tr class="a">
+             <td>defaultJavaType</td>
+             <td>Default type of columns in the database
+                 (object or primitive, defaults to primitive)</td>
+           </tr>
+           <tr class="b">
+             <td>package</td>
+             <td>Used for OM Peer generation</td>
+           </tr>
+           <tr class="a">
+             <td>baseClass</td>
+             <td>Used for OM generation</td>
+           </tr>
+           <tr class="b">
+             <td>basePeer</td>
+             <td>Used for OM Peer generation</td>
+           </tr>
+           <tr class="a">
+             <td>defaultJavaNamingMethod</td>
+             <td>Indicates how a schema table or column name is mapped to a
+                 Java class or method name respectively</td>
+           </tr>
+           <tr class="b">
+             <td>heavyIndexing</td>
+             <td>Adds extra indices for multi-part primary key
+                 columns.  true or false, defaults to false.
+
+                 For databases like MySQL, values in a where clause
+                 must match key part order from the left to right.
+                 So, in the key definition <code>PRIMARY KEY (FOO_ID,
+                 BAR_ID)</code>, <code>FOO_ID</code> <i>must</i> be
+                 the first element used in the <code>where</code>
+                 clause of the SQL query used against this table for
+                 the primary key index to be used.  This feature could
+                 cause problems under MySQL with heavily indexed
+                 tables, by causing too many indices to be created,
+                 overrunning MySQL's table limit.</td>
+           </tr>
+         </table>
+       </p>
+
+       <p>
+         The database element can contain the following elements:
+       </p>
+       <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>external-schema</td>
+            <td>0 or more</td>
+          </tr>
+          <tr class="b">
+            <td>domain</td>
+            <td>0 or more</td>
+          </tr>
+          <tr class="a">
+            <td>table</td>
+            <td>1 or more</td>
+          </tr>
+        </table>
+       </p>
+
+     <div class="subsection"><a name="Attribute:_defaultIdMethod"></a><h3>Attribute: defaultIdMethod</h3>
+       <p>
+         By defining this attribute at the database level it applies the
+         defaultIdMethod to those tables which do not have an idMethod
+         attribute defined. The attribute defaultIdMethod has 5 possible
+         values, they are:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="b">
+             <td>idbroker</td>
+             <td>This allows Torque to generate the IDs through its IDBroker
+                 Service</td>
+           </tr>
+           <tr class="a">
+             <td>native</td>
+             <td>Torque will determine how the database will auto-generate
+                 IDs</td>
+           </tr>
+           <tr class="b">
+             <td>none</td>
+             <td>Typically used if you do not want IDs generated</td>
+           </tr>
+         </table>
+       </p>
+     </div>
+     <div class="subsection"><a name="Attribute:_defaultJavaNamingMethod"></a><h3>Attribute: defaultJavaNamingMethod</h3>
+       <p>
+         This attribute determines how table or column names, from the name
+         attribute of the table or column element, are converted to a Java
+         class or method name respectively when creating the OM Java objects.
+         defaultJavaNamingMethod can contain 3 different values:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="a">
+             <td>nochange</td>
+             <td>Indicates no change is performed.</td>
+           </tr>
+           <tr class="b">
+             <td>underscore</td>
+             <td>Underscores are removed, First letter is capitalized, first
+               letter after an underscore is capitalized, the rest of the
+               letters are converted to lowercase.
+             </td>
+           </tr>
+           <tr class="a">
+             <td>javaname</td>
+             <td>Same as underscore, but no letters are converted to lowercase.
+             </td>
+           </tr>
+         </table>
+       </p>
+     </div>
+     <div class="subsection"><a name="Attribute:_package"></a><h3>Attribute: package</h3>
+       <p>
+         The base package in which this database will generate the Object
+         Models associated with it. This overrides the targetPackage property
+         in the Torque build.properties file.
+       </p>
+     </div>
+     <div class="subsection"><a name="Attribute:_baseClass"></a><h3>Attribute: baseClass</h3>
+       <p>
+         The base class to use when generating the Object Model.
+         This class does not have to extend org.apache.torque.om.BaseObject.
+       </p>
+     </div>
+     <div class="subsection"><a name="Attribute:_basePeer"></a><h3>Attribute: basePeer</h3>
+       <p>
+         The base peer to use when generating the Object Model Peers.
+         Unlike baseClass, basePeer should extend BasePeer at some point in the
+         chain, i.e. it needs to be the superclass.
+       </p>
+     </div>
+   </div><div class="section"><a name="Element:_external-schema"></a><h2>Element: external-schema</h2>
+       <p>
+         Includes another schema file.
+       </p>
+       
+    <div class="source"><pre>
+         &lt;external-schema
+           filename="extext-schema.xml" /&gt;
+       
+       </pre></div>
+  
+   </div><div class="section"><a name="Element:_domain"></a><h2>Element: domain</h2>
+       <p>
+         Domains are used to define attributes for columns.
+       </p>
+       
+    <div class="source"><pre>
+         &lt;domain
+           name="amount"
+           type="NUMERIC"
+           size="10"
+           scale="2"
+           default="0"
+           description="amount domain" /&gt;
+       
+       </pre></div>
+  
+   </div><div class="section"><a name="Element:_table"></a><h2>Element: table</h2>
+       <p>
+         The table element and its relevant attributes
+       </p>
+       
+    <div class="source"><pre>
+         &lt;table
+           name="MY_TABLE"
+           javaName="table"
+           idMethod="idbroker"
+           skipSql="false"
+           baseClass="com.myapp.om.table.BaseClass"
+           basePeer="com.myapp.om.table.BasePeer"
+           javaNamingMethod="underscore"
+           description="Table for Torque tests"&gt;
+
+           &lt;!-- column information here --&gt;
+
+         &lt;/table&gt;
+       </pre></div>
+  
+       <p>
+         The table element has 13 attributes associated with it, they are:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="b">
+             <td>name</td>
+             <td>The name of the table being referenced</td>
+           </tr>
+           <tr class="a">
+             <td>javaName</td>
+             <td>How this table will be referenced in Java</td>
+           </tr>
+           <tr class="b">
+             <td>idMethod</td>
+             <td>How will the primary keys be created, defaults to "null"</td>
+           </tr>
+           <tr class="a">
+             <td>skipSql</td>
+             <td>Whether or not to skip SQL generation for this reference</td>
+           </tr>
+           <tr class="b">
+             <td>abstract</td>
+             <td>Whether or not to generate the class as Abstract or not</td>
+           </tr>
+           <tr class="a">
+             <td>baseClass</td>
+             <td>Used for OM Peer generation</td>
+           </tr>
+           <tr class="b">
+             <td>basePeer</td>
+             <td>Used for OM Peer generation</td>
+           </tr>
+           <tr class="a">
+             <td>alias</td>
+             <td>The table alias</td>
+           </tr>
+           <tr class="b">
+             <td>interface</td>
+             <td>The interface attribute specifies an interface that should
+                 be referenced in the <code>implements</code> section of the 
+                 generated extension class. If this is a fully qualified 
+                 class name (i. e. the string contains dots), the interface 
+                 will simply be implemented by the extension object. If the 
+                 interface is a simple class name (without dots), an empty 
+                 interface file  will be generated in the extension object 
+                 package.
+                 When this attribute is used, all methods that normally
+                 would return the extension object type will now return the
+                 interface type. This feature allows to use Torque generated 
+                 classes in the context of other applications or APIs.</td>
+           </tr>
+           <tr class="a">
+             <td>javaNamingMethod</td>
+             <td>Specifies how the name attribute is converted to the Java
+                 class name of the corresponding OM object.  This attribute
+                 overrides the defaultJavaNamingMethod attribute of the
+                 database element</td>
+           </tr>
+           <tr class="b">
+             <td>heavyIndexing</td>
+             <td>? (true or false)</td>
+           </tr>
+           <tr class="a">
+             <td>description</td>
+             <td>Used for doc generation</td>
+           </tr>
+         </table>
+       </p>
+
+       <p>
+         The table element can contain the following elements:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="b">
+             <td>column</td>
+             <td>1 or more</td>
+           </tr>
+           <tr class="a">
+             <td>foreign-key</td>
+             <td>0 or more</td>
+           </tr>
+           <tr class="b">
+             <td>index</td>
+             <td>0 or more</td>
+           </tr>
+           <tr class="a">
+             <td>unique</td>
+             <td>0 or more</td>
+           </tr>
+           <tr class="b">
+             <td>id-method-parameter</td>
+             <td>0 or more</td>
+           </tr>
+         </table>
+       </p>
+     <div class="subsection"><a name="Attribute:_javaName"></a><h3>Attribute: javaName</h3>
+       <p>
+         This is the Java class name to use when generating the Table or
+         column. If this is missing the Java name is generated in the
+         following manner:
+       </p>
+       <p>
+         Underscores are removed, first letter and first letter after each
+         underscore is uppercased, all other letters are lowercased.
+         So YOUR_TABLE_NAME would become YourTableName.
+       </p>
+     </div>
+   </div><div class="section"><a name="Element:_column"></a><h2>Element: column</h2>
+       <p>
+         The column element and its relevant attributes
+       </p>
+       
+    <div class="source"><pre>
+         &lt;column
+           name="MY_COLUMN"
+           javaName="Column"
+           primaryKey="true"
+           required="true"
+           size="4"
+           type="VARCHAR"
+           javaNamingMethod="underscore"&gt;
+
+           &lt;!-- inheritance info if necessary --&gt;
+         &lt;/column&gt;
+       </pre></div>
+  
+       <p>
+         The column element has 13 attributes associated with it, they are:
+       </p>
+       <p>
+         <table class="bodyTable">
+           <tr class="a">
+             <td>name</td>
+             <td>The name of the column being referenced</td>
+           </tr>
+           <tr class="b">
+             <td>javaName</td>
+             <td>How this column will be referred to in Java</td>
+           </tr>
+           <tr class="a">
+             <td>primaryKey</td>
+             <td>Is this a primary key or not (true or false, defaults to
+                 false)</td>
+           </tr>
+           <tr class="b">
+             <td>required</td>
+             <td>Whether a value is required in this field (true or false,
+                 defaults to false)</td>
+           </tr>
+           <tr class="a">
+             <td>type</td>
+             <td>What type of column is it? Covered below, defaults to
+                 VARCHAR</td>
+           </tr>
+           <tr class="b">
+             <td>javaType</td>
+             <td>The type of the column in Java (object or primitive)</td>
+           </tr>
+           <tr class="a">
+             <td>size</td>
+             <td>How many characters or digits can be stored?</td>
+           </tr>
+           <tr class="b">
+             <td>default</td>
+             <td>Default value to insert into field if it is missing.</td>
+           </tr>
+           <tr class="a">
+             <td>autoIncrement</td>
+             <td>Whether or not to auto-increment this field (true or false,
+                 defaults to false)</td>
+           </tr>
+           <tr class="b">
+             <td>inheritance</td>
+             <td>? (single or false, defaults to false)</td>
+           </tr>
+           <tr class="a">
+             <td>inputValidator</td>
+             <td>?</td>
+           </tr>
+           <tr class="b">
+             <td>javaNamingMethod</td>
+             <td>Specifies how the name attribute is converted to the Java
+                 class name of the corresponding OM object.  This attribute
+                 overrides the defaultJavaNamingMethod attribute of the
+                 database element</td>
+           </tr>
+           <tr class="a">
+             <td>description</td>
+             <td>Used for doc generation</td>
+           </tr>
+         </table>
+       </p>
+       <p>
+         The column element can contain the following elements:
+       </p>
+       <p>
+        <table class="bodyTable">
+          <tr class="b">
+            <td>inheritance</td>
+            <td>0 or more</td>
+          </tr>
+        </table>
+       </p>
+    </div><div class="section"><a name="Element:_inheritance"></a><h2>Element: inheritance</h2>
+        <p>
+          The inheritance element and its relevant attributes
+        </p>
+        
+    <div class="source"><pre>
+          &lt;inheritance key="key"
+            class="classname"
+            extends="mybase"/&gt;
+        </pre></div>
+  
+      <p>
+        The inheritance element has 3 attributes associated with it, they are:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>key</td>
+            <td>?</td>
+          </tr>
+          <tr class="b">
+            <td>class</td>
+            <td>?</td>
+          </tr>
+          <tr class="a">
+            <td>extends</td>
+            <td>?</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The inheritance element can not contain other elements.
+      </p>
+    </div><div class="section"><a name="Element:_foreign-key"></a><h2>Element: foreign-key</h2>
+      <p>
+        The foreign-key element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;foreign-key foreignTable="MY_TABLE"
+          name="MY_TABLE_FK"
+          onUpdate="none"
+          onDelete="none"&gt;
+          &lt;!-- reference info --&gt;
+        &lt;/foreign-key&gt;
+      </pre></div>
+  
+      <p>
+        The foreign-key element has 4 attributes associated with it, they are:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="b">
+            <td>foreignTable</td>
+            <td>The name of the table being referenced</td>
+          </tr>
+          <tr class="a">
+            <td>name</td>
+            <td>The name of the foreign key</td>
+          </tr>
+          <tr class="b">
+            <td>onUpdate</td>
+            <td>The action to take when the referenced value in foreignTable
+                is updated</td>
+          </tr>
+          <tr class="a">
+            <td>onDelete</td>
+            <td>The action to take when the referenced value in foreignTable
+                is deleted</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The foreign-key element can contain the following elements:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="b">
+            <td>reference</td>
+            <td>1 or more</td>
+          </tr>
+        </table>
+      </p>
+    </div><div class="section"><a name="Element:_reference"></a><h2>Element: reference</h2>
+      <p>
+        The reference element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;reference local="FK_TABLE_ID" foreign="PK_COLUMN_ID"/&gt;
+      </pre></div>
+  
+      <p>
+        The reference element has 2 attributes associated with it, they are:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>local</td>
+            <td>The local reference</td>
+          </tr>
+          <tr class="b">
+            <td>foreign</td>
+            <td>The foreign key reference</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The reference element can not contain other elements.
+      </p>
+    </div><div class="section"><a name="Element:_index"></a><h2>Element: index</h2>
+      <p>
+        The index element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;index name="MY_INDEX"&gt;
+          &lt;!-- index-column info --&gt;
+        &lt;/index&gt;
+      </pre></div>
+  
+      <p>
+        The index element has 1 attribute associated with it, it is:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>name</td>
+            <td>The name of the index</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The index element can contain the following elements:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="b">
+            <td>index-column</td>
+            <td>1 or more</td>
+          </tr>
+        </table>
+      </p>
+    </div><div class="section"><a name="Element:_index-column"></a><h2>Element: index-column</h2>
+      <p>
+        The index-column element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;index-column name="INDEX_COLUMN"/&gt;
+      </pre></div>
+  
+      <p>
+        The index-column element has 2 attributes associated with it, they are:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>name</td>
+            <td>The name of the indexed column</td>
+          </tr>
+          <tr class="b">
+            <td>size</td>
+            <td>
+              This attribute is not used and will be removed in a future
+              version of the dtd.
+            </td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The index-column element can not contain other elements.
+      </p>
+    </div><div class="section"><a name="Element:_unique"></a><h2>Element: unique</h2>
+      <p>
+        The unique element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;unique name="MY_UNIQUE"&gt;
+          &lt;!-- unique-column info --&gt;
+        &lt;/unique&gt;
+      </pre></div>
+  
+      <p>
+        The unique element has 1 attribute associated with it, it is:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>name</td>
+            <td>The name of the unique constraint</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The unique element can contain the following elements:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="b">
+            <td>unique-column</td>
+            <td>1 or more</td>
+          </tr>
+        </table>
+      </p>
+    </div><div class="section"><a name="Element:_unique-column"></a><h2>Element: unique-column</h2>
+      <p>
+        The unique-column element and its relevant attributes
+      </p>
+      
+    <div class="source"><pre>
+        &lt;unique-column name="UNIQUE_COLUMN"/&gt;
+      </pre></div>
+  
+      <p>
+        The unique-column element has 1 attribute associated with it, it is:
+      </p>
+      <p>
+        <table class="bodyTable">
+          <tr class="a">
+            <td>name</td>
+            <td>The name of the unique column</td>
+          </tr>
+        </table>
+      </p>
+      <p>
+        The unique-column element can not contain other elements.
+      </p>
+  </div></div></div><div class="clear"><hr></hr></div><div id="footer"><div class="xright">© 2000-2008, Apache Software Foundation</div><div class="clear"><hr></hr></div></div></body></html>
