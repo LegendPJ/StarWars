@@ -1,6 +1,8 @@
 public class Jeu {
 
-	public static void main(String[] args) { new Jeu(); }
+	Partie part;
+	
+	public static void main (String[] args) { new Jeu(); }
 	
 	public Jeu () {
 		int choix;
@@ -10,12 +12,19 @@ public class Jeu {
 			switch (choix) {
 				case 1:
 					System.out.println("Nouvelle partie");
+					part = new Partie();
+					part.nouvelle();
 					break;
 				case 2:
 					System.out.println("Charger une partie");
 					break;
 				case 3:
 					System.out.println("Ajouter un objet");
+					break;
+				case 0:
+					break;
+				default:
+					System.out.println("Vous n'avez pas saisi une valeur correcte, veuillez recommencer!");
 					break;
 			}
 		} while (choix !=0);

@@ -48,6 +48,12 @@
       type="INTEGER"
       default="6"
       description="points d'action du vaisseau"/>
+   <column
+      name="type_vaisseau"
+      required="true"
+      type="VARCHAR"
+      default="3"
+      description="image du vaisseau"/>
   </table>
   
 <!-- TABLE CARACTERISTIQUES -->
