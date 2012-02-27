@@ -1,10 +1,17 @@
 public class Jeu {
 
 	Partie part;
+	int nb_joueurs;
 	
 	public static void main (String[] args) { new Jeu(); }
 	
 	public Jeu () {
+		nb_joueurs = 2;
+		part = new Partie();
+		this.nouveau();
+	}
+	
+	public void nouveau() {
 		int choix;
 		System.out.println("Bienvenue dans le jeu StarWars 1.0 GUIless");
 		do{
@@ -12,8 +19,12 @@ public class Jeu {
 			switch (choix) {
 				case 1:
 					System.out.println("Nouvelle partie");
-					part = new Partie();
-					part.nouvelle();
+					for (int i=0; i < nb_joueurs; i++) {
+						System.out.println("");
+						System.out.println("Joueur "+(i+1)+" que voulez-vous faire ?");
+						System.out.println("");
+						part.nouvelle(i+1);
+					}
 					break;
 				case 2:
 					System.out.println("Charger une partie");

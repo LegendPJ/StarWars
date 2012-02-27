@@ -5,7 +5,7 @@
  "http://db.apache.org/torque/dtd/database_3_3.dtd">
 
 <database
-  name="starwars"
+  name="base5a00"
   defaultIdMethod="none">
   
 <!-- TABLE VAISSEAUX -->  
@@ -19,40 +19,11 @@
       size="40"
       description="Nom du vaisseau"/>
     <column
-      name="attaque"
+      name="type"
       required="true"
-      type="INTEGER"
-      size="2"
-      default="0"
-      description="attaque du vaisseau"/>
-    <column
-      name="degats"
-      required="true"
-      type="INTEGER"
-      size="2"
-      default="0"
-      description="degats du vaisseau"/>
-    <column
-      name="champ"
-      required="true"
-      type="INTEGER"
-      size="2"
-      default="0"
-      description="champ du vaisseau"/>
-    <column
-      name="energie"
-      required="true"
-      type="INTEGER"
-      size="2"
-      default="0"
-      description="energie du vaisseau"/>
-   <column
-      name="pa"
-      required="true"
-      type="INTEGER"
-      size="1"
-      default="6"
-      description="points d'action du vaisseau"/>
+      type="VARCHAR"
+      size="3"
+      description="Type du vaisseau"/>
   </table>
   
 <!-- TABLE CARACTERISTIQUES -->
@@ -76,7 +47,7 @@
       primaryKey="true"
       type="VARCHAR"
       size="40"
-      description="Nom de l'objet"/>
+      description="Nom de lobjet"/>
     <column
       name="points"
       required="true"
@@ -87,7 +58,7 @@
       name="carac"
       required="true"
       default="0"
-      description="caracteritique amÃ©liorÃ©e"/>
+      description="caracteritique améliorée"/>
     <foreign-key foreignTable="caracteristiques">
       <reference
         local="carac"
@@ -111,7 +82,7 @@
       primaryKey="true"
       type="VARCHAR"
       size="40"
-      description="Nom de l'objet"/>
+      description="Nom de lobjet"/>
     <foreign-key foreignTable="vaisseaux">
       <reference
         local="nom_vaisseau"
@@ -119,7 +90,7 @@
     </foreign-key>
     <foreign-key foreignTable="objets">
       <reference
-        local="nom_objets"
+        local="nom_objet"
         foreign="nom"/>
     </foreign-key>
   </table>  
@@ -139,6 +110,18 @@
       type="VARCHAR"
       size="40"
       description="Nom de la partie"/>
+	<column
+      name="tour"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="a qui le tour"/>
+      
+	<foreign-key foreignTable="vaisseaux">
+      <reference
+        local="tour"
+        foreign="nom"/>
+    </foreign-key> 
   </table>  
   
 <!-- TABLE PARTIES_VAISSEAUX -->
@@ -160,14 +143,42 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      size="3"
-      description="coordonnÃ©es en X"/>
+      description="coordonnées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      size="3"
-      description="coordonnÃ©es en Y"/>
+      description="coordonnées en Y"/>
+	<column
+      name="attaque"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="attaque du vaisseau"/>
+    <column
+      name="degats"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="degats du vaisseau"/>
+    <column
+      name="champ"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="champ du vaisseau"/>
+    <column
+      name="energie"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="energie du vaisseau"/>
+   <column
+      name="pa"
+      required="true"
+      type="INTEGER"
+      default="6"
+      description="points daction du vaisseau"/>
       
     <foreign-key foreignTable="parties">
       <reference
@@ -178,11 +189,11 @@
       <reference
         local="nom_vaisseau"
         foreign="nom"/>
-    </foreign-key>    
+    </foreign-key>
   </table>
 
 
-<!-- TABLE PARTIES_VAISSEAUX -->
+<!-- TABLE OBJETS_PARTIES -->
   
   <table name="objets_parties" description="objets_parties">
   	<column
@@ -196,19 +207,17 @@
       required="true"
       type="VARCHAR"
       size="40"
-      description="Nom de l'objet"/>
+      description="Nom de lobjet"/>
     <column
       name="coord_x"
       required="true"
       type="INTEGER"
-      size="3"
-      description="coordonnÃ©es en X"/>
+      description="coordonnées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      size="3"
-      description="coordonnÃ©es en Y"/>
+      description="coordonnées en Y"/>
       
     <foreign-key foreignTable="parties">
       <reference

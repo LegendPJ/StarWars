@@ -1,44 +1,45 @@
+import java.util.HashSet;
+
+
 public class Partie {
 	
 	private Plateau plat;
+	private HashSet<Vaisseau> vaisseaux;
 	
 	public Partie() {
 		plat = new Plateau(10);
+		vaisseaux = new HashSet<Vaisseau>();
+		plat.afficher();
 	}
-	public void nouvelle() {
+	public void nouvelle(int numJoueur) {
 		
-		int c1, c2;
-		
-		String tableauV[] = {"(-)", "[-]", "{-}" , "/-\\", "|-|"};
-		
-				System.out.println("Joueur 1, veuillez choisir votre vaisseau : ");
-				for (int i=0; i < tableauV.length; i++) {
-					int nb = i+1;
-					System.out.println(nb+". "+tableauV[i]);
-				}
-			do {
-					c1 = IO.lireEntier();
-				
-			} while (c1 > 5 || c1 < 1);
-				System.out.println("Joueur 1, votre vaisseau est : "+tableauV[c1-1]);
-				
-				
-			
-				System.out.println("Joueur 2, veuillez choisir votre vaisseau à votre tour : ");
+		System.out.println("************************************");
+		System.out.println("*  Star Wars 1.0 | Nouvelle partie");
+		System.out.println("*");
+		System.out.println("* 1. Utiliser un vaisseau ");
+		System.out.println("* 2. Créer un vaisseau");
+		System.out.println("* 0. Menu Principal");
+		System.out.println("************************************");
 
-				for (int i=0; i < tableauV.length; i++) {
-					int a = 0;
-					int nb;
-						if (tableauV[a] != tableauV[c1-1]) {
-							nb = a+1;
-							System.out.println(nb+". "+tableauV[a]);
-						}
-					a++;
-				}
-			do {
-					c2 = IO.lireEntier();
-				
-			} while (c2 > 5 || c2 < 1);
-				System.out.println("Joueur 2, votre vaisseau est : "+tableauV[c2-1]);
+		int choix;
+		
+		do{
+			choix = IO.lireEntier();
+			switch (choix) {
+				case 1:
+					//chargerVaisseau();
+					break;
+				case 2:
+					Vaisseau v = new Vaisseau(numJoueur);
+					vaisseaux.add(v);
+					choix = 0;
+					break;
+				case 0:
+					break;
+				default:
+					System.out.println("Vous n'avez pas saisi une valeur correcte, veuillez recommencer!");
+					break;
+			}
+		} while (choix !=0);
 	}
 }

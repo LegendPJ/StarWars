@@ -19,6 +19,137 @@
       size="40"
       description="Nom du vaisseau"/>
     <column
+      name="type"
+      required="true"
+      type="VARCHAR"
+      size="3"
+      description="Type du vaisseau"/>
+  </table>
+  
+<!-- TABLE CARACTERISTIQUES -->
+  
+  <table name="caracteristiques" description="caracteristiques">
+  	<column 
+  	  name="nom"
+  	  required="true"
+  	  primaryKey="true"
+  	  type="VARCHAR"
+  	  size="60"
+  	  description="..." />
+  </table>
+  
+<!-- TABLE OBJETS -->
+ 
+  <table name="objets" description="objets">
+  	<column
+      name="nom"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de lobjet"/>
+    <column
+      name="points"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="points de gain"/>
+    <column
+      name="carac"
+      required="true"
+      default="0"
+      description="caracteritique améliorée"/>
+    <foreign-key foreignTable="caracteristiques">
+      <reference
+        local="carac"
+        foreign="nom"/>
+    </foreign-key>
+  </table>
+ 
+<!-- TABLE OBJETS_VAISSEAUX -->
+ 
+  <table name="objets_vaisseaux" description="objets_vaisseaux">
+  	<column
+      name="nom_vaisseau"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="nom_objet"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de lobjet"/>
+    <foreign-key foreignTable="vaisseaux">
+      <reference
+        local="nom_vaisseau"
+        foreign="nom"/>
+    </foreign-key>
+    <foreign-key foreignTable="objets">
+      <reference
+        local="nom_objet"
+        foreign="nom"/>
+    </foreign-key>
+  </table>  
+  
+<!-- TABLE PARTIES -->
+  
+  <table name="parties" description="parties">
+  	<column
+      name="id"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Une partie"/>
+    <column
+      name="nom"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de la partie"/>
+	<column
+      name="tour"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="a qui le tour"/>
+      
+	<foreign-key foreignTable="vaisseaux">
+      <reference
+        local="tour"
+        foreign="nom"/>
+    </foreign-key> 
+  </table>  
+  
+<!-- TABLE PARTIES_VAISSEAUX -->
+  
+  <table name="parties_vaisseaux" description="parties_vaisseaux">
+  	<column
+      name="id_partie"
+      required="true"
+      primaryKey="true"
+      type="INTEGER"
+      description="Une partie"/>
+    <column
+      name="nom_vaisseau"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="coord_x"
+      required="true"
+      type="INTEGER"
+      description="coordonnées en X"/>
+    <column
+      name="coord_y"
+      required="true"
+      type="INTEGER"
+      description="coordonnées en Y"/>
+	<column
       name="attaque"
       required="true"
       type="INTEGER"
@@ -47,126 +178,7 @@
       required="true"
       type="INTEGER"
       default="6"
-      description="points d'action du vaisseau"/>
-   <column
-      name="type_vaisseau"
-      required="true"
-      type="VARCHAR"
-      default="3"
-      description="image du vaisseau"/>
-  </table>
-  
-<!-- TABLE CARACTERISTIQUES -->
-  
-  <table name="caracteristiques" description="caracteristiques">
-  	<column 
-  	  name="nom"
-  	  required="true"
-  	  primaryKey="true"
-  	  type="VARCHAR"
-  	  size="60"
-  	  description="..." />
-  </table>
-  
-<!-- TABLE OBJETS -->
- 
-  <table name="objets" description="objets">
-  	<column
-      name="nom"
-      required="true"
-      primaryKey="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom de l'objet"/>
-    <column
-      name="points"
-      required="true"
-      type="INTEGER"
-      default="0"
-      description="points de gain"/>
-    <column
-      name="carac"
-      required="true"
-      default="0"
-      description="caracteritique amÃ©liorÃ©e"/>
-    <foreign-key foreignTable="caracteristiques">
-      <reference
-        local="carac"
-        foreign="nom"/>
-    </foreign-key>
-  </table>
- 
-<!-- TABLE OBJETS_VAISSEAUX -->
- 
-  <table name="objets_vaisseaux" description="objets_vaisseaux">
-  	<column
-      name="nom_vaisseau"
-      required="true"
-      primaryKey="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom du vaisseau"/>
-    <column
-      name="nom_objet"
-      required="true"
-      primaryKey="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom de l'objet"/>
-    <foreign-key foreignTable="vaisseaux">
-      <reference
-        local="nom_vaisseau"
-        foreign="nom"/>
-    </foreign-key>
-    <foreign-key foreignTable="objets">
-      <reference
-        local="nom_objet"
-        foreign="nom"/>
-    </foreign-key>
-  </table>  
-  
-<!-- TABLE PARTIES -->
-  
-  <table name="parties" description="parties">
-  	<column
-      name="id"
-      required="true"
-      primaryKey="true"
-      type="INTEGER"
-      description="Une partie"/>
-    <column
-      name="nom"
-      required="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom de la partie"/>
-  </table>  
-  
-<!-- TABLE PARTIES_VAISSEAUX -->
-  
-  <table name="parties_vaisseaux" description="parties_vaisseaux">
-  	<column
-      name="id_partie"
-      required="true"
-      primaryKey="true"
-      type="INTEGER"
-      description="Une partie"/>
-    <column
-      name="nom_vaisseau"
-      required="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom du vaisseau"/>
-    <column
-      name="coord_x"
-      required="true"
-      type="INTEGER"
-      description="coordonnÃ©es en X"/>
-    <column
-      name="coord_y"
-      required="true"
-      type="INTEGER"
-      description="coordonnÃ©es en Y"/>
+      description="points daction du vaisseau"/>
       
     <foreign-key foreignTable="parties">
       <reference
@@ -177,7 +189,7 @@
       <reference
         local="nom_vaisseau"
         foreign="nom"/>
-    </foreign-key>    
+    </foreign-key>
   </table>
 
 
@@ -195,17 +207,17 @@
       required="true"
       type="VARCHAR"
       size="40"
-      description="Nom de l'objet"/>
+      description="Nom de lobjet"/>
     <column
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en X"/>
+      description="coordonnées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en Y"/>
+      description="coordonnées en Y"/>
       
     <foreign-key foreignTable="parties">
       <reference
