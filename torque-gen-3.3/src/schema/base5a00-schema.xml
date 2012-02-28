@@ -116,12 +116,6 @@
       type="VARCHAR"
       size="40"
       description="a qui le tour"/>
-      
-	<foreign-key foreignTable="vaisseaux">
-      <reference
-        local="tour"
-        foreign="nom"/>
-    </foreign-key> 
   </table>  
   
 <!-- TABLE PARTIES_VAISSEAUX -->

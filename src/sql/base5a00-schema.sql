@@ -56,7 +56,7 @@ COMMENT ON TABLE objets IS 'objets';
 
 COMMENT ON COLUMN objets.nom IS 'Nom de lobjet';
 COMMENT ON COLUMN objets.points IS 'points de gain';
-COMMENT ON COLUMN objets.carac IS 'caracteritique améliorée';
+COMMENT ON COLUMN objets.carac IS 'caracteritique amÃ©liorÃ©e';
 
 
 -----------------------------------------------------------------------------
@@ -126,8 +126,8 @@ COMMENT ON TABLE parties_vaisseaux IS 'parties_vaisseaux';
 
 COMMENT ON COLUMN parties_vaisseaux.id_partie IS 'Une partie';
 COMMENT ON COLUMN parties_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
-COMMENT ON COLUMN parties_vaisseaux.coord_x IS 'coordonnées en X';
-COMMENT ON COLUMN parties_vaisseaux.coord_y IS 'coordonnées en Y';
+COMMENT ON COLUMN parties_vaisseaux.coord_x IS 'coordonnÃ©es en X';
+COMMENT ON COLUMN parties_vaisseaux.coord_y IS 'coordonnÃ©es en Y';
 COMMENT ON COLUMN parties_vaisseaux.attaque IS 'attaque du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.degats IS 'degats du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.champ IS 'champ du vaisseau';
@@ -155,8 +155,8 @@ COMMENT ON TABLE objets_parties IS 'objets_parties';
 
 COMMENT ON COLUMN objets_parties.id_partie IS 'Une partie';
 COMMENT ON COLUMN objets_parties.nom_objet IS 'Nom de lobjet';
-COMMENT ON COLUMN objets_parties.coord_x IS 'coordonnées en X';
-COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnées en Y';
+COMMENT ON COLUMN objets_parties.coord_x IS 'coordonnÃ©es en X';
+COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnÃ©es en Y';
 
 
 ----------------------------------------------------------------------
@@ -200,10 +200,6 @@ ALTER TABLE objets_vaisseaux
 ----------------------------------------------------------------------
 
 
-ALTER TABLE parties
-    ADD CONSTRAINT parties_FK_1 FOREIGN KEY (tour)
-    REFERENCES vaisseaux (nom)
-;
 
 ----------------------------------------------------------------------
 -- parties
