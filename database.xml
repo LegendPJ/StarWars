@@ -58,8 +58,9 @@
       name="carac"
       required="true"
       default="0"
-      description="caracteritique amÃ©liorÃ©e"/>
-<!-- manque le type de champ non ? -->
+      type="VARCHAR"
+      size="60"
+      description="caracteritique améliorée"/>
     <foreign-key foreignTable="caracteristiques">
       <reference
         local="carac"
@@ -213,12 +214,12 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnÃˆes en X"/>
+      description="coordonnÃées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnÃˆes en Y"/>
+      description="coordonnées en Y"/>
       
     <foreign-key foreignTable="parties">
       <reference
