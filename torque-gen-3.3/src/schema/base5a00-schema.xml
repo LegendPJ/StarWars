@@ -58,7 +58,7 @@
       name="carac"
       required="true"
       default="0"
-      description="caracteritique améliorée"/>
+      description="caracteritique amÃ©liorÃ©e"/>
     <foreign-key foreignTable="caracteristiques">
       <reference
         local="carac"
@@ -143,12 +143,12 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnées en X"/>
+      description="coordonnÃ©es en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnées en Y"/>
+      description="coordonnÃ©es en Y"/>
 	<column
       name="attaque"
       required="true"
@@ -212,12 +212,12 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnées en X"/>
+      description="coordonnÃ©es en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnées en Y"/>
+      description="coordonnÃ©es en Y"/>
       
     <foreign-key foreignTable="parties">
       <reference
