@@ -20,5 +20,23 @@ public  class PartiesVaisseaux
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
+    public PartiesVaisseaux() { super(); }
+    
+    /**
+     * 
+     * @param atq Attaque
+     * @param frc Champ de Force
+     * @param dgt Degats
+     * @param nrj Energie
+     */
+    public PartiesVaisseaux (int atq, int cdf, int dgt, int nrj) {
+    	super();
+    	this.setAttaque(atq);
+    	this.setChamp(cdf);
+    	this.setDegats(dgt);
+    	this.setEnergie(nrj);
+    	this.setCoordX(0);
+    	this.setCoordY(0);
+    }
 
 }

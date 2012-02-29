@@ -7,7 +7,7 @@ import org.apache.torque.TorqueException;
 
 
 public class Controller {
-	protected static Connection conn;
+	protected static Connection conn, connTransaction;
 	private final static String TORQUE_PROPS = new String("torque-3.3//Torque.properties");
 	
 	public Controller() {

@@ -1,6 +1,0 @@
-org.apache.torque.engine
-org.apache.torque.engine.database.model
-org.apache.torque.engine.database.transform
-org.apache.torque.engine.platform
-org.apache.torque.engine.sql
-org.apache.torque.task

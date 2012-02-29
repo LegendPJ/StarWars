@@ -1,3 +1,5 @@
+import java.sql.Connection;
+
 import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.util.Transaction;
@@ -22,40 +24,52 @@ public class PartieController extends Controller {
 	 * Créer une nouvelle partie vide et l'enregistre
 	 */
 	public void nouvelle() {
+		int choixMenu = 0;
+		String nom;
 		try {
-			Transaction.begin();
+			connTransaction = Transaction.begin();
 		} catch (TorqueException e2) {
 			e2.printStackTrace();
 		}
-		System.out.println("Nom de la partie : ");
-		parties.setNom(IO.lireChaine());
+		
+		parties = new Parties();
+		do {
+			System.out.println("Nom de la partie (40 caracteres maximum) : ");
+			nom = IO.lireChaine();
+		} while (nom.length() > 40);
+		
+		parties.setNom(nom);
 		parties.setTour("");
 		try {
-			parties.setId(IO.lireEntier());
-		} catch (TorqueException e1) {
-			e1.printStackTrace();
+			parties.save(connTransaction);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
 		}
-		
 		for (int i=0; i < nb_joueurs; i++) {
 			System.out.println("");
 			System.out.println("Joueur "+(i+1)+" que voulez-vous faire ?");
 			System.out.println("");
-			if (this.menuPartie(i+1) == 10)
+			choixMenu = this.menuPartie(i+1);
+			if (choixMenu == 10)
 				i = nb_joueurs;
 		}
-		try {
-			// TODO Enregistrer les Vaisseaux et les PartiesVaisseaux dans une transaction pour eviter les problemes
-			parties.save();
-			Transaction.commit(conn);
-		} catch (Exception e) {
+		if (choixMenu != 10)
+		{
 			try {
-				Transaction.rollback(conn);
-			} catch (TorqueException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				// TODO Enregistrer les Vaisseaux et les PartiesVaisseaux dans une transaction pour eviter les problemes
+				Transaction.commit(connTransaction);
+			} catch (Exception e) {
+				try {
+					Transaction.rollback(connTransaction);
+				} catch (TorqueException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				e.printStackTrace();
 			}
-			e.printStackTrace();
 		}
+		
 	}
 	
 	/**
@@ -83,10 +97,16 @@ public class PartieController extends Controller {
 					//chargerVaisseau();
 					break;
 				case 2:
-					vaisseaux.creer();
+					vaisseaux.creer(numJoueur, this.parties);
 					choix = 0;
 					break;
 				case 0:
+					try {
+						Transaction.rollback(connTransaction);
+					} catch (TorqueException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					fin = 10;
 					break;
 				default:

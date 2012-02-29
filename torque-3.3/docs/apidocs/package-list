@@ -1,9 +1,0 @@
-org.apache.torque
-org.apache.torque.adapter
-org.apache.torque.avalon
-org.apache.torque.dsfactory
-org.apache.torque.manager
-org.apache.torque.map
-org.apache.torque.oid
-org.apache.torque.om
-org.apache.torque.util

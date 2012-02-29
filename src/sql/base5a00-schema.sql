@@ -83,8 +83,10 @@ COMMENT ON COLUMN objets_vaisseaux.nom_objet IS 'Nom de lobjet';
 -- parties
 -----------------------------------------------------------------------------
 DROP TABLE parties CASCADE;
+DROP SEQUENCE parties_SEQ;
 
 
+CREATE SEQUENCE parties_SEQ INCREMENT BY 1 START WITH 1 NO MAXVALUE NO CYCLE;
 
 CREATE TABLE parties
 (
@@ -119,7 +121,8 @@ CREATE TABLE parties_vaisseaux
     champ INTEGER default 0 NOT NULL,
     energie INTEGER default 0 NOT NULL,
     pa INTEGER default 6 NOT NULL,
-    PRIMARY KEY (id_partie)
+    num_joueur INTEGER NOT NULL,
+    PRIMARY KEY (id_partie,nom_vaisseau)
 );
 
 COMMENT ON TABLE parties_vaisseaux IS 'parties_vaisseaux';
@@ -133,6 +136,7 @@ COMMENT ON COLUMN parties_vaisseaux.degats IS 'degats du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.champ IS 'champ du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.energie IS 'energie du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.pa IS 'points daction du vaisseau';
+COMMENT ON COLUMN parties_vaisseaux.num_joueur IS 'numero du joueur';
 
 
 -----------------------------------------------------------------------------
