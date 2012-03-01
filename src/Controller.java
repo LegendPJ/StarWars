@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
+import org.apache.torque.util.Transaction;
 
 
 public class Controller {
@@ -14,7 +15,7 @@ public class Controller {
 		
 	}
 	
-	public static void connexion() {
+	protected static void connexion() {
 		try {
 			//CONNEXION
 			Torque.init(TORQUE_PROPS);
@@ -29,11 +30,36 @@ public class Controller {
 		}
 	}
 	
-	public static void finConnexion() {
+	protected static void finConnexion() {
 		try {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	protected void beginTransaction() {
+		try {
+			connTransaction = Transaction.begin();
+		} catch (TorqueException e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	protected void commitTransaction() {
+		try {
+			Transaction.commit(connTransaction);
+		} catch (Exception e) {
+			this.rollBack();
+			e.printStackTrace();
+		}
+	}
+	
+	protected void rollBack() {
+		try {
+			Transaction.rollback(connTransaction);
+		} catch (TorqueException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

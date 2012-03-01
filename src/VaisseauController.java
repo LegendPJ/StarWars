@@ -1,17 +1,15 @@
 import java.util.HashSet;
 
-import org.apache.torque.NoRowsException;
-import org.apache.torque.TooManyRowsException;
 import org.apache.torque.TorqueException;
 
-import torque.generated.BaseVaisseauxPeer;
 import torque.generated.Parties;
 import torque.generated.PartiesVaisseaux;
 import torque.generated.Vaisseaux;
+import torque.generated.VaisseauxPeer;
 
 public class VaisseauController extends Controller {
 
-	static String VAISSEAUX[] = {"(-)", "[-]", "{-}" , "/-\\", "|-|"};
+	private static String VAISSEAUX[] = {"(-)", "[-]", "{-}" , "/-\\", "|-|"};
 	private HashSet<Vaisseaux> vaisseaux;
 	private HashSet<String> noms;
 	
@@ -26,8 +24,6 @@ public class VaisseauController extends Controller {
 		int c1;
 		String nomV;
 		Vaisseaux v = new Vaisseaux();
-		Vaisseaux vE;
-		boolean contain;
 		
 		
 		
@@ -54,33 +50,9 @@ public class VaisseauController extends Controller {
 		
 		// Nom du vaisseau
 		do {
-			contain = false;
-			vE = null;
 			System.out.print("Joueur "+numJoueur+", veuillez nommer votre vaisseau : ");
 			nomV = IO.lireChaine();
-			try {
-				vE = BaseVaisseauxPeer.retrieveByPK(nomV);
-			} catch (NoRowsException e) {
-				for (String vtest : noms) {
-					if (vtest.toString().equals(nomV.toString()))
-						contain = true;
-				}
-			} catch (TooManyRowsException e) {
-				// TODO Auto-generated catch block
-
-			} catch (TorqueException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} while (nomV.length() > 40 || vE != null || contain == true);
-		
-		try {
-			// TODO: répéter tant qu'il y a une exception
-			v.setNom(nomV);
-		} catch (TorqueException e) {
-			e.printStackTrace();
-		}
-		noms.add(nomV);
+		} while (nomV.length() > 40 || VaisseauxPeer.nomPris(nomV, noms));
 		
 		// Type du vasseau
 		System.out.println("Joueur "+numJoueur+", choisissez votre vaisseau : ");
@@ -91,27 +63,25 @@ public class VaisseauController extends Controller {
 		do {
 			c1 = IO.lireEntier();
 		} while (c1 > 5 || c1 < 1);
-		System.out.println("Joueur "+numJoueur+", \""+v.getNom()+"\" a été créé "+VAISSEAUX[c1-1]+"\n");
-		v.setType(VAISSEAUX[c1-1]);
+		System.out.println("Joueur " + numJoueur + ", \"" + nomV + "\" a été créé " + VAISSEAUX[c1-1] + "\n");
 		
 		// Caracteristiques du vaisseau pour la partie
 		PartiesVaisseaux pv = this.setCaracs(numJoueur);
 		
 		try {
+			v.setNom(nomV);
+			v.setType(VAISSEAUX[c1-1]);
 			pv.setNomVaisseau(v.getNom());
 			pv.setIdPartie(p.getId());
 			pv.setNumJoueur(numJoueur);
-		} catch (TorqueException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		// Ajoute le vaisseau en bd et pour le controleur
-		vaisseaux.add(v);
-		try {
+			
+			noms.add(nomV);
+			vaisseaux.add(v);
+			
 			v.save(connTransaction);
 			pv.save(connTransaction);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (TorqueException e1) {
+			e1.printStackTrace();
 		}
 	}
 	/**
@@ -145,7 +115,6 @@ public class VaisseauController extends Controller {
 		sommeC-=cdf;
 		nrj = sommeC;
 		System.out.println("Votre vaisseau aura donc "+nrj+" points d'energie.");
-		// TODO set les caracteristiques
 		
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj);
 	}

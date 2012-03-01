@@ -1,5 +1,11 @@
 package torque.generated;
 
+import java.util.HashSet;
+
+import org.apache.torque.NoRowsException;
+import org.apache.torque.TooManyRowsException;
+import org.apache.torque.TorqueException;
+
 /**
  * vaisseaux
  *
@@ -16,5 +22,23 @@ public class VaisseauxPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
-    // test de ma ligne
+
+	public static boolean nomPris(String nomV, HashSet<String> noms) {
+		boolean vE = false;
+		
+		try {
+			BaseVaisseauxPeer.retrieveByPK(nomV);
+			vE = true;
+		} catch (NoRowsException e) {
+			for (String vtest : noms) {
+				if (vtest.toString().equals(nomV.toString()))
+					vE = true;
+			}
+		} catch (TooManyRowsException e) {
+
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		return vE;
+	}
 }

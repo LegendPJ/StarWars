@@ -1,12 +1,8 @@
-import java.sql.Connection;
-
-import org.apache.torque.Torque;
-import org.apache.torque.TorqueException;
-import org.apache.torque.util.Transaction;
-
 import torque.generated.*;
 
 public class PartieController extends Controller {
+	
+	private static int QUITTER = 10;
 	
 	private Plateau plat;
 	private VaisseauController vaisseaux;
@@ -26,11 +22,7 @@ public class PartieController extends Controller {
 	public void nouvelle() {
 		int choixMenu = 0;
 		String nom;
-		try {
-			connTransaction = Transaction.begin();
-		} catch (TorqueException e2) {
-			e2.printStackTrace();
-		}
+		this.beginTransaction();
 		
 		parties = new Parties();
 		do {
@@ -38,14 +30,14 @@ public class PartieController extends Controller {
 			nom = IO.lireChaine();
 		} while (nom.length() > 40);
 		
-		parties.setNom(nom);
-		parties.setTour("");
 		try {
+			parties.setNom(nom);
+			parties.setTour("");
 			parties.save(connTransaction);
 		} catch (Exception e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		
 		for (int i=0; i < nb_joueurs; i++) {
 			System.out.println("");
 			System.out.println("Joueur "+(i+1)+" que voulez-vous faire ?");
@@ -54,22 +46,9 @@ public class PartieController extends Controller {
 			if (choixMenu == 10)
 				i = nb_joueurs;
 		}
-		if (choixMenu != 10)
-		{
-			try {
-				// TODO Enregistrer les Vaisseaux et les PartiesVaisseaux dans une transaction pour eviter les problemes
-				Transaction.commit(connTransaction);
-			} catch (Exception e) {
-				try {
-					Transaction.rollback(connTransaction);
-				} catch (TorqueException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
-		}
 		
+		if (choixMenu != this.QUITTER)
+			this.commitTransaction();
 	}
 	
 	/**
@@ -101,13 +80,8 @@ public class PartieController extends Controller {
 					choix = 0;
 					break;
 				case 0:
-					try {
-						Transaction.rollback(connTransaction);
-					} catch (TorqueException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					fin = 10;
+					this.rollBack();
+					fin = this.QUITTER;
 					break;
 				default:
 					System.out.println("Vous n'avez pas saisi une valeur correcte, veuillez recommencer!");
