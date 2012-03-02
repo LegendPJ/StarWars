@@ -1,7 +1,9 @@
 package torque.generated;
 
 
+import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
+import org.apache.torque.util.Criteria;
 
 /**
  * vaisseaux
@@ -18,7 +20,19 @@ public  class Vaisseaux
     extends torque.generated.BaseVaisseaux
     implements Persistent
 {
-    /** Serial version */
+	public Vaisseaux() {
+		
+	}
+    public Vaisseaux(String nomVaisseau, String type) {
+    	super();
+		try {
+			this.setType(type);
+			this.setNom(nomVaisseau);
+		} catch (TorqueException e) {
+		}
+	}
+
+	/** Serial version */
     private static final long serialVersionUID = 1329818711143L;
     // teste de ma ligne
 }

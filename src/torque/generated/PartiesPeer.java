@@ -1,5 +1,12 @@
 package torque.generated;
 
+import java.util.List;
+
+import org.apache.torque.NoRowsException;
+import org.apache.torque.TooManyRowsException;
+import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
+
 /**
  * parties
  *
@@ -16,5 +23,35 @@ public class PartiesPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
+
+	public static boolean nomPris(String nom) {
+		boolean c = true;
+		try {
+			BasePartiesPeer.retrieveByPK(nom);
+		} catch (NoRowsException e) {
+			c = false;
+		} catch (TooManyRowsException e) {
+		} catch (TorqueException e) {
+		}
+		
+		return c;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Parties> doSelectAll() throws TorqueException {
+		return PartiesPeer.doSelect(new Criteria());
+	}
+
+	public static Parties charger(String partie) {
+		Parties p = null;
+		try {
+			p = PartiesPeer.retrieveByPK(partie);
+		} catch (NoRowsException e) {
+		} catch (TooManyRowsException e) {
+		} catch (TorqueException e) {
+		}
+		
+		return p;
+	}
 
 }

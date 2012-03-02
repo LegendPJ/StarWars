@@ -1,6 +1,7 @@
 package torque.generated;
 
 
+import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
 
 /**
@@ -18,7 +19,16 @@ public  class Parties
     extends torque.generated.BaseParties
     implements Persistent
 {
-    /** Serial version */
+	public Parties() { super(); }
+    public Parties(String nom) {
+    	super();
+		try {
+			this.setNom(nom);
+		} catch (TorqueException e) {
+		}
+	}
+
+	/** Serial version */
     private static final long serialVersionUID = 1329818711143L;
 
 }

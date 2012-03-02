@@ -1,3 +1,5 @@
+import java.util.List;
+import org.apache.torque.TorqueException;
 import torque.generated.*;
 
 public class PartieController extends Controller {
@@ -6,14 +8,15 @@ public class PartieController extends Controller {
 	
 	private Plateau plat;
 	private VaisseauController vaisseaux;
+	private PartiesVaisseaux pv;
 	int nb_joueurs = 2;
-	private Parties parties;
+	private Parties partie;
 	
 	public PartieController() {
 		plat = new Plateau(10);
 		vaisseaux = new VaisseauController();
 		//plat.afficher();
-		parties = new Parties();
+		partie = new Parties();
 	}
 	
 	/**
@@ -24,16 +27,16 @@ public class PartieController extends Controller {
 		String nom;
 		this.beginTransaction();
 		
-		parties = new Parties();
+		partie = new Parties();
 		do {
 			System.out.println("Nom de la partie (40 caracteres maximum) : ");
 			nom = IO.lireChaine();
-		} while (nom.length() > 40);
+		} while (nom.length() > 40 || PartiesPeer.nomPris(nom));
 		
 		try {
-			parties.setNom(nom);
-			parties.setTour("");
-			parties.save(connTransaction);
+			partie.setNom(nom);
+			partie.setTour("");
+			partie.save(connTransaction);
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
@@ -47,8 +50,33 @@ public class PartieController extends Controller {
 				i = nb_joueurs;
 		}
 		
-		if (choixMenu != this.QUITTER)
+		if (choixMenu != PartieController.QUITTER)
 			this.commitTransaction();
+	}
+	
+	public void charger() {
+		try {
+			List<Parties> list = PartiesPeer.doSelectAll();
+			
+			int c = 1, menu = 0;
+			int length = list.size();
+			for (Parties p : list){
+				System.out.println(c + ". " + p.getNom());
+				c++;
+			}
+			do {
+				System.out.println("Choisissez votre partie [1.."+length+"] : ");
+				menu = IO.lireEntier();
+			} while (menu < 1 || menu > length);
+			
+			partie = PartiesPeer.charger(list.get(menu-1).getNom());
+			vaisseaux.chargerVaisseaux(partie);
+			
+			//Faire le lien entre la partie (ICI) et les vaisseaux récupérés!
+			
+		} catch (TorqueException e) {
+			System.out.println("Aucune partie enregistrée");
+		}
 	}
 	
 	/**
@@ -76,12 +104,12 @@ public class PartieController extends Controller {
 					//chargerVaisseau();
 					break;
 				case 2:
-					vaisseaux.creer(numJoueur, this.parties);
+					vaisseaux.creer(numJoueur, this.partie);
 					choix = 0;
 					break;
 				case 0:
 					this.rollBack();
-					fin = this.QUITTER;
+					fin = PartieController.QUITTER;
 					break;
 				default:
 					System.out.println("Vous n'avez pas saisi une valeur correcte, veuillez recommencer!");

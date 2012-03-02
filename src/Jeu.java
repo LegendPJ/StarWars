@@ -1,10 +1,14 @@
-import java.sql.DriverManager;
+import java.sql.DriverManager;				
 import java.sql.SQLException;
 
 import java.sql.Connection;
 
 import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
+
+import torque.generated.Parties;
+import torque.generated.PartiesVaisseaux;
+import torque.generated.Vaisseaux;
 
 public class Jeu {
 
@@ -33,6 +37,7 @@ public class Jeu {
 					break;
 				case 2:
 					System.out.println("Charger une partie");
+					part.charger();
 					break;
 				case 3:
 					System.out.println("Ajouter un objet");

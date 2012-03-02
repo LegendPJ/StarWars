@@ -83,22 +83,18 @@ COMMENT ON COLUMN objets_vaisseaux.nom_objet IS 'Nom de lobjet';
 -- parties
 -----------------------------------------------------------------------------
 DROP TABLE parties CASCADE;
-DROP SEQUENCE parties_SEQ;
 
 
-CREATE SEQUENCE parties_SEQ INCREMENT BY 1 START WITH 1 NO MAXVALUE NO CYCLE;
 
 CREATE TABLE parties
 (
-    id INTEGER NOT NULL,
     nom VARCHAR(40) NOT NULL,
     tour VARCHAR(40) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (nom)
 );
 
 COMMENT ON TABLE parties IS 'parties';
 
-COMMENT ON COLUMN parties.id IS 'Une partie';
 COMMENT ON COLUMN parties.nom IS 'Nom de la partie';
 COMMENT ON COLUMN parties.tour IS 'a qui le tour';
 
@@ -112,7 +108,7 @@ DROP TABLE parties_vaisseaux CASCADE;
 
 CREATE TABLE parties_vaisseaux
 (
-    id_partie INTEGER NOT NULL,
+    nom_partie VARCHAR(40) NOT NULL,
     nom_vaisseau VARCHAR(40) NOT NULL,
     coord_x INTEGER NOT NULL,
     coord_y INTEGER NOT NULL,
@@ -122,12 +118,12 @@ CREATE TABLE parties_vaisseaux
     energie INTEGER default 0 NOT NULL,
     pa INTEGER default 6 NOT NULL,
     num_joueur INTEGER NOT NULL,
-    PRIMARY KEY (id_partie,nom_vaisseau)
+    PRIMARY KEY (nom_partie,nom_vaisseau)
 );
 
 COMMENT ON TABLE parties_vaisseaux IS 'parties_vaisseaux';
 
-COMMENT ON COLUMN parties_vaisseaux.id_partie IS 'Une partie';
+COMMENT ON COLUMN parties_vaisseaux.nom_partie IS 'Une partie';
 COMMENT ON COLUMN parties_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.coord_x IS 'coordonnÃ©es en X';
 COMMENT ON COLUMN parties_vaisseaux.coord_y IS 'coordonnÃ©es en Y';
@@ -148,16 +144,16 @@ DROP TABLE objets_parties CASCADE;
 
 CREATE TABLE objets_parties
 (
-    id_partie INTEGER NOT NULL,
+    nom_partie VARCHAR(40) NOT NULL,
     nom_objet VARCHAR(40) NOT NULL,
     coord_x INTEGER NOT NULL,
     coord_y INTEGER NOT NULL,
-    PRIMARY KEY (id_partie)
+    PRIMARY KEY (nom_partie)
 );
 
 COMMENT ON TABLE objets_parties IS 'objets_parties';
 
-COMMENT ON COLUMN objets_parties.id_partie IS 'Une partie';
+COMMENT ON COLUMN objets_parties.nom_partie IS 'Une partie';
 COMMENT ON COLUMN objets_parties.nom_objet IS 'Nom de lobjet';
 COMMENT ON COLUMN objets_parties.coord_x IS 'coordonnÃ©es en X';
 COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnÃ©es en Y';
@@ -211,8 +207,8 @@ ALTER TABLE objets_vaisseaux
 
 
 ALTER TABLE parties_vaisseaux
-    ADD CONSTRAINT parties_vaisseaux_FK_1 FOREIGN KEY (id_partie)
-    REFERENCES parties (id)
+    ADD CONSTRAINT parties_vaisseaux_FK_1 FOREIGN KEY (nom_partie)
+    REFERENCES parties (nom)
 ;
 ALTER TABLE parties_vaisseaux
     ADD CONSTRAINT parties_vaisseaux_FK_2 FOREIGN KEY (nom_vaisseau)
@@ -225,8 +221,8 @@ ALTER TABLE parties_vaisseaux
 
 
 ALTER TABLE objets_parties
-    ADD CONSTRAINT objets_parties_FK_1 FOREIGN KEY (id_partie)
-    REFERENCES parties (id)
+    ADD CONSTRAINT objets_parties_FK_1 FOREIGN KEY (nom_partie)
+    REFERENCES parties (nom)
 ;
 ALTER TABLE objets_parties
     ADD CONSTRAINT objets_parties_FK_2 FOREIGN KEY (nom_objet)

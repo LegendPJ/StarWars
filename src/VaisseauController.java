@@ -1,9 +1,11 @@
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.torque.TorqueException;
 
 import torque.generated.Parties;
 import torque.generated.PartiesVaisseaux;
+import torque.generated.PartiesVaisseauxPeer;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
 
@@ -25,36 +27,13 @@ public class VaisseauController extends Controller {
 		String nomV;
 		Vaisseaux v = new Vaisseaux();
 		
-		
-		
-		
-		
-		
-		/* CHANGER LA BD POUR METTRE LE NOM DUNE PARTIE EN PRIMARY KEY!!!!!!
-		 * 
-		 * 
-		 * URGENTISSIME
-		 * 
-		 * */
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		// Nom du vaisseau
 		do {
 			System.out.print("Joueur "+numJoueur+", veuillez nommer votre vaisseau : ");
 			nomV = IO.lireChaine();
 		} while (nomV.length() > 40 || VaisseauxPeer.nomPris(nomV, noms));
 		
-		// Type du vasseau
+		// Type du vaisseau
 		System.out.println("Joueur "+numJoueur+", choisissez votre vaisseau : ");
 		for (int i=0; i < VAISSEAUX.length; i++) {
 			int nb = i+1;
@@ -72,12 +51,12 @@ public class VaisseauController extends Controller {
 			v.setNom(nomV);
 			v.setType(VAISSEAUX[c1-1]);
 			pv.setNomVaisseau(v.getNom());
-			pv.setIdPartie(p.getId());
+			pv.setNomPartie(p.getNom());
 			pv.setNumJoueur(numJoueur);
 			
 			noms.add(nomV);
 			vaisseaux.add(v);
-			
+
 			v.save(connTransaction);
 			pv.save(connTransaction);
 		} catch (TorqueException e1) {
@@ -117,6 +96,20 @@ public class VaisseauController extends Controller {
 		System.out.println("Votre vaisseau aura donc "+nrj+" points d'energie.");
 		
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj);
+	}
+	@SuppressWarnings("unchecked")
+	public void chargerVaisseaux(Parties partie) {
+		List<PartiesVaisseaux> lPartieVaisseau;
+		try {
+			lPartieVaisseau = partie.getPartiesVaisseauxs();
+			//On recupere les vaisseaux (type et nom)
+			for (PartiesVaisseaux pv : lPartieVaisseau) {
+				Vaisseaux v = new Vaisseaux(pv.getNomVaisseau(), pv.getVaisseaux().getType());
+				vaisseaux.add(v);
+			}
+		} catch (TorqueException e) {
+		}
+		
 	}
 }
 
