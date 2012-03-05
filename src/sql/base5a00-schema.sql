@@ -48,7 +48,7 @@ CREATE TABLE objets
 (
     nom VARCHAR(40) NOT NULL,
     points INTEGER default 0 NOT NULL,
-    carac VARCHAR default '0' NOT NULL,
+    carac VARCHAR(60) default '0' NOT NULL,
     PRIMARY KEY (nom)
 );
 
@@ -56,7 +56,7 @@ COMMENT ON TABLE objets IS 'objets';
 
 COMMENT ON COLUMN objets.nom IS 'Nom de lobjet';
 COMMENT ON COLUMN objets.points IS 'points de gain';
-COMMENT ON COLUMN objets.carac IS 'caracteritique amÃ©liorÃ©e';
+COMMENT ON COLUMN objets.carac IS 'caracteritique améliorée';
 
 
 -----------------------------------------------------------------------------
@@ -89,14 +89,14 @@ DROP TABLE parties CASCADE;
 CREATE TABLE parties
 (
     nom VARCHAR(40) NOT NULL,
-    tour VARCHAR(40) NOT NULL,
+    tour INTEGER NOT NULL,
     PRIMARY KEY (nom)
 );
 
 COMMENT ON TABLE parties IS 'parties';
 
 COMMENT ON COLUMN parties.nom IS 'Nom de la partie';
-COMMENT ON COLUMN parties.tour IS 'a qui le tour';
+COMMENT ON COLUMN parties.tour IS 'loto a qui le tour ?';
 
 
 -----------------------------------------------------------------------------
@@ -125,8 +125,8 @@ COMMENT ON TABLE parties_vaisseaux IS 'parties_vaisseaux';
 
 COMMENT ON COLUMN parties_vaisseaux.nom_partie IS 'Une partie';
 COMMENT ON COLUMN parties_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
-COMMENT ON COLUMN parties_vaisseaux.coord_x IS 'coordonnÃ©es en X';
-COMMENT ON COLUMN parties_vaisseaux.coord_y IS 'coordonnÃ©es en Y';
+COMMENT ON COLUMN parties_vaisseaux.coord_x IS 'coordonnées en X';
+COMMENT ON COLUMN parties_vaisseaux.coord_y IS 'coordonnées en Y';
 COMMENT ON COLUMN parties_vaisseaux.attaque IS 'attaque du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.degats IS 'degats du vaisseau';
 COMMENT ON COLUMN parties_vaisseaux.champ IS 'champ du vaisseau';
@@ -155,8 +155,8 @@ COMMENT ON TABLE objets_parties IS 'objets_parties';
 
 COMMENT ON COLUMN objets_parties.nom_partie IS 'Une partie';
 COMMENT ON COLUMN objets_parties.nom_objet IS 'Nom de lobjet';
-COMMENT ON COLUMN objets_parties.coord_x IS 'coordonnÃ©es en X';
-COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnÃ©es en Y';
+COMMENT ON COLUMN objets_parties.coord_x IS 'coordonnées en X';
+COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnées en Y';
 
 
 ----------------------------------------------------------------------

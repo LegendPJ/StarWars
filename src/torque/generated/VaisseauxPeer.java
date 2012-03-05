@@ -1,10 +1,13 @@
 package torque.generated;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import org.apache.torque.NoRowsException;
 import org.apache.torque.TooManyRowsException;
 import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
 
 /**
  * vaisseaux
@@ -40,5 +43,25 @@ public class VaisseauxPeer
 			e.printStackTrace();
 		}
 		return vE;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Vaisseaux> doSelectAll(List<Vaisseaux> vlist) {
+		List<Vaisseaux> v = null;
+		try {
+			Criteria c = new Criteria();
+			if (vlist.size() != 0)
+			{
+				List<String> nList = new ArrayList<String>();
+				for (Vaisseaux vaisso : vlist)
+					nList.add(vaisso.getNom());
+				c.add(VaisseauxPeer.NOM, nList, Criteria.NOT_IN);
+			}
+				
+			v = VaisseauxPeer.doSelect(c);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		return v;
 	}
 }

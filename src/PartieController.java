@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.Random;
+
 import org.apache.torque.TorqueException;
 import torque.generated.*;
 
@@ -8,14 +10,12 @@ public class PartieController extends Controller {
 	
 	private Plateau plat;
 	private VaisseauController vaisseaux;
-	private PartiesVaisseaux pv;
-	int nb_joueurs = 2;
+	public static int nb_joueurs = 2;
 	private Parties partie;
 	
 	public PartieController() {
 		plat = new Plateau(10);
 		vaisseaux = new VaisseauController();
-		//plat.afficher();
 		partie = new Parties();
 	}
 	
@@ -34,24 +34,27 @@ public class PartieController extends Controller {
 		} while (nom.length() > 40 || PartiesPeer.nomPris(nom));
 		
 		try {
+			Random r = new Random();
 			partie.setNom(nom);
-			partie.setTour("");
+			partie.setTour(r.nextInt(2)+1);
 			partie.save(connTransaction);
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 		
 		for (int i=0; i < nb_joueurs; i++) {
-			System.out.println("");
-			System.out.println("Joueur "+(i+1)+" que voulez-vous faire ?");
-			System.out.println("");
 			choixMenu = this.menuPartie(i+1);
 			if (choixMenu == 10)
 				i = nb_joueurs;
 		}
 		
 		if (choixMenu != PartieController.QUITTER)
+		{
 			this.commitTransaction();
+			vaisseaux.clearLists();
+		
+			this.jouer();
+		}
 	}
 	
 	public void charger() {
@@ -70,13 +73,13 @@ public class PartieController extends Controller {
 			} while (menu < 1 || menu > length);
 			
 			partie = PartiesPeer.charger(list.get(menu-1).getNom());
-			vaisseaux.chargerVaisseaux(partie);
-			
-			//Faire le lien entre la partie (ICI) et les vaisseaux récupérés!
+			vaisseaux.chargerVaisseauxPartie(partie);
+			this.jouer();
 			
 		} catch (TorqueException e) {
 			System.out.println("Aucune partie enregistrée");
 		}
+		
 	}
 	
 	/**
@@ -84,28 +87,29 @@ public class PartieController extends Controller {
 	 * @param numJoueur numero du joueur pour le quel est affiché le menu
 	 * @return 10 si on quitte, 0 si on passe au joueur suivant
 	 */
+	
 	public int menuPartie(int numJoueur) {
 		
-		System.out.println("************************************");
-		System.out.println("*  Star Wars 1.0 | Nouvelle partie");
-		System.out.println("*");
-		System.out.println("* 1. Utiliser un vaisseau ");
-		System.out.println("* 2. Créer un vaisseau");
-		System.out.println("* 0. Menu Principal");
-		System.out.println("************************************");
-
 		int choix;
 		int fin = 0;
 		
 		do{
+			System.out.println("\n************************************");
+			System.out.println("*  Star Wars 1.0 | Nouvelle partie");
+			System.out.println("*");
+			System.out.println("* 1. Créer un vaisseau");
+			System.out.println("* 2. Utiliser un vaisseau ");
+			System.out.println("* 0. Menu Principal");
+			System.out.println("************************************");
+			System.out.println("\nJoueur "+numJoueur+" que voulez-vous faire ?\n");
 			choix = IO.lireEntier();
 			switch (choix) {
 				case 1:
-					//chargerVaisseau();
-					break;
-				case 2:
 					vaisseaux.creer(numJoueur, this.partie);
 					choix = 0;
+					break;
+				case 2:
+					choix = vaisseaux.chargerVaisseau(numJoueur, partie);
 					break;
 				case 0:
 					this.rollBack();
@@ -117,5 +121,16 @@ public class PartieController extends Controller {
 			}
 		} while (choix !=0);
 		return fin;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void jouer() {
+		//New Game
+		//Clear Ecran
+		try {
+			plat.afficher(partie.getPartiesVaisseauxs(), vaisseaux.getVaisseaux());
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
 	}
 }

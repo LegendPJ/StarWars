@@ -57,8 +57,10 @@
     <column
       name="carac"
       required="true"
+      type="VARCHAR"
+      size="60"
       default="0"
-      description="caracteritique amÃ©liorÃ©e"/>
+      description="caracteritique améliorée"/>
     <foreign-key foreignTable="caracteristiques">
       <reference
         local="carac"
@@ -108,9 +110,8 @@
 	<column
       name="tour"
       required="true"
-      type="VARCHAR"
-      size="40"
-      description="a qui le tour"/>
+      type="INTEGER"
+      description="loto a qui le tour ?"/>
   </table>  
   
 <!-- TABLE PARTIES_VAISSEAUX -->
@@ -134,12 +135,12 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en X"/>
+      description="coordonnées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en Y"/>
+      description="coordonnées en Y"/>
 	<column
       name="attaque"
       required="true"
@@ -209,12 +210,12 @@
       name="coord_x"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en X"/>
+      description="coordonnées en X"/>
     <column
       name="coord_y"
       required="true"
       type="INTEGER"
-      description="coordonnÃ©es en Y"/>
+      description="coordonnées en Y"/>
       
     <foreign-key foreignTable="parties">
       <reference

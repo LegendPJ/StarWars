@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -5,18 +6,19 @@ import org.apache.torque.TorqueException;
 
 import torque.generated.Parties;
 import torque.generated.PartiesVaisseaux;
-import torque.generated.PartiesVaisseauxPeer;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
 
 public class VaisseauController extends Controller {
 
 	private static String VAISSEAUX[] = {"(-)", "[-]", "{-}" , "/-\\", "|-|"};
-	private HashSet<Vaisseaux> vaisseaux;
+	private List<Vaisseaux> vaisseaux;
+	private List<PartiesVaisseaux> partieV; 
 	private HashSet<String> noms;
 	
 	public VaisseauController () {
-		this.vaisseaux = new HashSet<Vaisseaux> ();
+		this.vaisseaux = new ArrayList<Vaisseaux> ();
+		this.partieV = new ArrayList<PartiesVaisseaux> ();
 		noms = new HashSet<String>();
 	}
 	/**
@@ -53,6 +55,15 @@ public class VaisseauController extends Controller {
 			pv.setNomVaisseau(v.getNom());
 			pv.setNomPartie(p.getNom());
 			pv.setNumJoueur(numJoueur);
+			
+			if (numJoueur == 1) {
+				pv.setCoordX(4);
+				pv.setCoordY(0);
+			}
+			else {
+				pv.setCoordX(5);
+				pv.setCoordY(9);
+			}
 			
 			noms.add(nomV);
 			vaisseaux.add(v);
@@ -98,18 +109,64 @@ public class VaisseauController extends Controller {
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj);
 	}
 	@SuppressWarnings("unchecked")
-	public void chargerVaisseaux(Parties partie) {
-		List<PartiesVaisseaux> lPartieVaisseau;
+	public void chargerVaisseauxPartie(Parties partie) {
 		try {
-			lPartieVaisseau = partie.getPartiesVaisseauxs();
+			partieV = partie.getPartiesVaisseauxs();
 			//On recupere les vaisseaux (type et nom)
-			for (PartiesVaisseaux pv : lPartieVaisseau) {
+			for (PartiesVaisseaux pv : partieV) {
 				Vaisseaux v = new Vaisseaux(pv.getNomVaisseau(), pv.getVaisseaux().getType());
 				vaisseaux.add(v);
 			}
+			
 		} catch (TorqueException e) {
 		}
-		
+	}
+	public int chargerVaisseau(int numJoueur, Parties partie) {
+		List<Vaisseaux> lVaisPossible = VaisseauxPeer.doSelectAll(vaisseaux);
+		int r=0;
+		if (lVaisPossible == null || lVaisPossible.size() == 0)
+		{
+			System.out.println("Aucun vaisseau disponible");
+			r = 15;
+		}
+		else
+		{
+			int c = 1, menu = 0;
+			int length = lVaisPossible.size();
+			for (Vaisseaux v : lVaisPossible){
+				System.out.println(c + ". " + v.getNom());
+				c++;
+			}
+			do {
+				System.out.println("Choisissez votre vaisseau [1.."+length+"] : ");
+				menu = IO.lireEntier();
+			} while (menu < 1 || menu > length);
+			
+			PartiesVaisseaux pv = this.setCaracs(numJoueur);
+			
+			try {
+				
+				pv.setNomVaisseau(lVaisPossible.get(menu-1).getNom());
+				pv.setNomPartie(partie.getNom());
+				pv.setNumJoueur(numJoueur);
+				
+				vaisseaux.add(lVaisPossible.get(menu-1));
+				
+				pv.save(connTransaction);
+			} catch (TorqueException e1) {
+				e1.printStackTrace();
+			}
+			
+		}
+		return r;
+	}
+	
+	public void clearLists() {
+		vaisseaux.clear();
+		partieV.clear();
+	}
+	public List<Vaisseaux> getVaisseaux() {
+		return vaisseaux;
 	}
 }
 

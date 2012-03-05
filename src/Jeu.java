@@ -1,14 +1,4 @@
-import java.sql.DriverManager;				
-import java.sql.SQLException;
 
-import java.sql.Connection;
-
-import org.apache.torque.Torque;
-import org.apache.torque.TorqueException;
-
-import torque.generated.Parties;
-import torque.generated.PartiesVaisseaux;
-import torque.generated.Vaisseaux;
 
 public class Jeu {
 
@@ -32,11 +22,9 @@ public class Jeu {
 			choix = this.menu();
 			switch (choix) {
 				case 1:
-					System.out.println("Nouvelle partie");
 					part.nouvelle();
 					break;
 				case 2:
-					System.out.println("Charger une partie");
 					part.charger();
 					break;
 				case 3:

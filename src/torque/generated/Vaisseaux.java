@@ -3,7 +3,6 @@ package torque.generated;
 
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
-import org.apache.torque.util.Criteria;
 
 /**
  * vaisseaux
