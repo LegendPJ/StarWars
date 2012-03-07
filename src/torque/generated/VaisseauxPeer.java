@@ -45,22 +45,22 @@ public class VaisseauxPeer
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Vaisseaux> doSelectAll(List<Vaisseaux> vlist) {
+	public static List<Vaisseaux> doSelectAll() throws TorqueException {
+		return VaisseauxPeer.doSelect(new Criteria());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Vaisseaux> doSelectAllNotSelected(List<Vaisseaux> vlist) throws TorqueException {
 		List<Vaisseaux> v = null;
-		try {
-			Criteria c = new Criteria();
-			if (vlist.size() != 0)
-			{
-				List<String> nList = new ArrayList<String>();
-				for (Vaisseaux vaisso : vlist)
-					nList.add(vaisso.getNom());
-				c.add(VaisseauxPeer.NOM, nList, Criteria.NOT_IN);
-			}
-				
-			v = VaisseauxPeer.doSelect(c);
-		} catch (TorqueException e) {
-			e.printStackTrace();
+		Criteria c = new Criteria();
+		if (vlist.size() != 0) {
+			List<String> nList = new ArrayList<String>();
+			for (Vaisseaux vaisso : vlist)
+				nList.add(vaisso.getNom());
+			c.add(VaisseauxPeer.NOM, nList, Criteria.NOT_IN);
 		}
+				
+		v = VaisseauxPeer.doSelect(c);
 		return v;
 	}
 }

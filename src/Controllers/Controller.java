@@ -10,57 +10,55 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.util.Transaction;
 
-import Vues.VueMenuStarWars;
-import Vues.VuePartie;
-import Vues.VueJoueur;
-//import Vues.VuePlateau;
+import Vues.*;
 
 import torque.generated.Parties;
+import torque.generated.PartiesPeer;
 import torque.generated.PartiesVaisseaux;
+import torque.generated.PartiesVaisseauxPeer;
 import torque.generated.Vaisseaux;
+import torque.generated.VaisseauxPeer;
 
 
 public class Controller {
 	protected static Connection conn, connTransaction;
 	private final static String TORQUE_PROPS = new String("torque-3.3//Torque.properties");
 	
-	private int nb_joueurs = 2;
+	private final int nb_joueurs = 2;
 	
-	// Variables du jeu
+	// Vaisseau et partie en cours
 	protected List<Vaisseaux> vaisseaux;
 	protected List<PartiesVaisseaux> partieV;
 	protected Parties partie;
 
 	// Les vues
-//	private VuePlateau		_vuePlateau;
 	private VueMenuStarWars	_vueMenuStarwars;
 	private VuePartie		_vuePartie;
 	private VueJoueur		_vueJoueur;
 	
 	public Controller() {
-		vaisseaux			= new ArrayList<Vaisseaux>();
-		partieV				= new ArrayList<PartiesVaisseaux>();
-		partie				= new Parties();
-//		_vuePlateau 		= null;
-		_vueMenuStarwars	= null;
-		_vuePartie			= null;
+		this.resetJeu();
+		this.resetVues();
 	}
 	
 	public void menuPrincipal() {
 		int action = 0;
 		do {
 			this.resetVues();
+			this.resetJeu();
 			this.setVueMenuStarWars();
 			action = this._vueMenuStarwars.menu();
 			switch (action) {
 				case 1: // On veut créer une partie
 					this.nouvellePartie();
+					// TODO on va jouer
 					break;
 				case 2: // On veut charger une partie et ses vaisseaux
 					this.chargerPartie();
+					// TODO on va jouer
 					break;
 			}
-		} while (action != 0);
+		} while (action != Vue.QUITTER);
 		// ici on quitte
 	}
 	
@@ -86,9 +84,10 @@ public class Controller {
 		
 		int action = 0;
 		for (int i = 1; i <= nb_joueurs; i++) {
-			action = this._vueJoueur.menuJoueur(i);
 			Vaisseaux v = null;
 			PartiesVaisseaux pv = null;
+			
+			action = this._vueJoueur.menuJoueur(i);
 			
 			switch (action) {
 				case 1:
@@ -96,18 +95,33 @@ public class Controller {
 					pv = this._vueJoueur.setCaracs(i);
 					break;
 				case 2:
-					v = this._vueJoueur.chargerVaisseau(i);
-					pv = this._vueJoueur.chargerPartieVaisseau(i);
+					// TODO a vérifier
+					try {
+						v = this._vueJoueur.chargerVaisseau(i, VaisseauxPeer.doSelectAllNotSelected(this.vaisseaux));
+					} catch (TorqueException e) {
+						System.out.println("Aucun vaisseau disponible");
+						this._vueJoueur.nouveauVaisseau(i);
+						// TODO direct nouveau vaisseau ou possibilité de quitter ?
+					}
+					pv = this._vueJoueur.setCaracs(i);
+					try {
+						pv.setNomPartie(this.partie.getNom());
+						pv.setNomVaisseau(v.getNom());
+					} catch (TorqueException e1) {
+						e1.printStackTrace();
+					}
 					break;
-				case 100: // Valeur de Vue.QUITTER
+				case Vue.QUITTER:
 					Controller.rollBack();
-					vaisseaux.clear();
-					partieV.clear();
+					this.resetJeu();
+					i = nb_joueurs+1;
+					v = null;
+					pv = null;
 					break;
 			}
 			
-			if (action != 100) {
-				// TODO
+			if (action != Vue.QUITTER) {
+				// TODO Faire une fonction pour trouver les coordonnées
 				if (i == 1) {
 					pv.setCoordX(4);
 					pv.setCoordY(0);
@@ -132,22 +146,34 @@ public class Controller {
 				}
 			}
 		} // Fin sélection vaisseaux joueurs
-		if (action != 100) {
+		
+		// Si on veut quitter la création de nouvelle partie
+		if (action != Vue.QUITTER) {
 			try {
 				Controller.commitTransaction();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				Controller.rollBack();
 			}
-		} else {
-			this.menuPrincipal();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
 	public void chargerPartie() {
 		this.resetVues();
 		this.setVuePartie();
-		this._vuePartie.chargerPartie();
-		
+		try {
+			this.partie = this._vuePartie.chargerPartie(PartiesPeer.doSelectAll());
+			
+			if (this.partie != null) {
+				this.partieV = this.partie.getPartiesVaisseauxs();
+				for (PartiesVaisseaux v : this.partieV)
+					this.vaisseaux.add(v.getVaisseaux());
+			}
+			
+		} catch (TorqueException e) {
+			System.out.println("Aucune partie n'a été créée");
+		}
 	}
 	
 	
@@ -161,19 +187,15 @@ public class Controller {
 	//////////////////////////////////////////////////////
 	/**
 	 * Connexion à la base de donnée
+	 * @throws SQLException 
+	 * @throws TorqueException 
 	 */
-	public static void connexion() {
-		try {
-			//CONNEXION
-			Torque.init(TORQUE_PROPS);
-			String url = "jdbc:postgresql://postgres-info/base5a00";
-			conn = DriverManager.getConnection(url, "user5a00", "p00");
-		} catch (SQLException e) {
-			System.err.println("SQLException : " + e.getMessage());
-			System.err.println("SQLState : " + e.getSQLState());
-		}  catch (TorqueException e) {
-			e.printStackTrace();
-		}
+	public static void connexion() throws SQLException, TorqueException {
+		Torque.init(TORQUE_PROPS);
+		//String url = "jdbc:postgresql://postgres-info/base5a00";
+		String url = "jdbc:postgresql://localhost:9090/base5a00";
+		//conn = DriverManager.getConnection(url, "user5a00", "p00");
+		conn = DriverManager.getConnection(url, "user5a00", "p00");
 	}
 	/**
 	 * Fermer la connexion à la base de donnée
@@ -226,6 +248,12 @@ public class Controller {
 		return joueur;
 	}
 	
+	private void resetJeu() {
+		vaisseaux	= new ArrayList<Vaisseaux>();
+		partieV		= new ArrayList<PartiesVaisseaux>();
+		partie		= new Parties();
+	}
+	
 	//////////////////////////////////////////////////////
 	// POUR LES VUES
 	//////////////////////////////////////////////////////
@@ -241,9 +269,9 @@ public class Controller {
 	}
 	
 	public void resetVues() {
-		this._vueMenuStarwars = null;
-//		this._vuePlateau = null;
-		this._vuePartie = null;
+		this._vueMenuStarwars	= null;
+		this._vuePartie			= null;
+		this._vueJoueur			= null;
 	}
 	
 }

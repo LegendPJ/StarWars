@@ -20,6 +20,7 @@ public  class Parties
     implements Persistent
 {
 	public Parties() { super(); }
+	
     public Parties(String nom) {
     	super();
 		try {

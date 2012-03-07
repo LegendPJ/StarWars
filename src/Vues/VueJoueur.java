@@ -3,7 +3,10 @@ package Vues;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.torque.TorqueException;
+
 import Services.IO;
+import torque.generated.Parties;
 import torque.generated.PartiesVaisseaux;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
@@ -31,7 +34,7 @@ public class VueJoueur extends Vue {
 			System.out.println("\nJoueur "+numJoueur+" que voulez-vous faire ?\n");
 			
 			choix = IO.lireEntier();
-		} while (choix < 0 || choix > 2);
+		} while (choix < Vue.QUITTER || choix > 2);
 		
 		return choix;
 	}
@@ -45,6 +48,7 @@ public class VueJoueur extends Vue {
 			nomVaisseau = IO.lireChaine();
 		} while (nomVaisseau.length() > 40 || VaisseauxPeer.nomPris(nomVaisseau, noms));
 		noms.add(nomVaisseau);
+		
 		// Type du vaisseau
 		System.out.println("Joueur "+numJoueur+", choisissez votre vaisseau : ");
 		for (int i=0; i < VAISSEAUX.length; i++) {
@@ -89,12 +93,22 @@ public class VueJoueur extends Vue {
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj, coordX, coordY);
 	}
 	
-	public Vaisseaux chargerVaisseau (int numJoueur) {
-		return null;
-	}
-
-	public PartiesVaisseaux chargerPartieVaisseau(int numJoueur) {
-		return null;
+	public Vaisseaux chargerVaisseau (int numJoueur, List<Vaisseaux> vaisseaux) {
+		int numVaisseau = 1, menu = Vue.QUITTER;
+		int length = vaisseaux.size();
+		
+		for (Vaisseaux v : vaisseaux){
+			System.out.println(numVaisseau + ". " + v.getNom());
+			numVaisseau++;
+		}
+		System.out.println("0. Quitter");
+		
+		do {
+			System.out.println("Choisissez votre vaisseau [0.."+length+"] : ");
+			menu = IO.lireEntier();
+		} while (menu < Vue.QUITTER || menu > length);
+		
+		return new Vaisseaux(vaisseaux.get(menu-1).getNom(), vaisseaux.get(menu-1).getType());
 	}
 	
 }

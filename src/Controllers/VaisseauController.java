@@ -14,24 +14,7 @@ public class VaisseauController extends Controller {
 	
 	public VaisseauController () {
 	}
-	/**
-	 * Ajoute les caracteristiques au vaisseau pour la partie
-	 * @param v Vaisseau sans ses caracteristiques
-	 * @return vaisseau avec ses caracteristiques
-	 */
-	@SuppressWarnings("unchecked")
-	public void chargerVaisseauxPartie(Parties partie) {
-		try {
-			partieV = partie.getPartiesVaisseauxs();
-			//On recupere les vaisseaux (type et nom)
-			for (PartiesVaisseaux pv : partieV) {
-				Vaisseaux v = new Vaisseaux(pv.getNomVaisseau(), pv.getVaisseaux().getType());
-				vaisseaux.add(v);
-			}
-			
-		} catch (TorqueException e) {
-		}
-	}
+	
 	public int chargerVaisseau(int numJoueur, Parties partie) {
 		List<Vaisseaux> lVaisPossible = VaisseauxPeer.doSelectAll(vaisseaux);
 		int r=0;

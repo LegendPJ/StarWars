@@ -9,41 +9,6 @@ import torque.generated.Vaisseaux;
 
 public class JeuController extends Controller{
 	
-	public JeuController () {
-		Controller.connexion();
-		nb_joueurs = 2;
-		this.nouveau();
-		Controller.finConnexion();
-	}
-	
-	public void nouveau() {
-		int choix;
-		System.out.println("Bienvenue dans le jeu StarWars 1.0 GUIless");
-		do{
-			choix = this.menu();
-			switch (choix) {
-				case 1:
-					part.nouvelle();
-					break;
-				case 2:
-					part.charger();
-					break;
-				case 3:
-					System.out.println("Ajouter un objet");
-					break;
-				case 0:
-					break;
-				default:
-					System.out.println("Vous n'avez pas saisi une valeur correcte, veuillez recommencer!");
-					break;
-			}
-		} while (choix !=0);
-	}
-	
-	public void setVariables(List<PartiesVaisseaux> pv, List<Vaisseaux> v) {
-		this.Pvaisseaux = pv;
-		this.vaisseaux = v;
-	}
 	
 	public void tour() {
 		

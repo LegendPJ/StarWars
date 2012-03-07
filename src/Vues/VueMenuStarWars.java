@@ -10,7 +10,7 @@ public class VueMenuStarWars extends Vue {
 	}
 	
 	public int menu () {
-		int choix = 0;
+		int choix = Vue.QUITTER;
 		do {
 			System.out.println("\n     **************************************");
 			System.out.println("     *          Star Wars 1.0             *");
@@ -22,7 +22,7 @@ public class VueMenuStarWars extends Vue {
 			System.out.println("     **************************************");
 	
 			choix = IO.lireEntier();
-		} while (choix < 0 || choix > 3);
+		} while (choix < Vue.QUITTER || choix > 3);
 		
 		return choix;
 	}

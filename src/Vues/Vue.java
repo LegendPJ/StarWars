@@ -4,9 +4,10 @@ import Controllers.Controller;
 
 public class Vue {
 	
-	public static int QUITTER = 100;
+	public static final int QUITTER = 0;
 	
 	private Controller _controller;
+	
 	public Vue (Controller c) {
 		_controller = c;
 	}

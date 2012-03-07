@@ -1,5 +1,11 @@
 package torque.generated;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
+
 /**
  * parties_vaisseaux
  *
@@ -16,6 +22,5 @@ public class PartiesVaisseauxPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
-
 
 }
