@@ -1,0 +1,371 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0xf6cb0e71, pid=11517, tid=3007523696
+#
+# JRE version: 6.0_26-b03
+# Java VM: Java HotSpot(TM) Server VM (20.1-b02 mixed mode linux-x86 )
+# Problematic frame:
+# V  [libjvm.so+0x357e71]  frame::sender_for_interpreter_frame(RegisterMap*) const+0x71
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0xb3517400):  JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_in_vm, id=11531, stack(0xb33e2000,0xb3433000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x00000000
+
+Registers:
+EAX=0x00000000, EBX=0xf715adc8, ECX=0x08991d88, EDX=0xf6903358
+ESP=0xb3431a44, EBP=0xb3431a78, ESI=0x00000000, EDI=0x08b57f34
+EIP=0xf6cb0e71, EFLAGS=0x00010296, CR2=0x00000000
+
+Top of Stack: (sp=0xb3431a44)
+0xb3431a44:   f6903358 b3431b58 f715adc8 00000020
+0xb3431a54:   00000000 f6903358 f6e48f58 f6903560
+0xb3431a64:   f690332c b3431a88 f715adc8 b3431b30
+0xb3431a74:   08b57f34 b3431aa8 f6cb1302 b3431b30
+0xb3431a84:   08b57f34 b3431b50 00000001 b3431b80
+0xb3431a94:   00000001 00000001 f715adc8 b3431b30
+0xb3431aa4:   b3431b30 b3431b08 f6cae626 b3431b30
+0xb3431ab4:   08b57f34 b3431b50 f715adc8 b3431b80 
+
+Instructions: (pc=0xf6cb0e71)
+0xf6cb0e51:   8b 48 08 01 c8 39 45 e0 73 05 ba 01 00 00 00 84
+0xf6cb0e61:   d2 0f 94 c1 81 e1 ff 00 00 00 49 21 ce 83 ec 0c
+0xf6cb0e71:   8b 06 56 ff 50 04 83 c4 10 89 f2 84 c0 0f 94 c1
+0xf6cb0e81:   81 e1 ff 00 00 00 49 21 ca 74 16 89 d1 8b 42 64 
+
+Register to memory mapping:
+
+EAX=0x00000000 is an unknown value
+EBX=0xf715adc8: <offset 0x801dc8> in /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/server/libjvm.so at 0xf6959000
+ECX=0x08991d88 is an unknown value
+EDX=0xf6903358 is pointing into the stack for thread: 0x08998400
+ESP=0xb3431a44 is pointing into the stack for thread: 0xb3517400
+EBP=0xb3431a78 is pointing into the stack for thread: 0xb3517400
+ESI=0x00000000 is an unknown value
+EDI=0x08b57f34 is an unknown value
+
+
+Stack: [0xb33e2000,0xb3433000],  sp=0xb3431a44,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x357e71]  frame::sender_for_interpreter_frame(RegisterMap*) const+0x71
+V  [libjvm.so+0x358302]  frame::sender(RegisterMap*) const+0x102
+V  [libjvm.so+0x355626]  frame::real_sender(RegisterMap*) const+0x26
+V  [libjvm.so+0x71c33c]  vframe::sender() const+0xac
+V  [libjvm.so+0x71c42f]  vframe::java_sender() const+0xf
+V  [libjvm.so+0x4e53ea]  JvmtiEnvBase::vframeFor(JavaThread*, int)+0x6a
+V  [libjvm.so+0x4e5fbf]  JvmtiEnvBase::get_frame_location(JavaThread*, int, _jmethodID**, long long*)+0x4f
+V  [libjvm.so+0x4df0fb]  JvmtiEnv::GetFrameLocation(JavaThread*, int, _jmethodID**, long long*)+0x4b
+V  [libjvm.so+0x470504]  unsigned+0x244
+C  [libjdwp.so+0xab46]  float+0x1d6
+C  [libjdwp.so+0x13143]  double+0x233
+C  [libjdwp.so+0x27fd5]  char+0x75
+C  [libjdwp.so+0x282d3]  signed char+0x33
+V  [libjvm.so+0x4f8829]  JvmtiAgentThread::start_function_wrapper(JavaThread*, Thread*)+0x79
+V  [libjvm.so+0x6e16bf]  JavaThread::run()+0x11f
+V  [libjvm.so+0x5e2aee]  java_start(Thread*)+0x14e
+C  [libpthread.so.0+0x5955]  short+0xb5
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x08b6a400 JavaThread "SIGTERM handler" daemon [_thread_blocked, id=11547, stack(0xb3340000,0xb3391000)]
+  0xb351f400 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=11541, stack(0xb31ed000,0xb323e000)]
+  0xb351d400 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=11540, stack(0xb323e000,0xb32bf000)]
+  0xb351b400 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=11539, stack(0xb32bf000,0xb3340000)]
+  0xb3519c00 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=11534, stack(0xb3391000,0xb33e2000)]
+=>0xb3517400 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_in_vm, id=11531, stack(0xb33e2000,0xb3433000)]
+  0xb3500800 JavaThread "Finalizer" daemon [_thread_blocked, id=11528, stack(0xb3634000,0xb3685000)]
+  0x08a18000 JavaThread "Reference Handler" daemon [_thread_blocked, id=11527, stack(0xb3685000,0xb36d6000)]
+  0x08998400 JavaThread "main" [_thread_blocked, id=11523, stack(0xf68e2000,0xf6933000)]
+
+Other Threads:
+  0x08a14000 VMThread [stack: 0xb36d6000,0xb3757000] [id=11526]
+
+VM state:synchronizing (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x08997338] Threads_lock - owner thread: 0x08a14000
+
+Heap
+ PSYoungGen      total 17792K, used 1529K [0xdf830000, 0xe0c00000, 0xf3580000)
+  eden space 15296K, 10% used [0xdf830000,0xdf9ae7a0,0xe0720000)
+  from space 2496K, 0% used [0xe0990000,0xe0990000,0xe0c00000)
+  to   space 2496K, 0% used [0xe0720000,0xe0720000,0xe0990000)
+ PSOldGen        total 40576K, used 0K [0xb7d80000, 0xba520000, 0xdf830000)
+  object space 40576K, 0% used [0xb7d80000,0xb7d80000,0xba520000)
+ PSPermGen       total 16384K, used 1992K [0xb3d80000, 0xb4d80000, 0xb7d80000)
+  object space 16384K, 12% used [0xb3d80000,0xb3f721e0,0xb4d80000)
+
+Code Cache  [0xf3645000, 0xf3885000, 0xf6645000)
+ total_blobs=99 nmethods=1 adapters=61 free_code_cache=50036032 largest_free_block=6080
+
+Dynamic libraries:
+08048000-08052000 r-xp 00000000 08:01 10174465                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/bin/java
+08052000-08053000 rwxp 00009000 08:01 10174465                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/bin/java
+08991000-08c0c000 rwxp 00000000 00:00 0                                  [heap]
+b316c000-b316d000 ---p 00000000 00:00 0 
+b316d000-b31ed000 rwxp 00000000 00:00 0 
+b31ed000-b31f0000 ---p 00000000 00:00 0 
+b31f0000-b323e000 rwxp 00000000 00:00 0 
+b323e000-b3241000 ---p 00000000 00:00 0 
+b3241000-b32bf000 rwxp 00000000 00:00 0 
+b32bf000-b32c2000 ---p 00000000 00:00 0 
+b32c2000-b3340000 rwxp 00000000 00:00 0 
+b3340000-b3343000 ---p 00000000 00:00 0 
+b3343000-b3391000 rwxp 00000000 00:00 0 
+b3391000-b3394000 ---p 00000000 00:00 0 
+b3394000-b33e2000 rwxp 00000000 00:00 0 
+b33e2000-b33e5000 ---p 00000000 00:00 0 
+b33e5000-b3433000 rwxp 00000000 00:00 0 
+b3433000-b343d000 r-xp 00000000 08:01 9421336                            /lib/i686/cmov/libnss_files-2.11.3.so
+b343d000-b343e000 r-xp 00009000 08:01 9421336                            /lib/i686/cmov/libnss_files-2.11.3.so
+b343e000-b343f000 rwxp 0000a000 08:01 9421336                            /lib/i686/cmov/libnss_files-2.11.3.so
+b347a000-b34af000 r-xs 00000000 08:01 25136812                           /var/cache/nscd/hosts
+b34af000-b34b2000 ---p 00000000 00:00 0 
+b34b2000-b3500000 rwxp 00000000 00:00 0 
+b3500000-b35aa000 rwxp 00000000 00:00 0 
+b35aa000-b3600000 ---p 00000000 00:00 0 
+b3612000-b3616000 r-xs 00038000 00:15 2756357                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/commons-lang-2.3.jar
+b3616000-b3618000 r-xs 0001c000 00:15 2756353                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/commons-dbcp-1.2.2.jar
+b3618000-b361d000 r-xs 00038000 00:15 2756352                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/commons-configuration-1.4.jar
+b361d000-b362a000 r-xs 0007f000 00:15 2756348                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/commons-collections-3.2.jar
+b362a000-b362e000 r-xs 00026000 00:15 2756346                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/commons-beanutils-core-1.7.0.jar
+b362e000-b3634000 r-xs 00077000 00:15 2758103                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-gen-3.3/lib/postgresql-8.4-701.jdbc4.jar
+b3634000-b3637000 ---p 00000000 00:00 0 
+b3637000-b3685000 rwxp 00000000 00:00 0 
+b3685000-b3688000 ---p 00000000 00:00 0 
+b3688000-b36d6000 rwxp 00000000 00:00 0 
+b36d6000-b36d7000 ---p 00000000 00:00 0 
+b36d7000-b378b000 rwxp 00000000 00:00 0 
+b378b000-b3923000 r-xs 03029000 08:01 17793183                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/rt.jar
+b3923000-b3924000 ---p 00000000 00:00 0 
+b3924000-b39a4000 rwxp 00000000 00:00 0 
+b39a4000-b39a5000 ---p 00000000 00:00 0 
+b39a5000-b3a2d000 rwxp 00000000 00:00 0 
+b3a2d000-b3a45000 rwxp 00000000 00:00 0 
+b3a45000-b3a59000 rwxp 00000000 00:00 0 
+b3a59000-b3b83000 rwxp 00000000 00:00 0 
+b3b83000-b3b8b000 rwxp 00000000 00:00 0 
+b3b8b000-b3ba3000 rwxp 00000000 00:00 0 
+b3ba3000-b3bb7000 rwxp 00000000 00:00 0 
+b3bb7000-b3ce0000 rwxp 00000000 00:00 0 
+b3ce0000-b3ceb000 rwxp 00000000 00:00 0 
+b3ceb000-b3d7f000 rwxp 00000000 00:00 0 
+b3d7f000-b4d80000 rwxp 00000000 00:00 0 
+b4d80000-b7d80000 rwxp 00000000 00:00 0 
+b7d80000-ba520000 rwxp 00000000 00:00 0 
+ba520000-df830000 rwxp 00000000 00:00 0 
+df830000-e0c00000 rwxp 00000000 00:00 0 
+e0c00000-f3580000 rwxp 00000000 00:00 0 
+f3582000-f3585000 r-xs 00012000 00:15 2756343                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/avalon-logkit-2.1.jar
+f3585000-f358e000 rwxp 00000000 00:00 0 
+f358e000-f3645000 rwxp 00000000 00:00 0 
+f3645000-f3885000 rwxp 00000000 00:00 0 
+f3885000-f6645000 rwxp 00000000 00:00 0 
+f6645000-f6654000 r-xp 00000000 08:01 10534952                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libzip.so
+f6654000-f6656000 rwxp 0000e000 08:01 10534952                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libzip.so
+f6656000-f665e000 rwxs 00000000 08:01 16760932                           /tmp/hsperfdata_parrenof/11517
+f665e000-f684c000 r-xp 00000000 08:01 17396449                           /usr/lib/locale/locale-archive
+f684c000-f6886000 r-xp 00000000 08:01 10534934                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libjdwp.so
+f6886000-f6887000 rwxp 00039000 08:01 10534934                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libjdwp.so
+f6887000-f689a000 r-xp 00000000 08:01 9421327                            /lib/i686/cmov/libnsl-2.11.3.so
+f689a000-f689b000 r-xp 00012000 08:01 9421327                            /lib/i686/cmov/libnsl-2.11.3.so
+f689b000-f689c000 rwxp 00013000 08:01 9421327                            /lib/i686/cmov/libnsl-2.11.3.so
+f689c000-f689e000 rwxp 00000000 00:00 0 
+f689f000-f68a2000 r-xs 00028000 00:15 2756402                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/torque-3.3.jar
+f68a2000-f68d7000 r-xs 00000000 08:01 25136870                           /var/cache/nscd/passwd
+f68d7000-f68d8000 rwxp 00000000 00:00 0 
+f68d8000-f68d9000 ---p 00000000 00:00 0 
+f68d9000-f68e0000 r-xp 00000000 08:01 9423275                            /lib/i686/cmov/librt-2.11.3.so
+f68e0000-f68e1000 r-xp 00006000 08:01 9423275                            /lib/i686/cmov/librt-2.11.3.so
+f68e1000-f68e2000 rwxp 00007000 08:01 9423275                            /lib/i686/cmov/librt-2.11.3.so
+f68e2000-f68e5000 ---p 00000000 00:00 0 
+f68e5000-f6933000 rwxp 00000000 00:00 0 
+f6933000-f6957000 r-xp 00000000 08:01 9421331                            /lib/i686/cmov/libm-2.11.3.so
+f6957000-f6958000 r-xp 00023000 08:01 9421331                            /lib/i686/cmov/libm-2.11.3.so
+f6958000-f6959000 rwxp 00024000 08:01 9421331                            /lib/i686/cmov/libm-2.11.3.so
+f6959000-f710b000 r-xp 00000000 08:01 11337730                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/server/libjvm.so
+f710b000-f715f000 rwxp 007b1000 08:01 11337730                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/server/libjvm.so
+f715f000-f757e000 rwxp 00000000 00:00 0 
+f757e000-f76be000 r-xp 00000000 08:01 9421320                            /lib/i686/cmov/libc-2.11.3.so
+f76be000-f76bf000 ---p 00140000 08:01 9421320                            /lib/i686/cmov/libc-2.11.3.so
+f76bf000-f76c1000 r-xp 00140000 08:01 9421320                            /lib/i686/cmov/libc-2.11.3.so
+f76c1000-f76c2000 rwxp 00142000 08:01 9421320                            /lib/i686/cmov/libc-2.11.3.so
+f76c2000-f76c5000 rwxp 00000000 00:00 0 
+f76c5000-f76c7000 r-xp 00000000 08:01 9421330                            /lib/i686/cmov/libdl-2.11.3.so
+f76c7000-f76c8000 r-xp 00001000 08:01 9421330                            /lib/i686/cmov/libdl-2.11.3.so
+f76c8000-f76c9000 rwxp 00002000 08:01 9421330                            /lib/i686/cmov/libdl-2.11.3.so
+f76c9000-f76d0000 r-xp 00000000 08:01 11288577                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/jli/libjli.so
+f76d0000-f76d2000 rwxp 00006000 08:01 11288577                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/jli/libjli.so
+f76d2000-f76d3000 rwxp 00000000 00:00 0 
+f76d3000-f76e8000 r-xp 00000000 08:01 9423273                            /lib/i686/cmov/libpthread-2.11.3.so
+f76e8000-f76e9000 r-xp 00014000 08:01 9423273                            /lib/i686/cmov/libpthread-2.11.3.so
+f76e9000-f76ea000 rwxp 00015000 08:01 9423273                            /lib/i686/cmov/libpthread-2.11.3.so
+f76ea000-f76ec000 rwxp 00000000 00:00 0 
+f76ec000-f76ee000 r-xs 00008000 00:15 2756339                            /users/info/etu-s4/parrenof/cinf5a/StarWars/torque-3.3/lib/avalon-framework-api-4.3.jar
+f76ee000-f76f1000 r-xp 00000000 08:01 10534919                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libdt_socket.so
+f76f1000-f76f2000 rwxp 00003000 08:01 10534919                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libdt_socket.so
+f76f2000-f76f5000 r-xp 00000000 08:01 10534946                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libnpt.so
+f76f5000-f76f6000 rwxp 00002000 08:01 10534946                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libnpt.so
+f76f6000-f7719000 r-xp 00000000 08:01 10534928                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libjava.so
+f7719000-f771b000 rwxp 00023000 08:01 10534928                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libjava.so
+f771b000-f7726000 r-xp 00000000 08:01 10534951                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libverify.so
+f7726000-f7727000 rwxp 0000b000 08:01 10534951                           /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/libverify.so
+f7727000-f7729000 rwxp 00000000 00:00 0 
+f7729000-f772a000 r-xp 00000000 00:00 0                                  [vdso]
+f772a000-f7745000 r-xp 00000000 08:01 9421085                            /lib/ld-2.11.3.so
+f7745000-f7746000 r-xp 0001b000 08:01 9421085                            /lib/ld-2.11.3.so
+f7746000-f7747000 rwxp 0001c000 08:01 9421085                            /lib/ld-2.11.3.so
+ffe03000-ffe24000 rwxp 00000000 00:00 0                                  [stack]
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:50485 -Dfile.encoding=UTF-8 
+java_command: JeuController
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/games:/users/info/pub/bin
+LD_LIBRARY_PATH=/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386/client:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/i386:
+SHELL=/bin/bash
+DISPLAY=:0.0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x725510], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x725510], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x5dff20], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x5dff20], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x5dff20], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x5dff20], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x5e3160], sa_mask[0]=0x00000004, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x5e2d40], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: [libjvm.so+0x5e2d40], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGTERM: [libjvm.so+0x5e2d40], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x5e2d40], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:6.0.4
+
+uname:Linux 3.2.0-2-amd64 #1 SMP Mon Mar 5 02:56:07 UTC 2012 x86_64
+libc:glibc 2.11.3 NPTL 2.11.3 
+rlimit: STACK 8192k, CORE 0k, NPROC infinity, NOFILE 1024, AS infinity
+load average:0,16 0,06 0,06
+
+/proc/meminfo:
+MemTotal:        3893024 kB
+MemFree:         2090768 kB
+Buffers:           94168 kB
+Cached:          1107508 kB
+SwapCached:            0 kB
+Active:           864960 kB
+Inactive:         809284 kB
+Active(anon):     490512 kB
+Inactive(anon):    82880 kB
+Active(file):     374448 kB
+Inactive(file):   726404 kB
+Unevictable:          16 kB
+Mlocked:              16 kB
+SwapTotal:        524284 kB
+SwapFree:         524284 kB
+Dirty:               172 kB
+Writeback:             0 kB
+AnonPages:        472712 kB
+Mapped:           104016 kB
+Shmem:            100748 kB
+Slab:              93340 kB
+SReclaimable:      72156 kB
+SUnreclaim:        21184 kB
+KernelStack:        2512 kB
+PageTables:         4568 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     2470796 kB
+Committed_AS:    1175956 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      358968 kB
+VmallocChunk:   34359314747 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       53244 kB
+DirectMap2M:     3971072 kB
+
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 23 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8400  @ 3.00GHz
+stepping	: 10
+microcode	: 0xa0b
+cpu MHz		: 3000.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm dts tpr_shadow vnmi flexpriority
+bogomips	: 5985.54
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8400  @ 3.00GHz
+stepping	: 10
+microcode	: 0xa0b
+cpu MHz		: 3000.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm dts tpr_shadow vnmi flexpriority
+bogomips	: 5984.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 3893024k(2090768k free), swap 524284k(524284k free)
+
+vm_info: Java HotSpot(TM) Server VM (20.1-b02) for linux-x86 JRE (1.6.0_26-b03), built on May  4 2011 01:04:10 by "java_re" with gcc 3.2.1-7a (J2SE release)
+
+time: Wed Mar  7 16:42:26 2012
+elapsed time: 16 seconds
+

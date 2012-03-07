@@ -29,14 +29,14 @@ public  class PartiesVaisseaux
      * @param dgt Degats
      * @param nrj Energie
      */
-    public PartiesVaisseaux (int atq, int cdf, int dgt, int nrj) {
+    public PartiesVaisseaux (int atq, int cdf, int dgt, int nrj, int coordX, int coordY) {
     	super();
     	this.setAttaque(atq);
     	this.setChamp(cdf);
     	this.setDegats(dgt);
     	this.setEnergie(nrj);
-    	this.setCoordX(0);
-    	this.setCoordY(0);
+    	this.setCoordX(coordX);
+    	this.setCoordY(coordY);
     }
 
 }

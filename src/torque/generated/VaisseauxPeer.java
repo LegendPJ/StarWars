@@ -1,7 +1,6 @@
 package torque.generated;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.torque.NoRowsException;
@@ -26,7 +25,7 @@ public class VaisseauxPeer
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
 
-	public static boolean nomPris(String nomV, HashSet<String> noms) {
+	public static boolean nomPris(String nomV, List<String> noms) {
 		boolean vE = false;
 		
 		try {
