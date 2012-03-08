@@ -10,12 +10,14 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.util.Transaction;
 
-import Vues.*;
+import Vues.Vue;
+import Vues.VueJoueur;
+import Vues.VueMenuStarWars;
+import Vues.VuePartie;
 
 import torque.generated.Parties;
 import torque.generated.PartiesPeer;
 import torque.generated.PartiesVaisseaux;
-import torque.generated.PartiesVaisseauxPeer;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
 
@@ -87,28 +89,30 @@ public class Controller {
 			Vaisseaux v = null;
 			PartiesVaisseaux pv = null;
 			
-			action = this._vueJoueur.menuJoueur(i);
+			action = this._vueJoueur.menuJoueur(i, VaisseauxPeer.doSelectAll().size());
 			
 			switch (action) {
-				case 1:
+				case 1: 			// Créer un vaisseau
 					v = this._vueJoueur.nouveauVaisseau(i);
 					pv = this._vueJoueur.setCaracs(i);
 					break;
-				case 2:
-					// TODO a vérifier
-					try {
-						v = this._vueJoueur.chargerVaisseau(i, VaisseauxPeer.doSelectAllNotSelected(this.vaisseaux));
-					} catch (TorqueException e) {
-						System.out.println("Aucun vaisseau disponible");
-						this._vueJoueur.nouveauVaisseau(i);
-						// TODO direct nouveau vaisseau ou possibilité de quitter ?
-					}
-					pv = this._vueJoueur.setCaracs(i);
-					try {
-						pv.setNomPartie(this.partie.getNom());
-						pv.setNomVaisseau(v.getNom());
-					} catch (TorqueException e1) {
-						e1.printStackTrace();
+				case 2: 			// Utiliser un vaisseau existant
+					v = this._vueJoueur.chargerVaisseau(i, VaisseauxPeer.doSelectAllNotSelected(this.vaisseaux));
+					if (v != null) {	// Si le joeur n'a pas quitter
+						pv = this._vueJoueur.setCaracs(i);
+						try {
+							pv.setNomPartie(this.partie.getNom());
+							pv.setNomVaisseau(v.getNom());
+						} catch (TorqueException e1) {
+							e1.printStackTrace();
+						}
+					} else {
+						Controller.rollBack();
+						this.resetJeu();
+						i = nb_joueurs+1;
+						v = null;
+						pv = null;
+						action = Vue.QUITTER;
 					}
 					break;
 				case Vue.QUITTER:
@@ -192,8 +196,7 @@ public class Controller {
 	 */
 	public static void connexion() throws SQLException, TorqueException {
 		Torque.init(TORQUE_PROPS);
-		//String url = "jdbc:postgresql://postgres-info/base5a00";
-		String url = "jdbc:postgresql://localhost:9090/base5a00";
+		String url = "jdbc:postgresql://postgres-info/base5a00";
 		//conn = DriverManager.getConnection(url, "user5a00", "p00");
 		conn = DriverManager.getConnection(url, "user5a00", "p00");
 	}

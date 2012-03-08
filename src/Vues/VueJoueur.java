@@ -3,10 +3,7 @@ package Vues;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.torque.TorqueException;
-
 import Services.IO;
-import torque.generated.Parties;
 import torque.generated.PartiesVaisseaux;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
@@ -21,20 +18,24 @@ public class VueJoueur extends Vue {
 		noms = new ArrayList<String>();
 	}
 	
-	public int menuJoueur (int numJoueur) {
-		int choix = Vue.QUITTER;
+	public int menuJoueur (int numJoueur, int nbVaisseaux) {
+		int choix = Vue.QUITTER, choixMax = 1;
 		do{
 			System.out.println("\n     **************************************");
 			System.out.println("     *  Star Wars 1.0 | Nouvelle partie   *");
 			System.out.println("     *                                    *");
 			System.out.println("     * 1. Créer un vaisseau               *");
-			System.out.println("     * 2. Utiliser un vaisseau            *");
+			if (nbVaisseaux != 0) {
+				System.out.println("     * 2. Utiliser un vaisseau            *");
+				choixMax = 2;
+			}
 			System.out.println("     * 0. Menu Principal                  *");
 			System.out.println("     **************************************");
 			System.out.println("\nJoueur "+numJoueur+" que voulez-vous faire ?\n");
-			
+			System.out.println("NbVaisseaux = "+nbVaisseaux);
+			System.out.println("choixMax = "+choixMax);
 			choix = IO.lireEntier();
-		} while (choix < Vue.QUITTER || choix > 2);
+		} while (choix < Vue.QUITTER || choix > choixMax);
 		
 		return choix;
 	}
@@ -107,8 +108,10 @@ public class VueJoueur extends Vue {
 			System.out.println("Choisissez votre vaisseau [0.."+length+"] : ");
 			menu = IO.lireEntier();
 		} while (menu < Vue.QUITTER || menu > length);
-		
-		return new Vaisseaux(vaisseaux.get(menu-1).getNom(), vaisseaux.get(menu-1).getType());
+		if (menu == Vue.QUITTER)
+			return null;
+		else
+			return new Vaisseaux(vaisseaux.get(menu-1).getNom(), vaisseaux.get(menu-1).getType());
 	}
 	
 }

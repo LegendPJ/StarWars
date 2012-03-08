@@ -45,12 +45,18 @@ public class VaisseauxPeer
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Vaisseaux> doSelectAll() throws TorqueException {
-		return VaisseauxPeer.doSelect(new Criteria());
+	public static List<Vaisseaux> doSelectAll() {
+		List<Vaisseaux> v = new ArrayList<Vaisseaux>();
+		try {
+			v = VaisseauxPeer.doSelect(new Criteria());
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		return v;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static List<Vaisseaux> doSelectAllNotSelected(List<Vaisseaux> vlist) throws TorqueException {
+	public static List<Vaisseaux> doSelectAllNotSelected(List<Vaisseaux> vlist) {
 		List<Vaisseaux> v = null;
 		Criteria c = new Criteria();
 		if (vlist.size() != 0) {
@@ -60,7 +66,11 @@ public class VaisseauxPeer
 			c.add(VaisseauxPeer.NOM, nList, Criteria.NOT_IN);
 		}
 				
-		v = VaisseauxPeer.doSelect(c);
+		try {
+			v = VaisseauxPeer.doSelect(c);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
 		return v;
 	}
 }
