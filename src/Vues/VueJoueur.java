@@ -32,8 +32,7 @@ public class VueJoueur extends Vue {
 			System.out.println("     * 0. Menu Principal                  *");
 			System.out.println("     **************************************");
 			System.out.println("\nJoueur "+numJoueur+" que voulez-vous faire ?\n");
-			System.out.println("NbVaisseaux = "+nbVaisseaux);
-			System.out.println("choixMax = "+choixMax);
+
 			choix = IO.lireEntier();
 		} while (choix < Vue.QUITTER || choix > choixMax);
 		
@@ -89,7 +88,7 @@ public class VueJoueur extends Vue {
 		}
 		sommeC-=cdf;
 		nrj = sommeC;
-		System.out.println("Votre vaisseau aura donc "+nrj+" points d'energie.");
+		System.out.println("Votre vaisseau aura donc "+(nrj*10)+" points d'energie.");
 		
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj, coordX, coordY);
 	}

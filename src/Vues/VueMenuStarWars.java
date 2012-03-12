@@ -20,6 +20,8 @@ public class VueMenuStarWars extends Vue {
 			System.out.println("     * 3. Nouvel Objet                    *");
 			System.out.println("     * 0. Quitter                         *");
 			System.out.println("     **************************************");
+			
+			System.out.println("Que voulez-vous faire ? ");
 	
 			choix = IO.lireEntier();
 		} while (choix < Vue.QUITTER || choix > 3);

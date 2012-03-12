@@ -34,7 +34,7 @@ public  class PartiesVaisseaux
     	this.setAttaque(atq);
     	this.setChamp(cdf);
     	this.setDegats(dgt);
-    	this.setEnergie(nrj);
+    	this.setEnergie(nrj*10);
     	this.setCoordX(coordX);
     	this.setCoordY(coordY);
     }
