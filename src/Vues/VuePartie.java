@@ -17,7 +17,7 @@ public class VuePartie extends Vue {
 		String nom = new String();
 		
 		do {
-			System.out.println("Nom de la partie (40 caracteres maximum) : ");
+			System.out.print("Nom de la partie (40 caracteres maximum) : ");
 			nom = IO.lireChaine();
 		} while (nom.length() > 40 || PartiesPeer.nomPris(nom));
 		
@@ -36,13 +36,14 @@ public class VuePartie extends Vue {
 		System.out.println("0. Menu Principal");
 		
 		do {
-			System.out.println("Choisissez votre partie [0.."+length+"] : ");
+			System.out.print("Choisissez votre partie [0.."+length+"] : ");
 			menu = IO.lireEntier();
 		} while (menu < Vue.QUITTER || menu > length);
+		
 		if (menu != 0)
 			r = PartiesPeer.charger(list.get(menu-1).getNom());
 		
-			return r;
+		return r;
 	}
 
 }

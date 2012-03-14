@@ -1,4 +1,5 @@
 package Vues;
+import java.util.ArrayList;
 import java.util.List;
 
 import Services.IO;
@@ -23,10 +24,8 @@ public class VuePlateau extends Vue {
 	public void afficher(List<PartiesVaisseaux> pv, List<Vaisseaux> v) {
 		//Construction du plateau
 		for (int j=0; j < dimension; j++) {
-			
-			
-			//TOUJOURS LE FAIRE
-			if (j==0) { // border-top
+			// BORDURE DU HAUT
+			if (j==0) {
 				for (int c=1; c <= dimension; c++) {
 					if (j == 0)
 						System.out.print("  ");
@@ -43,10 +42,10 @@ public class VuePlateau extends Vue {
 				}
 				System.out.println();
 			}
-			//END TOUJOURS LE FAIRE
+			//END BORDURE DU HAUT
 			
 			//LIGNE PAR LIGNE		
-			//PREMIERS BATONS - JOUEUR 1
+			//PREMIERE LIGNE - JOUEUR 1
 			for (int i=0; i < dimension; i++) {
 				if (i == 0) 
 					System.out.print(" ");
@@ -58,7 +57,7 @@ public class VuePlateau extends Vue {
 			}
 			System.out.println(" |");
 			
-			//DEUXIEMES BATONS - JOUEUR 2
+			//DEUXIEME LIGNE - JOUEUR 2
 			System.out.print(alphabet[j]);
 			for (int i=0; i < dimension; i++) {
 				System.out.print(" |");
@@ -69,7 +68,7 @@ public class VuePlateau extends Vue {
 			}
 			System.out.println(" |");
 			
-			//TROISIEMES BATONS - OBJETS
+			//TROISIEME LIGNO - OBJETS
 			for (int i=0; i < dimension; i++) {
 				if (i == 0) 
 					System.out.print("  ");
@@ -81,7 +80,7 @@ public class VuePlateau extends Vue {
 	
 	public int menu(int numJoueur) {
 		int menu = 0;
-		boolean cond = (menu != 0 || menu != 6); 
+		boolean cond = (menu != 0 && menu != 6); 
 		System.out.println("\n     ************************************");
 		System.out.println("     *  Star Wars 1.0 | Jeu             *");
 		System.out.println("     *                                  *");
@@ -99,7 +98,7 @@ public class VuePlateau extends Vue {
 		
 		System.out.println("\n Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
 		
-		System.out.println("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ?\n");
+		System.out.print("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ? ");
 		do {
 			menu = IO.lireEntier();
 		} while (cond);
@@ -107,16 +106,31 @@ public class VuePlateau extends Vue {
 	}
 	
 	public int deplacement(int numJoueurActif) {
-		System.out.println("Déplacement : ");
-		if (getController().getJoueur(numJoueurActif).getCoordY() != 0)
-			System.out.println("              8. Haut");
-		if (getController().getJoueur(numJoueurActif).getCoordY() != dimension-1)
-			System.out.println("              2. Bas");
-		if (getController().getJoueur(numJoueurActif).getCoordX() != 0)
-			System.out.println("              4. Gauche");
-		if (getController().getJoueur(numJoueurActif).getCoordX() != dimension-1)
-			System.out.println("              6. Droite");
-		return IO.lireEntier();
+		List<Integer> p = new ArrayList<Integer>();
+		int d;
+		
+		do {
+			System.out.println("Déplacement : ");
+			if (getController().getJoueur(numJoueurActif).getCoordY() != 0) {
+				System.out.println("              8. Haut");
+				p.add(8);
+			}
+			if (getController().getJoueur(numJoueurActif).getCoordY() != dimension-1) {
+				System.out.println("              2. Bas");
+				p.add(2);
+			}
+			if (getController().getJoueur(numJoueurActif).getCoordX() != 0) {
+				System.out.println("              4. Gauche");
+				p.add(4);
+			}
+			if (getController().getJoueur(numJoueurActif).getCoordX() != dimension-1) {
+				System.out.println("              6. Droite");
+				p.add(6);
+			}
+			d = IO.lireEntier();
+		} while (!p.contains(d));
+		
+		return d;
 	}
 
 	

@@ -31,7 +31,7 @@ public class VueJoueur extends Vue {
 			}
 			System.out.println("     * 0. Menu Principal                  *");
 			System.out.println("     **************************************");
-			System.out.println("\nJoueur "+numJoueur+" que voulez-vous faire ?\n");
+			System.out.print("\nJoueur "+numJoueur+" que voulez-vous faire ? [0.."+choixMax+"] ");
 
 			choix = IO.lireEntier();
 		} while (choix < Vue.QUITTER || choix > choixMax);
@@ -104,13 +104,28 @@ public class VueJoueur extends Vue {
 		System.out.println("0. Quitter");
 		
 		do {
-			System.out.println("Choisissez votre vaisseau [0.."+length+"] : ");
+			System.out.print("Choisissez votre vaisseau [0.."+length+"] : ");
 			menu = IO.lireEntier();
 		} while (menu < Vue.QUITTER || menu > length);
 		if (menu == Vue.QUITTER)
 			return null;
 		else
 			return new Vaisseaux(vaisseaux.get(menu-1).getNom(), vaisseaux.get(menu-1).getType());
+	}
+
+	public int attaquer(List<PartiesVaisseaux> vais, int coordX, int coordY, String nom) {
+		int i = 1, menu = 0;
+		for (PartiesVaisseaux v : vais) {
+			if (getController().memeCase(coordX, coordY, nom))
+				System.out.print(i + ". " + v.getNomVaisseau());
+			i++;
+		}
+		do {
+			System.out.print("Quel vaisseau attaquer ? [1.." + i + "] ");
+			menu = IO.lireEntier();
+		} while (menu < 1 || menu > i);
+		
+		return menu;
 	}
 	
 }

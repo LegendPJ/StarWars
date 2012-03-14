@@ -1,5 +1,9 @@
 package torque.generated;
 
+import org.apache.torque.NoRowsException;
+import org.apache.torque.TooManyRowsException;
+import org.apache.torque.TorqueException;
+
 /**
  * objets
  *
@@ -16,5 +20,20 @@ public class ObjetsPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
+    
+    
+    public static boolean nomPris(String nom) {
+		boolean c = true;
+		try {
+			BaseObjetsPeer.retrieveByPK(nom);
+		} catch (NoRowsException e) {
+			c = false;
+		} catch (TooManyRowsException e) {
+		} catch (TorqueException e) {
+		}
+		
+		return c;
+	}
+    
 
 }

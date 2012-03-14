@@ -1,5 +1,11 @@
 package torque.generated;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
+
 /**
  * caracteristiques
  *
@@ -16,5 +22,16 @@ public class CaracteristiquesPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
+
+	@SuppressWarnings("unchecked")
+	public static List<Caracteristiques> doSelectAll() {
+		List<Caracteristiques> c = new ArrayList<Caracteristiques>();
+		try {
+			c = CaracteristiquesPeer.doSelect(new Criteria());
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		return c;
+	}
 
 }

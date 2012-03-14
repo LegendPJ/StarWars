@@ -21,7 +21,7 @@ public class VueMenuStarWars extends Vue {
 			System.out.println("     * 0. Quitter                         *");
 			System.out.println("     **************************************");
 			
-			System.out.println("Que voulez-vous faire ? ");
+			System.out.print("Que voulez-vous faire ? ");
 	
 			choix = IO.lireEntier();
 		} while (choix < Vue.QUITTER || choix > 3);

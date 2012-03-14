@@ -1,8 +1,12 @@
 package torque.generated;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
+import org.apache.torque.util.Criteria;
 
 /**
  * parties
@@ -26,8 +30,22 @@ public  class Parties
 		try {
 			this.setNom(nom);
 		} catch (TorqueException e) {
+			e.printStackTrace();
 		}
 	}
+    
+    @SuppressWarnings("unchecked")
+	public List<PartiesVaisseaux> getPartiesVaisseauxsOrdered() {
+    	Criteria criteria = new Criteria();
+    	List<PartiesVaisseaux> l = new ArrayList<PartiesVaisseaux>();
+    	criteria.addAscendingOrderByColumn(PartiesVaisseauxPeer.NUM_JOUEUR);
+    	try {
+			l = this.getPartiesVaisseauxs(criteria);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    	return l;
+    }
 
 	/** Serial version */
     private static final long serialVersionUID = 1329818711143L;

@@ -112,6 +112,11 @@
       required="true"
       type="INTEGER"
       description="loto a qui le tour ?"/>
+    <column
+      name="numJoueur"
+      required="TRUE"
+      type="INTEGER"
+      description="numero avec qui on s'est arrete" />
   </table>  
   
 <!-- TABLE PARTIES_VAISSEAUX -->

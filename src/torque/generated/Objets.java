@@ -1,6 +1,7 @@
 package torque.generated;
 
 
+import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
 
 /**
@@ -20,5 +21,16 @@ public  class Objets
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
-
+    public Objets() { super(); }
+    
+    public Objets (String nom, String carac, int points) {
+    	super();
+    	try {
+			this.setNom(nom);
+			this.setCarac(carac);
+	    	this.setPoints(points);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    }
 }
