@@ -6,6 +6,7 @@ import Services.IO;
 
 import Controllers.Controller;
 
+import torque.generated.ObjetsParties;
 import torque.generated.PartiesVaisseaux;
 import torque.generated.Vaisseaux;
 
@@ -21,7 +22,7 @@ public class VuePlateau extends Vue {
 		dimension = d;
 	}
 	
-	public void afficher(List<PartiesVaisseaux> pv, List<Vaisseaux> v) {
+	public void afficher(List<PartiesVaisseaux> pv, List<Vaisseaux> v, List<ObjetsParties> op) {
 		//Construction du plateau
 		for (int j=0; j < dimension; j++) {
 			// BORDURE DU HAUT
@@ -45,7 +46,7 @@ public class VuePlateau extends Vue {
 			//END BORDURE DU HAUT
 			
 			//LIGNE PAR LIGNE		
-			//PREMIERE LIGNE - JOUEUR 1
+			//PREMIERE LIGNE - JOUEUR 1 
 			for (int i=0; i < dimension; i++) {
 				if (i == 0) 
 					System.out.print(" ");
@@ -68,11 +69,17 @@ public class VuePlateau extends Vue {
 			}
 			System.out.println(" |");
 			
-			//TROISIEME LIGNO - OBJETS
+			//TROISIEME LIGNE - OBJETS
 			for (int i=0; i < dimension; i++) {
 				if (i == 0) 
 					System.out.print("  ");
-				System.out.print("|______");
+				StringBuffer s = new StringBuffer("|______");
+				// boucle pour ajouter les objets
+				for (ObjetsParties o : op) {
+					if (o.getCoordX() == i && o.getCoordY() == j)
+						s.setCharAt(3, 'o');
+				}
+				System.out.print(s.toString());
 			}
 			System.out.println("|");
 		} //FIN CREATION
@@ -80,27 +87,35 @@ public class VuePlateau extends Vue {
 	
 	public int menu(int numJoueur) {
 		int menu = 0;
-		boolean cond = (menu != 0 && menu != 6); 
+		boolean cond = true; 
 		System.out.println("\n     ************************************");
 		System.out.println("     *  Star Wars 1.0 | Jeu             *");
 		System.out.println("     *                                  *");
 		if (getController().getJoueur(numJoueur).getPa() > 0) {
-			cond = (menu > 6 || menu < 0);
 			System.out.println("     * 1. Déplacer le vaisseau          *");
 			System.out.println("     * 2. Attaquer                      *");
 			System.out.println("     * 3. Ramasser Objet                *");
 			System.out.println("     * 4. Utiliser un Objet             *");
 			System.out.println("     * 5. Equiper un Objet              *");
+			System.out.println("     * 6. Lister les Objets             *");
 		}
-		System.out.println("     * 6. Fin du tour                   *");
+		System.out.println("     * 7. Fin du tour                   *");
 		System.out.println("     * 0. Menu Principal                *");
 		System.out.println("     ************************************");
 		
-		System.out.println("\n Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
+		System.out.println("\nPoints d'attaque : " + getController().getJoueur(numJoueur).getAttaque());
+		System.out.println("Points de dégats : " + getController().getJoueur(numJoueur).getDegats());
+		System.out.println("Points de champ de force : " + getController().getJoueur(numJoueur).getChamp());
+		System.out.println("Points d'énergie : " + getController().getJoueur(numJoueur).getEnergie());
+		System.out.println("Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
 		
-		System.out.print("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ? ");
 		do {
+			System.out.print("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ? ");
 			menu = IO.lireEntier();
+			if (getController().getJoueur(numJoueur).getPa() > 0)
+				cond = (menu > 7 || menu < 0);
+			else
+				cond = (menu != 0 && menu != 7); 
 		} while (cond);
 		return menu;
 	}

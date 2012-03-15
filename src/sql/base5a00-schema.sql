@@ -38,6 +38,23 @@ COMMENT ON COLUMN caracteristiques.nom IS '...';
 
 
 -----------------------------------------------------------------------------
+-- types
+-----------------------------------------------------------------------------
+DROP TABLE types CASCADE;
+
+
+
+CREATE TABLE types
+(
+    nom VARCHAR(40) NOT NULL,
+    PRIMARY KEY (nom)
+);
+
+COMMENT ON TABLE types IS 'types dobjet';
+
+
+
+-----------------------------------------------------------------------------
 -- objets
 -----------------------------------------------------------------------------
 DROP TABLE objets CASCADE;
@@ -49,6 +66,8 @@ CREATE TABLE objets
     nom VARCHAR(40) NOT NULL,
     points INTEGER default 0 NOT NULL,
     carac VARCHAR(60) default '0' NOT NULL,
+    duree INTEGER default 0 NOT NULL,
+    type VARCHAR(40) NOT NULL,
     PRIMARY KEY (nom)
 );
 
@@ -57,26 +76,8 @@ COMMENT ON TABLE objets IS 'objets';
 COMMENT ON COLUMN objets.nom IS 'Nom de lobjet';
 COMMENT ON COLUMN objets.points IS 'points de gain';
 COMMENT ON COLUMN objets.carac IS 'caracteritique améliorée';
-
-
------------------------------------------------------------------------------
--- objets_vaisseaux
------------------------------------------------------------------------------
-DROP TABLE objets_vaisseaux CASCADE;
-
-
-
-CREATE TABLE objets_vaisseaux
-(
-    nom_vaisseau VARCHAR(40) NOT NULL,
-    nom_objet VARCHAR(40) NOT NULL,
-    PRIMARY KEY (nom_vaisseau,nom_objet)
-);
-
-COMMENT ON TABLE objets_vaisseaux IS 'objets_vaisseaux';
-
-COMMENT ON COLUMN objets_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
-COMMENT ON COLUMN objets_vaisseaux.nom_objet IS 'Nom de lobjet';
+COMMENT ON COLUMN objets.duree IS 'nombre de tour valable';
+COMMENT ON COLUMN objets.type IS 'ataque ou defense';
 
 
 -----------------------------------------------------------------------------
@@ -90,6 +91,7 @@ CREATE TABLE parties
 (
     nom VARCHAR(40) NOT NULL,
     tour INTEGER NOT NULL,
+    numJoueur INTEGER NOT NULL,
     PRIMARY KEY (nom)
 );
 
@@ -97,6 +99,7 @@ COMMENT ON TABLE parties IS 'parties';
 
 COMMENT ON COLUMN parties.nom IS 'Nom de la partie';
 COMMENT ON COLUMN parties.tour IS 'loto a qui le tour ?';
+COMMENT ON COLUMN parties.numJoueur IS 'numero avec qui on sest arrete';
 
 
 -----------------------------------------------------------------------------
@@ -136,6 +139,28 @@ COMMENT ON COLUMN parties_vaisseaux.num_joueur IS 'numero du joueur';
 
 
 -----------------------------------------------------------------------------
+-- objets_vaisseaux
+-----------------------------------------------------------------------------
+DROP TABLE objets_vaisseaux CASCADE;
+
+
+
+CREATE TABLE objets_vaisseaux
+(
+    nom_vaisseau VARCHAR(40) NOT NULL,
+    nom_partie VARCHAR(40) NOT NULL,
+    nom_objet VARCHAR(40) NOT NULL,
+    PRIMARY KEY (nom_vaisseau,nom_partie,nom_objet)
+);
+
+COMMENT ON TABLE objets_vaisseaux IS 'objets_vaisseaux';
+
+COMMENT ON COLUMN objets_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
+COMMENT ON COLUMN objets_vaisseaux.nom_partie IS 'Nom de la partie';
+COMMENT ON COLUMN objets_vaisseaux.nom_objet IS 'Nom de lobjet';
+
+
+-----------------------------------------------------------------------------
 -- objets_parties
 -----------------------------------------------------------------------------
 DROP TABLE objets_parties CASCADE;
@@ -148,7 +173,7 @@ CREATE TABLE objets_parties
     nom_objet VARCHAR(40) NOT NULL,
     coord_x INTEGER NOT NULL,
     coord_y INTEGER NOT NULL,
-    PRIMARY KEY (nom_partie)
+    PRIMARY KEY (nom_partie,nom_objet)
 );
 
 COMMENT ON TABLE objets_parties IS 'objets_parties';
@@ -176,27 +201,23 @@ COMMENT ON COLUMN objets_parties.coord_y IS 'coordonnées en Y';
 ----------------------------------------------------------------------
 
 
+
+----------------------------------------------------------------------
+-- types
+----------------------------------------------------------------------
+
+
 ALTER TABLE objets
     ADD CONSTRAINT objets_FK_1 FOREIGN KEY (carac)
     REFERENCES caracteristiques (nom)
 ;
+ALTER TABLE objets
+    ADD CONSTRAINT objets_FK_2 FOREIGN KEY (type)
+    REFERENCES types (nom)
+;
 
 ----------------------------------------------------------------------
 -- objets
-----------------------------------------------------------------------
-
-
-ALTER TABLE objets_vaisseaux
-    ADD CONSTRAINT objets_vaisseaux_FK_1 FOREIGN KEY (nom_vaisseau)
-    REFERENCES vaisseaux (nom)
-;
-ALTER TABLE objets_vaisseaux
-    ADD CONSTRAINT objets_vaisseaux_FK_2 FOREIGN KEY (nom_objet)
-    REFERENCES objets (nom)
-;
-
-----------------------------------------------------------------------
--- objets_vaisseaux
 ----------------------------------------------------------------------
 
 
@@ -217,6 +238,20 @@ ALTER TABLE parties_vaisseaux
 
 ----------------------------------------------------------------------
 -- parties_vaisseaux
+----------------------------------------------------------------------
+
+
+ALTER TABLE objets_vaisseaux
+    ADD CONSTRAINT objets_vaisseaux_FK_1 FOREIGN KEY (nom_vaisseau, nom_partie)
+    REFERENCES parties_vaisseaux (nom_vaisseau, nom_partie)
+;
+ALTER TABLE objets_vaisseaux
+    ADD CONSTRAINT objets_vaisseaux_FK_2 FOREIGN KEY (nom_objet)
+    REFERENCES objets (nom)
+;
+
+----------------------------------------------------------------------
+-- objets_vaisseaux
 ----------------------------------------------------------------------
 
 

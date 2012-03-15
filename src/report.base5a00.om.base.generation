@@ -53,19 +53,19 @@ correctGetters =
           
 
 
+        types
+
+        
+
+        
+
+          
+
+
+          
+
+
         objets
-
-        
-
-        
-
-          
-
-
-          
-
-
-        objets_vaisseaux
 
         
 
@@ -90,6 +90,18 @@ correctGetters =
 
 
         parties_vaisseaux
+
+        
+
+        
+
+          
+
+
+          
+
+
+        objets_vaisseaux
 
         
 

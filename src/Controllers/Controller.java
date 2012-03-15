@@ -18,9 +18,16 @@ import Vues.VuePlateau;
 
 import torque.generated.CaracteristiquesPeer;
 import torque.generated.Objets;
+import torque.generated.ObjetsParties;
+import torque.generated.ObjetsPartiesPeer;
+import torque.generated.ObjetsPeer;
+import torque.generated.ObjetsVaisseaux;
+import torque.generated.ObjetsVaisseauxPeer;
 import torque.generated.Parties;
 import torque.generated.PartiesPeer;
 import torque.generated.PartiesVaisseaux;
+import torque.generated.PartiesVaisseauxPeer;
+import torque.generated.TypesPeer;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
 
@@ -31,11 +38,16 @@ public class Controller {
 	
 	private final int nb_joueurs = 2;
 	private List<Integer> ordreTour;
+	private int dimension = 5;
+	private int nb_objets = 3;
+	private Vaisseaux gagnant;
 	
 	// Vaisseau et partie en cours
 	protected List<Vaisseaux> vaisseaux;
 	protected List<PartiesVaisseaux> partieV;
+	protected List<Objets> objets;
 	protected Parties partie;
+	protected List<ObjetsParties> objetsP;
 
 	// Les vues
 	private VueMenuStarWars	_vueMenuStarwars;
@@ -47,7 +59,6 @@ public class Controller {
 	public Controller() {
 		this.resetJeu();
 		this.resetVues();
-		this.ordreTour = new ArrayList<Integer>();
 	}
 	
 	public void menuPrincipal() {
@@ -72,6 +83,9 @@ public class Controller {
 					this.creerObjet();
 					break;
 			}
+			if (gagnant != null) {
+				this.gagner();
+			}
 		} while (action != Vue.QUITTER);
 		// ici on quitte
 	}
@@ -90,8 +104,16 @@ public class Controller {
 		
 		this.nouveauTour(true);
 		partie.setTour(this.ordreTour.get(0));
+		this.placeObjets();
 		try {
 			partie.save(connTransaction);
+			for (ObjetsParties op : objetsP) {
+				try {
+					op.save(connTransaction);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} catch (TorqueException e1) {
 			e1.printStackTrace();
 		}
@@ -144,12 +166,12 @@ public class Controller {
 			if (action != Vue.QUITTER) {
 				// TODO Faire une fonction pour trouver les coordonnées
 				if (i == 1) {
-					pv.setCoordX(4);
+					pv.setCoordX(2);
 					pv.setCoordY(0);
 				}
 				else if (i == 2) {
-					pv.setCoordX(5);
-					pv.setCoordY(9);
+					pv.setCoordX(2);
+					pv.setCoordY(4);
 				}
 				
 				vaisseaux.add(v);
@@ -175,10 +197,10 @@ public class Controller {
 				Controller.rollBack();
 			}
 		}
-		System.out.println(partie.getNom());
 		return action;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public void chargerPartie() {
 		this.resetVues();
 		this.setVuePartie();
@@ -186,8 +208,11 @@ public class Controller {
 			this.partie = this._vuePartie.chargerPartie(PartiesPeer.doSelectAll());
 			if (this.partie != null) {
 				this.partieV = this.partie.getPartiesVaisseauxsOrdered();
+				this.objetsP = this.partie.getObjetsPartiess();
 				for (PartiesVaisseaux v : this.partieV)
 					this.vaisseaux.add(v.getVaisseaux());
+				for (ObjetsParties op : this.objetsP)
+					this.objets.add(op.getObjets());
 				this.nouveauTour(true);
 			}
 			
@@ -199,11 +224,13 @@ public class Controller {
 	public void jouer() {
 		this.resetVues();
 		this.setVuePlateau();
+		this.setVueJoueur();
 		int action = Vue.QUITTER;
-		int numJoueur = 0;
+		int numJoueur = partie.getNumjoueur();
 		int joueurActif = this.ordreTour.get(numJoueur);
+		
 		do {
-			this._vuePlateau.afficher(partieV, vaisseaux);
+			this._vuePlateau.afficher(partieV, vaisseaux, objetsP);
 			action = this._vuePlateau.menu(joueurActif);
 			
 			switch(action) {
@@ -225,16 +252,28 @@ public class Controller {
 							System.out.println("Vous n'avez pas assez de point d'action");
 						else {
 							this.attaquer(joueurActif);
+							if (gagnant != null) {
+								//fin de la partie
+								action = Vue.QUITTER;
+							}
 						}
 					}
 					break;
 				case 3:		// Ramasser
+					if (!this.objetPresent(this.getJoueur(joueurActif).getCoordX(), this.getJoueur(joueurActif).getCoordY())) {
+						System.out.println("Vous ne pouvez pas ramasser d'objet, il n'y en a pas sur votre case");
+					} else {
+						this.ramasserObjet(joueurActif);
+					}
 					break;
-				case 4:		// Utilise
+				case 4:		// Utiliser
 					break;
 				case 5:		// Equiper
 					break;
-				case 6:		// fin tour
+				case 6:		// Lister les objets
+					this.listerObjets(joueurActif);
+					break;
+				case 7:		// fin tour
 					if (numJoueur == nb_joueurs-1) { //fin du tour global
 						this.nouveauTour(false);
 						numJoueur = 0;
@@ -242,8 +281,8 @@ public class Controller {
 					else
 						numJoueur++;
 					partie.setTour(joueurActif);
+					partie.setNumjoueur(numJoueur);
 					joueurActif = this.ordreTour.get(numJoueur);
-					System.out.println("fin tour");
 					break;
 				case 0:		// Quitter
 					action = Vue.QUITTER;
@@ -284,7 +323,7 @@ public class Controller {
 	public void attaquer (int numJoueur) {
 		int v = this._vueJoueur.attaquer(this.partieV, getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY(), getJoueur(numJoueur).getNomVaisseau());
 		PartiesVaisseaux atq = this.getJoueur(numJoueur);
-		PartiesVaisseaux def = this.getJoueur(v);
+		PartiesVaisseaux def = this.getJoueur(v-1);
 		if (def.getNomVaisseau().equals(atq.getNomVaisseau())) {
 			System.out.println("Vous ne pouvez pas vous attaquer vous même");
 		} else {
@@ -295,18 +334,66 @@ public class Controller {
 				int ptsDef = 0, ptsAtq = 0;
 				for (int i = 0; i < def.getChamp(); i++)
 					ptsDef += r.nextInt(3)+1;
+				System.out.println("Points Def :" +ptsDef);
 				for (int i = 0; i < atq.getAttaque(); i++)
 					ptsAtq += r.nextInt(3)+1;
+				System.out.println("Points Atq :" +ptsAtq);
 				if (ptsDef < ptsAtq)
 				{
-					// ON PEUT ATTAQUER
+					int ptsDeg = 0;
+					for (int i = 0; i < atq.getDegats(); i++)
+						ptsDeg+= r.nextInt(3)+1;
+					System.out.println("Points Deg :" +ptsDeg);
+					def.setEnergie(def.getEnergie()-ptsDeg);
+					System.out.println("Touché !");
+					if (def.getEnergie() <= 0) {
+						try {
+							gagnant = atq.getVaisseaux();
+						} catch (TorqueException e) {
+							e.printStackTrace();
+						}
+					}
 				}
 				else
-				{
-					// ON PEUT PAS ATTAQUER
+					System.out.println("Votre ennemi est trop fort pour vous...");
+			}
+			else
+				System.out.println(" /!\\ Echec critique /!\\ votre fusil à proton a surchauffé !");
+		}
+	}
+	
+	public void gagner () {
+		//lorsque l'on a gagné une partie TODO
+		this._vueJoueur.gagner(this.gagnant.getNom(), partie.getNom());
+		for (PartiesVaisseaux pv : partieV) {
+			try {
+				@SuppressWarnings("unchecked")
+				// Objets vaisseaux
+				List<ObjetsVaisseaux> lov = pv.getObjetsVaisseauxs();
+				for (ObjetsVaisseaux ov : lov) {
+					ObjetsVaisseauxPeer.doDelete(ov);
 				}
+				PartiesVaisseauxPeer.doDelete(pv);
+			} catch (TorqueException e) {
+				e.printStackTrace();
 			}
 		}
+		partieV = null;
+		for (ObjetsParties op : objetsP) {
+			try {
+				ObjetsPartiesPeer.doDelete(op);
+			} catch (TorqueException e) {
+				e.printStackTrace();
+			}
+		}
+		objetsP = null;
+		try {
+			PartiesPeer.doDelete(partie);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		partie = null;
+		this.resetJeu();
 	}
 
 	public boolean memeCase(int coordX, int coordY, String nomVaisseau) {
@@ -370,7 +457,7 @@ public class Controller {
 	public void creerObjet () {
 		this.resetVues();
 		this.setVueObjet();
-		Objets o = this._vueObjet.creer(CaracteristiquesPeer.doSelectAll());
+		Objets o = this._vueObjet.creer(CaracteristiquesPeer.doSelectAll(), TypesPeer.doSelectAll());
 		try {
 			o.save();
 		} catch (Exception e) {
@@ -378,6 +465,74 @@ public class Controller {
 		}
 	}
 	
+	private void placeObjets() {
+		//ici on ajoute un certain nombre d'objets présents dans la base de façon aleatoire dans le liste d'objets
+		List<Objets> obj;
+		Random r = new Random();
+		obj = ObjetsPeer.doSelectAll();
+		
+		if (obj.size() != 0) {
+			int nb_obj = obj.size();
+			for (int i = 0 ; i < nb_objets; i++) {
+				if (nb_obj != 0) {
+					int nombre = r.nextInt(nb_obj);
+					Objets o = obj.get(nombre);
+					ObjetsParties objp = new ObjetsParties(
+							o.getNom(),
+							this.partie.getNom(),
+							r.nextInt(dimension),
+							r.nextInt(dimension)
+							);
+					objetsP.add(objp);
+					try {
+						objets.add(objp.getObjets());
+					} catch (TorqueException e) {
+						e.printStackTrace();
+					}
+					obj.remove(nombre);
+					nb_obj--;
+				}
+			}
+		}
+	}
+	
+	public void ramasserObjet (int numJoueur) {
+		int c = this._vueJoueur.ramasserObjet(getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY());
+		ObjetsParties q = this.getObjetPartie(c-1);
+		
+		ObjetsVaisseaux objV = new ObjetsVaisseaux(this.getJoueur(numJoueur).getNomVaisseau(), partie.getNom(), q.getNomObjet());
+		this.getJoueur(numJoueur).setPa(this.getJoueur(numJoueur).getPa()-1);
+		try {
+			if (this.loiReussite()) {
+				this.getJoueur(numJoueur).addObjetsVaisseaux(objV);
+				this.objetsP.remove(c-1);
+				this.objets.remove(q.getObjets());
+				ObjetsPartiesPeer.doDelete(q);
+			} else {
+				System.out.println(" /!\\ Echec critique /!\\ panne hydrolique imminente !");
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void listerObjets(int numJoueur) {
+		try {
+			this._vueJoueur.listerObjets(getJoueur(numJoueur).getObjetsVaisseauxs());
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean objetPresent(int x, int y) {
+		boolean r = false;
+		for (ObjetsParties op : this.objetsP) {
+			if (op.getCoordX() == x && op.getCoordY() == y)
+				r = true;
+		}
+		return r;
+	}
 	
 	
 	
@@ -443,8 +598,11 @@ public class Controller {
 	private void resetJeu() {
 		vaisseaux	= new ArrayList<Vaisseaux>();
 		partieV		= new ArrayList<PartiesVaisseaux>();
+		objets		= new ArrayList<Objets>();
+		objetsP		= new ArrayList<ObjetsParties>();
 		partie		= new Parties();
 		ordreTour	= new ArrayList<Integer>();
+		gagnant		= null;
 	}
 	
 	//////////////////////////////////////////////////////
@@ -461,7 +619,7 @@ public class Controller {
 		this._vueJoueur = new VueJoueur(this);
 	}
 	public void setVuePlateau() {
-		this._vuePlateau = new VuePlateau(this, 10);
+		this._vuePlateau = new VuePlateau(this, this.dimension);
 	}
 	public void setVueObjet() {
 		this._vueObjet = new VueObjet(this);
@@ -477,6 +635,15 @@ public class Controller {
 
 	public PartiesVaisseaux getJoueur(int numJoueur) {
 		return this.partieV.get(numJoueur);
+	}
+	public ObjetsParties getObjetPartie(int numObjet) {
+		return this.objetsP.get(numObjet);
+	}
+	public List<ObjetsParties> getObjetsParties() {
+		return this.objetsP;
+	}
+	public Objets getObjet(int numObjet) {
+		return this.objets.get(numObjet);
 	}
 	
 }

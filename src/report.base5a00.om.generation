@@ -43,7 +43,7 @@ correctGetters =
 
 
 
-        objets
+        types
 
         
 
@@ -52,7 +52,7 @@ correctGetters =
 
 
 
-        objets_vaisseaux
+        objets
 
         
 
@@ -71,6 +71,15 @@ correctGetters =
 
 
         parties_vaisseaux
+
+        
+
+
+
+
+
+
+        objets_vaisseaux
 
         
 

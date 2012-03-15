@@ -23,12 +23,14 @@ public  class Objets
     private static final long serialVersionUID = 1329818711143L;
     public Objets() { super(); }
     
-    public Objets (String nom, String carac, int points) {
+    public Objets (String nom, int points, String carac, int duree, String type) {
     	super();
     	try {
 			this.setNom(nom);
+			this.setPoints(points);
 			this.setCarac(carac);
-	    	this.setPoints(points);
+			this.setDuree(duree);
+			this.setType(type);
 		} catch (TorqueException e) {
 			e.printStackTrace();
 		}

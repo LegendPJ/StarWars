@@ -1,7 +1,7 @@
-insert into caracteristiques ('attaque');
-insert into caracteristiques ('degat');
-insert into caracteristiques ('champ');
-insert into caracteristiques ('energie');
+insert into caracteristiques VALUES ('attaque');
+insert into caracteristiques VALUES ('degat');
+insert into caracteristiques VALUES ('champ');
+insert into caracteristiques VALUES ('energie');
 
-insert into objets ('missiles', 10, 'attaque');
-insert into objets ('', 10, 'attaque');
+insert into types VALUES ('arme');
+insert into types VALUES ('bonus');

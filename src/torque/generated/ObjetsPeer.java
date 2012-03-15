@@ -1,8 +1,12 @@
 package torque.generated;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.torque.NoRowsException;
 import org.apache.torque.TooManyRowsException;
 import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
 
 /**
  * objets
@@ -33,6 +37,18 @@ public class ObjetsPeer
 		}
 		
 		return c;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public static List<Objets> doSelectAll() {
+		List<Objets> o = new ArrayList<Objets>();
+		try {
+			o = ObjetsPeer.doSelect(new Criteria());
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		return o;
 	}
     
 

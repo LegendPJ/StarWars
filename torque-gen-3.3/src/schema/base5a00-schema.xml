@@ -37,6 +37,17 @@
   	  size="60"
   	  description="..." />
   </table>
+
+<!-- TABLE TYPES OBJETS -->
+  
+  <table name="types" description="types dobjet">
+  	<column 
+  	  name="nom"
+  	  required="true"
+  	  primaryKey="true"
+  	  type="VARCHAR"
+  	  size="40" />
+  </table>
   
 <!-- TABLE OBJETS -->
  
@@ -61,41 +72,29 @@
       size="60"
       default="0"
       description="caracteritique améliorée"/>
+    <column
+      name="duree"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="nombre de tour valable"/>
+    <column
+      name="type"
+      required="true"
+      type="VARCHAR"
+      size="40"
+      description="ataque ou defense"/>
     <foreign-key foreignTable="caracteristiques">
       <reference
         local="carac"
         foreign="nom"/>
     </foreign-key>
+    <foreign-key foreignTable="types">
+      <reference
+        local="type"
+        foreign="nom"/>
+    </foreign-key>
   </table>
- 
-<!-- TABLE OBJETS_VAISSEAUX -->
- 
-  <table name="objets_vaisseaux" description="objets_vaisseaux">
-  	<column
-      name="nom_vaisseau"
-      required="true"
-      primaryKey="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom du vaisseau"/>
-    <column
-      name="nom_objet"
-      required="true"
-      primaryKey="true"
-      type="VARCHAR"
-      size="40"
-      description="Nom de lobjet"/>
-    <foreign-key foreignTable="vaisseaux">
-      <reference
-        local="nom_vaisseau"
-        foreign="nom"/>
-    </foreign-key>
-    <foreign-key foreignTable="objets">
-      <reference
-        local="nom_objet"
-        foreign="nom"/>
-    </foreign-key>
-  </table>  
   
 <!-- TABLE PARTIES -->
   
@@ -114,10 +113,10 @@
       description="loto a qui le tour ?"/>
     <column
       name="numJoueur"
-      required="TRUE"
+      required="true"
       type="INTEGER"
-      description="numero avec qui on s'est arrete" />
-  </table>  
+      description="numero avec qui on sest arrete" />
+  </table>
   
 <!-- TABLE PARTIES_VAISSEAUX -->
   
@@ -194,6 +193,45 @@
     </foreign-key>
   </table>
 
+<!-- TABLE OBJETS_VAISSEAUX -->
+ 
+  <table name="objets_vaisseaux" description="objets_vaisseaux">
+  	<column
+      name="nom_vaisseau"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom du vaisseau"/>
+    <column
+      name="nom_partie"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de la partie"/>
+    <column
+      name="nom_objet"
+      required="true"
+      primaryKey="true"
+      type="VARCHAR"
+      size="40"
+      description="Nom de lobjet"/>
+    <foreign-key foreignTable="parties_vaisseaux">
+      <reference
+        local="nom_vaisseau"
+        foreign="nom_vaisseau"/>
+      <reference
+        local="nom_partie"
+        foreign="nom_partie"/>
+    </foreign-key>
+    <foreign-key foreignTable="objets">
+      <reference
+        local="nom_objet"
+        foreign="nom"/>
+    </foreign-key>
+  </table>  
+
 
 <!-- TABLE OBJETS_PARTIES -->
   
@@ -208,6 +246,7 @@
     <column
       name="nom_objet"
       required="true"
+      primaryKey="true"
       type="VARCHAR"
       size="40"
       description="Nom de lobjet"/>

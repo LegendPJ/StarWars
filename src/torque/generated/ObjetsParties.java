@@ -1,5 +1,7 @@
 package torque.generated;
 
+import org.apache.torque.TorqueException;
+
 /**
  * objets
  *
@@ -14,7 +16,19 @@ package torque.generated;
 public class ObjetsParties
     extends torque.generated.BaseObjetsParties
 {
-    /** Serial version */
+	public ObjetsParties() { super(); }
+    public ObjetsParties(String nom_obj, String nomP, int x, int y) {
+    	try {
+			this.setNomObjet(nom_obj);
+	    	this.setNomPartie(nomP);
+	    	this.setCoordX(x);
+	    	this.setCoordY(y);
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/** Serial version */
     private static final long serialVersionUID = 1329818711143L;
 
 }

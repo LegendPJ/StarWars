@@ -17,10 +17,11 @@ public class Base5a00MapInit
     {
         torque.generated.VaisseauxPeer.getMapBuilder();
         torque.generated.CaracteristiquesPeer.getMapBuilder();
+        torque.generated.TypesPeer.getMapBuilder();
         torque.generated.ObjetsPeer.getMapBuilder();
-        torque.generated.ObjetsVaisseauxPeer.getMapBuilder();
         torque.generated.PartiesPeer.getMapBuilder();
         torque.generated.PartiesVaisseauxPeer.getMapBuilder();
+        torque.generated.ObjetsVaisseauxPeer.getMapBuilder();
         torque.generated.ObjetsPartiesPeer.getMapBuilder();
     }
 }

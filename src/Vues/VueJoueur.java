@@ -3,7 +3,12 @@ package Vues;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.torque.TorqueException;
+
 import Services.IO;
+import torque.generated.Objets;
+import torque.generated.ObjetsParties;
+import torque.generated.ObjetsVaisseaux;
 import torque.generated.PartiesVaisseaux;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
@@ -114,18 +119,74 @@ public class VueJoueur extends Vue {
 	}
 
 	public int attaquer(List<PartiesVaisseaux> vais, int coordX, int coordY, String nom) {
-		int i = 1, menu = 0;
+		int i = 1, j = 0, menu = 0;
 		for (PartiesVaisseaux v : vais) {
-			if (getController().memeCase(coordX, coordY, nom))
-				System.out.print(i + ". " + v.getNomVaisseau());
+			if (getController().memeCase(coordX, coordY, nom)) {
+				System.out.println(i + ". " + v.getNomVaisseau());
+				j++;
+			}
 			i++;
 		}
 		do {
-			System.out.print("Quel vaisseau attaquer ? [1.." + i + "] ");
+			System.out.print("Quel vaisseau attaquer ? [1.." + j + "] ");
 			menu = IO.lireEntier();
-		} while (menu < 1 || menu > i);
+		} while (menu < 1 || menu > j);
 		
 		return menu;
+	}
+	
+	public int ramasserObjet (int x, int y) {
+		List<ObjetsParties> objp = getController().getObjetsParties();
+		int i = 1, j = 0, menu = 0;
+		for (ObjetsParties obj : objp) {
+			
+			if (obj.getCoordX() == x && obj.getCoordY() == y) {
+				Objets ob;
+				try {
+					ob = obj.getObjets();
+					String tour = " tours.";
+					if (ob.getDuree() == 1)
+						tour = " tour.";
+					System.out.println(i + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
+					j++;
+				} catch (TorqueException e) {
+					e.printStackTrace();
+				}
+			}
+			i++;
+		}
+		
+		do {
+			System.out.print("Quel objet ramasser ? [1.." + j + "] ");
+			menu = IO.lireEntier();
+		} while (menu < 1 || menu > j);
+		return menu;
+	}
+
+	public void listerObjets(List<ObjetsVaisseaux> ov) {
+		if (ov.size() == 0) 
+			System.out.println("Aucun objet dans votre équipement !");
+		else {
+			System.out.println("Objets dans votre équipement :\n");
+			for (ObjetsVaisseaux o : ov) {
+				try {
+					Objets obj = o.getObjets();
+					String tour = " tours.";
+					if (obj.getDuree() == 1)
+						tour = " tour.";
+					
+					System.out.println("- " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+	
+				} catch (TorqueException e) {
+					e.printStackTrace();
+				}
+			} 
+		} System.out.println();
+	}
+
+	public void gagner(String nomVaisseau, String nomPartie) {
+		//Vue de partie gagner
+		System.out.println("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
 	}
 	
 }
