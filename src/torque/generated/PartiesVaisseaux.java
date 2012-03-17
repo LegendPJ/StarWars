@@ -1,6 +1,9 @@
 package torque.generated;
 
 
+import java.util.List;
+
+import org.apache.torque.TorqueException;
 import org.apache.torque.om.Persistent;
 
 /**
@@ -37,6 +40,74 @@ public  class PartiesVaisseaux
     	this.setEnergie(nrj*10);
     	this.setCoordX(coordX);
     	this.setCoordY(coordY);
+    }
+    
+    @SuppressWarnings("unchecked")
+	public int getAttaqueImproved() {
+    	int r = super.getAttaque();
+		try {
+			List<ObjetsVaisseaux> objets;
+			objets = this.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objets) {
+	    		if (o.getObjets().getCarac().equals("attaque") && o.getEquipe())
+	    			r += o.getObjets().getPoints();
+	    	}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    	
+    	return r;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public int getChampImproved() {
+    	int r = super.getChamp();
+		try {
+			List<ObjetsVaisseaux> objets;
+			objets = this.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objets) {
+	    		if (o.getObjets().getCarac().equals("champ") && o.getEquipe())
+	    			r += o.getObjets().getPoints();
+	    	}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    	
+    	return r;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public int getDegatsImproved() {
+    	int r = super.getDegats();
+		try {
+			List<ObjetsVaisseaux> objets;
+			objets = this.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objets) {
+	    		if (o.getObjets().getCarac().equals("degats") && o.getEquipe())
+	    			r += o.getObjets().getPoints();
+	    	}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    	
+    	return r;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public int getEnergieImproved() {
+    	int r = super.getEnergie();
+		try {
+			List<ObjetsVaisseaux> objets;
+			objets = this.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objets) {
+	    		if (o.getObjets().getCarac().equals("energie") && o.getEquipe())
+	    			r += o.getObjets().getPoints();
+	    	}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+    	
+    	return r;
     }
 
 }

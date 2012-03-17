@@ -217,6 +217,18 @@
       type="VARCHAR"
       size="40"
       description="Nom de lobjet"/>
+    <column
+      name="equipe"
+      required="true"
+      type="BOOLEANINT"
+      default="0"
+      description="Equipe ou non" />
+    <column
+      name="duree_restante"
+      required="true"
+      type="INTEGER"
+      default="0"
+      description="Nombre de tours restants pour lobjet equipe" />
     <foreign-key foreignTable="parties_vaisseaux">
       <reference
         local="nom_vaisseau"

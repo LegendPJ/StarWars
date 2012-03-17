@@ -10,6 +10,7 @@ import org.apache.torque.Torque;
 import org.apache.torque.TorqueException;
 import org.apache.torque.util.Transaction;
 
+import Services.Fonctions;
 import Vues.Vue;
 import Vues.VueJoueur;
 import Vues.VueMenuStarWars;
@@ -22,6 +23,7 @@ import torque.generated.ObjetsParties;
 import torque.generated.ObjetsPartiesPeer;
 import torque.generated.ObjetsPeer;
 import torque.generated.ObjetsVaisseaux;
+import torque.generated.ObjetsVaisseauxPeer;
 import torque.generated.Parties;
 import torque.generated.PartiesPeer;
 import torque.generated.PartiesVaisseaux;
@@ -267,6 +269,15 @@ public class Controller {
 				case 4:		// Utiliser
 					break;
 				case 5:		// Equiper
+					if (this.getJoueur(joueurActif).getPa() < 2)
+						System.out.println("Vous n'avez pas assez de point d'action");
+					else
+					{
+						if (this.armesDansEquipement(joueurActif))
+							this.equiperArme(joueurActif);
+						else
+							System.out.println("Vous n'avez pas d'armes dans votre équipement");
+					}
 					break;
 				case 6:		// Lister les objets
 					this.listerObjets(joueurActif);
@@ -330,21 +341,30 @@ public class Controller {
 			if (this.loiReussite()) {
 				Random r = new Random();
 				int ptsDef = 0, ptsAtq = 0;
-				for (int i = 0; i < def.getChamp(); i++)
+				for (int i = 0; i < def.getChampImproved(); i++)
 					ptsDef += r.nextInt(3)+1;
 				System.out.println("Points Def :" +ptsDef);
-				for (int i = 0; i < atq.getAttaque(); i++)
+				for (int i = 0; i < atq.getAttaqueImproved(); i++)
 					ptsAtq += r.nextInt(3)+1;
+				for (ObjetsVaisseaux ov : this.getArmesEquipees(numJoueur)) {
+					Objets o;
+					try {
+						o = ov.getObjets();
+						ptsAtq += o.getPoints();
+					} catch (TorqueException e) {
+						e.printStackTrace();
+					}
+				}
 				System.out.println("Points Atq :" +ptsAtq);
 				if (ptsDef < ptsAtq)
 				{
 					int ptsDeg = 0;
-					for (int i = 0; i < atq.getDegats(); i++)
+					for (int i = 0; i < atq.getDegatsImproved(); i++)
 						ptsDeg+= r.nextInt(3)+1;
 					System.out.println("Points Deg :" +ptsDeg);
-					def.setEnergie(def.getEnergie()-ptsDeg);
+					def.setEnergie(def.getEnergieImproved()-ptsDeg);
 					System.out.println("Touché !");
-					if (def.getEnergie() <= 0) {
+					if (def.getEnergieImproved() <= 0) {
 						try {
 							gagnant = atq.getVaisseaux();
 						} catch (TorqueException e) {
@@ -411,8 +431,20 @@ public class Controller {
 			joueur = partie.getTour();
 		
 		for (int i = 0; i < nb_joueurs; i++) {
-			if (!nouvPartie)
-				this.partieV.get(i).setPa(6);
+			if (!nouvPartie) {
+				this.getJoueur(i).setPa(6);
+				for (ObjetsVaisseaux o : this.getObjetsEquipe(i)) {
+					o.setDureeRestante(o.getDureeRestante()-1);
+					if (o.getDureeRestante() == 0) {
+						try {
+							this.getJoueur(i).getObjetsVaisseauxs().remove(o);
+							ObjetsVaisseauxPeer.doDelete(o);
+						} catch (TorqueException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 			this.ordreTour.add(joueur);
 			if (joueur != nb_joueurs-1)
 				joueur++;
@@ -496,6 +528,39 @@ public class Controller {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void equiperArme(int numJoueur) {
+		try {
+			List<ObjetsVaisseaux> objets = getJoueur(numJoueur).getObjetsVaisseauxs();
+			int arme = this._vueJoueur.equiperArme(this.getArmes(numJoueur));
+			getJoueur(numJoueur).setPa(getJoueur(numJoueur).getPa()-2);
+			if (this.loiReussite()) {
+				objets.get(arme).setEquipe(true);
+				objets.get(arme).setDureeRestante(objets.get(arme).getObjets().getDuree());
+				StringBuffer liaison = new StringBuffer(" de ");
+				StringBuffer typeArme = new StringBuffer(objets.get(arme).getObjets().getType());
+				String tours = " tours.";
+				char voyelles[] = {'a', 'e', 'i', 'o', 'u', 'y'};
+				
+				if (objets.get(arme).getObjets().getDuree() == 1)
+					tours = " tour.";
+				if (Fonctions.in_array(typeArme.charAt(0), voyelles)) {
+					liaison.setCharAt(2, '\'');
+					liaison.deleteCharAt(3);
+				}
+				
+				System.out.print("Vous avez équiper " + objets.get(arme).getObjets().getNom());
+				System.out.print(" vous points " + liaison + objets.get(arme).getObjets().getCarac());
+				System.out.print(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(arme).getObjets().getCarac()));
+				System.out.println(" pour " + objets.get(arme).getObjets().getDuree() + tours);
+			}
+			else
+				System.out.println("/!\\ Echec critique /!\\ Vous avez cassé une pièce !");
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private boolean objetPresent(int x, int y) {
 		boolean r = false;
 		for (ObjetsParties op : this.objetsP) {
@@ -503,6 +568,70 @@ public class Controller {
 				r = true;
 		}
 		return r;
+	}
+	
+	private boolean armesDansEquipement(int numJoueur) {
+		return this.getArmes(numJoueur).size() > 0;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<ObjetsVaisseaux> getArmes(PartiesVaisseaux vaisseau) {
+		List<ObjetsVaisseaux> armes = new ArrayList<ObjetsVaisseaux>();
+		try {
+			List<ObjetsVaisseaux> objV = vaisseau.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objV) {
+				if (o.getObjets().getType().equalsIgnoreCase("arme"))
+					armes.add(o);
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		return armes;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<ObjetsVaisseaux> getArmesEquipees(PartiesVaisseaux vaisseau) {
+		List<ObjetsVaisseaux> armes = new ArrayList<ObjetsVaisseaux>();
+		try {
+			List<ObjetsVaisseaux> objV = vaisseau.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objV) {
+				if (o.getObjets().getType().equalsIgnoreCase("arme") && o.getEquipe())
+					armes.add(o);
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		return armes;
+	}
+	
+	public List<ObjetsVaisseaux> getArmes(int numJoueur) {
+		return this.getArmes(this.getJoueur(numJoueur));
+	}
+	
+	public List<ObjetsVaisseaux> getArmesEquipees(int numJoueur) {
+		return this.getArmesEquipees(this.getJoueur(numJoueur));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<ObjetsVaisseaux> getObjetsEquipe(PartiesVaisseaux vaisseau) {
+		List<ObjetsVaisseaux> objets = new ArrayList<ObjetsVaisseaux>();
+		try {
+			List<ObjetsVaisseaux> objV = vaisseau.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objV) {
+				if (o.getEquipe())
+					objets.add(o);
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		return objets;
+	}
+	
+	public List<ObjetsVaisseaux> getObjetsEquipe(int numJoueur) {
+		return this.getObjetsEquipe(this.getJoueur(numJoueur));
 	}
 	
 	
@@ -615,6 +744,19 @@ public class Controller {
 	}
 	public Objets getObjet(int numObjet) {
 		return this.objets.get(numObjet);
+	}
+	
+	private int getNouveauxPoints (int numJoueur, String carac) {
+		int pts = 0;
+		if (carac.equals("attaque"))
+			pts = this.getJoueur(numJoueur).getAttaqueImproved();
+		else if (carac.equals("degats"))
+			pts = this.getJoueur(numJoueur).getDegatsImproved();
+		else if (carac.equals("champ"))
+			pts = this.getJoueur(numJoueur).getChampImproved();
+		else if (carac.equals("energie"))
+			pts = this.getJoueur(numJoueur).getEnergieImproved();
+		return pts;
 	}
 	
 }

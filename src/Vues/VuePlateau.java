@@ -103,10 +103,10 @@ public class VuePlateau extends Vue {
 		System.out.println("     * 0. Menu Principal                *");
 		System.out.println("     ************************************");
 		
-		System.out.println("\nPoints d'attaque : " + getController().getJoueur(numJoueur).getAttaque());
-		System.out.println("Points de dégats : " + getController().getJoueur(numJoueur).getDegats());
-		System.out.println("Points de champ de force : " + getController().getJoueur(numJoueur).getChamp());
-		System.out.println("Points d'énergie : " + getController().getJoueur(numJoueur).getEnergie());
+		System.out.println("\nPoints d'attaque : " + getController().getJoueur(numJoueur).getAttaqueImproved());
+		System.out.println("Points de dégats : " + getController().getJoueur(numJoueur).getDegatsImproved());
+		System.out.println("Points de champ de force : " + getController().getJoueur(numJoueur).getChampImproved());
+		System.out.println("Points d'énergie : " + getController().getJoueur(numJoueur).getEnergieImproved());
 		System.out.println("Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
 		
 		do {

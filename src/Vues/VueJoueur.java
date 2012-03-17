@@ -188,5 +188,29 @@ public class VueJoueur extends Vue {
 		//Vue de partie gagner
 		System.out.println("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
 	}
+
+	public int equiperArme(List<ObjetsVaisseaux> armes) {
+		int choix = 0, i = 1;
+		try {
+			for (ObjetsVaisseaux o : armes) {
+			
+				Objets obj = o.getObjets();
+				String tour = " tours.";
+				if (obj.getDuree() == 1)
+					tour = " tour.";
+				System.out.println(i + ". " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+				i++;
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		do {
+			System.out.print("Quelle arme voulez-vous équiper ? [1.."+armes.size()+"] ");
+			choix = IO.lireEntier();
+		} while (choix < 1 && choix > armes.size());
+		
+		return armes.indexOf(armes.get(choix-1));
+	}
 	
 }

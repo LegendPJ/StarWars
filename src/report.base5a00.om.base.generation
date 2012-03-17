@@ -19,11 +19,11 @@ correctGetters =
     BaseBeans generated in package torque.generated.bean
     Maps generated in package torque.generated.map
 
-    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/torque/generated/
+    Failed to create dir or dir already exists: /Users/Flohw/Public/StarWars/src/torque/generated/
 
-    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/torque/generated/
+    Failed to create dir or dir already exists: /Users/Flohw/Public/StarWars/src/torque/generated/
 
-    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/torque/generated/map/
+    Failed to create dir or dir already exists: /Users/Flohw/Public/StarWars/src/torque/generated/map/
 
 
 
@@ -132,6 +132,6 @@ correctGetters =
     
 
 ;
-    Failed to create dir or dir already exists: /users/info/etu-s4/parrenof/cinf5a/StarWars/src/org/apache/torque/linkage/
+    Failed to create dir or dir already exists: /Users/Flohw/Public/StarWars/src/org/apache/torque/linkage/
     
 

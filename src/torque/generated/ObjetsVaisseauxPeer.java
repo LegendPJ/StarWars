@@ -1,5 +1,8 @@
 package torque.generated;
 
+import org.apache.torque.TorqueException;
+import org.apache.torque.util.Criteria;
+
 /**
  * objets_vaisseaux
  *
@@ -16,5 +19,19 @@ public class ObjetsVaisseauxPeer
 {
     /** Serial version */
     private static final long serialVersionUID = 1329818711143L;
+    
+    public static void doDelete(ObjetsVaisseaux objet) {
+    	Criteria c = new Criteria();
+    	if (objet.getDureeRestante() == 0 && objet.getEquipe()) {
+    		c.add(ObjetsVaisseauxPeer.NOM_OBJET, objet.getNomObjet());
+    		c.add(ObjetsVaisseauxPeer.NOM_PARTIE, objet.getNomPartie());
+    		c.add(ObjetsVaisseauxPeer.NOM_VAISSEAU, objet.getNomVaisseau());
+    		try {
+				ObjetsVaisseauxPeer.doDelete(c);
+			} catch (TorqueException e) {
+				e.printStackTrace();
+			}
+    	}
+    }
 
 }

@@ -150,6 +150,8 @@ CREATE TABLE objets_vaisseaux
     nom_vaisseau VARCHAR(40) NOT NULL,
     nom_partie VARCHAR(40) NOT NULL,
     nom_objet VARCHAR(40) NOT NULL,
+    equipe INT2 default 0 NOT NULL,
+    duree_restante INTEGER default 0 NOT NULL,
     PRIMARY KEY (nom_vaisseau,nom_partie,nom_objet)
 );
 
@@ -158,6 +160,8 @@ COMMENT ON TABLE objets_vaisseaux IS 'objets_vaisseaux';
 COMMENT ON COLUMN objets_vaisseaux.nom_vaisseau IS 'Nom du vaisseau';
 COMMENT ON COLUMN objets_vaisseaux.nom_partie IS 'Nom de la partie';
 COMMENT ON COLUMN objets_vaisseaux.nom_objet IS 'Nom de lobjet';
+COMMENT ON COLUMN objets_vaisseaux.equipe IS 'Equipe ou non';
+COMMENT ON COLUMN objets_vaisseaux.duree_restante IS 'Nombre de tours restants pour lobjet equipe';
 
 
 -----------------------------------------------------------------------------

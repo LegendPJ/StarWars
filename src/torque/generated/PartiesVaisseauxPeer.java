@@ -1,11 +1,5 @@
 package torque.generated;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.torque.TorqueException;
-import org.apache.torque.util.Criteria;
-
 /**
  * parties_vaisseaux
  *
