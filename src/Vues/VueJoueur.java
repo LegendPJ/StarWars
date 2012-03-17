@@ -137,30 +137,30 @@ public class VueJoueur extends Vue {
 	
 	public int ramasserObjet (int x, int y) {
 		List<ObjetsParties> objp = getController().getObjetsParties();
-		int i = 1, j = 0, menu = 0;
+		List<ObjetsParties> objc = new ArrayList<ObjetsParties>(); // Objets sur la case (x, y)
+		int j = 0, menu = 0;
 		for (ObjetsParties obj : objp) {
-			
 			if (obj.getCoordX() == x && obj.getCoordY() == y) {
 				Objets ob;
+				j++;
 				try {
 					ob = obj.getObjets();
+					objc.add(obj);
 					String tour = " tours.";
 					if (ob.getDuree() == 1)
 						tour = " tour.";
-					System.out.println(i + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
-					j++;
+					System.out.println(j + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
 			}
-			i++;
 		}
 		
 		do {
 			System.out.print("Quel objet ramasser ? [1.." + j + "] ");
 			menu = IO.lireEntier();
 		} while (menu < 1 || menu > j);
-		return menu;
+		return objp.indexOf(objc.get(menu-1));
 	}
 
 	public void listerObjets(List<ObjetsVaisseaux> ov) {

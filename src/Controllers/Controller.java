@@ -469,16 +469,16 @@ public class Controller {
 	
 	public void ramasserObjet (int numJoueur) {
 		int c = this._vueJoueur.ramasserObjet(getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY());
-		ObjetsParties q = this.getObjetPartie(c-1);
+		ObjetsParties objetRamasse = this.getObjetPartie(c);
 		
-		ObjetsVaisseaux objV = new ObjetsVaisseaux(this.getJoueur(numJoueur).getNomVaisseau(), partie.getNom(), q.getNomObjet());
+		ObjetsVaisseaux objV = new ObjetsVaisseaux(this.getJoueur(numJoueur).getNomVaisseau(), partie.getNom(), objetRamasse.getNomObjet());
 		this.getJoueur(numJoueur).setPa(this.getJoueur(numJoueur).getPa()-1);
 		try {
 			if (this.loiReussite()) {
 				this.getJoueur(numJoueur).addObjetsVaisseaux(objV);
-				this.objetsP.remove(c-1);
-				this.objets.remove(q.getObjets());
-				ObjetsPartiesPeer.doDelete(q);
+				this.objetsP.remove(c);
+				this.objets.remove(objetRamasse.getObjets());
+				ObjetsPartiesPeer.doDelete(objetRamasse);
 			} else {
 				System.out.println(" /!\\ Echec critique /!\\ panne hydrolique imminente !");
 			}
