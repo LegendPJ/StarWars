@@ -54,4 +54,53 @@ public class PartiesPeer
 		return p;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static void doDeletePartie(Parties partie) {
+		Criteria criteriaPartie = new Criteria();
+		List<PartiesVaisseaux> partieV;
+		try {
+			partieV = partie.getPartiesVaisseauxs();
+			List<ObjetsParties> objetsP = partie.getObjetsPartiess();
+			criteriaPartie.add(PartiesPeer.NOM, partie.getNom());
+			
+			// Suppression des parties_vaisseaux
+			for (PartiesVaisseaux pv : partieV) {
+				Criteria criteriaPartieV = new Criteria();
+				criteriaPartieV.add(PartiesVaisseauxPeer.NOM_PARTIE, pv.getNomPartie());
+				criteriaPartieV.add(PartiesVaisseauxPeer.NOM_VAISSEAU, pv.getNomVaisseau());
+				
+				try {
+					// Suppression des objets_vaisseaux
+					List<ObjetsVaisseaux> lov = pv.getObjetsVaisseauxs();
+					for (ObjetsVaisseaux ov : lov) {
+						Criteria criteriaObjetVaisseau = new Criteria();
+						criteriaObjetVaisseau.add(ObjetsVaisseauxPeer.NOM_OBJET, ov.getNomObjet());
+						criteriaObjetVaisseau.add(ObjetsVaisseauxPeer.NOM_PARTIE, ov.getNomPartie());
+						criteriaObjetVaisseau.add(ObjetsVaisseauxPeer.NOM_VAISSEAU, ov.getNomVaisseau());
+						ObjetsVaisseauxPeer.doDelete(criteriaObjetVaisseau);
+					}
+					PartiesVaisseauxPeer.doDelete(criteriaPartieV);
+				} catch (TorqueException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			// Suppression des opbjets_parties
+			for (ObjetsParties op : objetsP) {
+				try {
+					Criteria criteriaObjetPartie = new Criteria();
+					criteriaObjetPartie.add(ObjetsPartiesPeer.NOM_OBJET, op.getNomObjet());
+					criteriaObjetPartie.add(ObjetsPartiesPeer.NOM_PARTIE, op.getNomPartie());
+					ObjetsPartiesPeer.doDelete(criteriaObjetPartie);
+				} catch (TorqueException e) {
+					e.printStackTrace();
+				}
+			}
+			// Suppression de la partie
+			PartiesPeer.doDelete(criteriaPartie);
+		} catch (TorqueException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 }

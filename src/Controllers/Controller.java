@@ -22,11 +22,9 @@ import torque.generated.ObjetsParties;
 import torque.generated.ObjetsPartiesPeer;
 import torque.generated.ObjetsPeer;
 import torque.generated.ObjetsVaisseaux;
-import torque.generated.ObjetsVaisseauxPeer;
 import torque.generated.Parties;
 import torque.generated.PartiesPeer;
 import torque.generated.PartiesVaisseaux;
-import torque.generated.PartiesVaisseauxPeer;
 import torque.generated.TypesPeer;
 import torque.generated.Vaisseaux;
 import torque.generated.VaisseauxPeer;
@@ -365,34 +363,7 @@ public class Controller {
 	public void gagner () {
 		//lorsque l'on a gagné une partie TODO
 		this._vueJoueur.gagner(this.gagnant.getNom(), partie.getNom());
-		for (PartiesVaisseaux pv : partieV) {
-			try {
-				@SuppressWarnings("unchecked")
-				// Objets vaisseaux
-				List<ObjetsVaisseaux> lov = pv.getObjetsVaisseauxs();
-				for (ObjetsVaisseaux ov : lov) {
-					ObjetsVaisseauxPeer.doDelete(ov);
-				}
-				PartiesVaisseauxPeer.doDelete(pv);
-			} catch (TorqueException e) {
-				e.printStackTrace();
-			}
-		}
-		partieV = null;
-		for (ObjetsParties op : objetsP) {
-			try {
-				ObjetsPartiesPeer.doDelete(op);
-			} catch (TorqueException e) {
-				e.printStackTrace();
-			}
-		}
-		objetsP = null;
-		try {
-			PartiesPeer.doDelete(partie);
-		} catch (TorqueException e) {
-			e.printStackTrace();
-		}
-		partie = null;
+		PartiesPeer.doDeletePartie(this.partie);
 		this.resetJeu();
 	}
 
