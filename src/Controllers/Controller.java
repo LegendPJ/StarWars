@@ -361,7 +361,6 @@ public class Controller {
 	}
 	
 	public void gagner () {
-		//lorsque l'on a gagné une partie TODO
 		this._vueJoueur.gagner(this.gagnant.getNom(), partie.getNom());
 		PartiesPeer.doDeletePartie(this.partie);
 		this.resetJeu();
@@ -387,12 +386,13 @@ public class Controller {
 	}
 
 	private void sauverPartie() {
-		// TODO Enregistrer les objets_parties
 		try {
 			Controller.beginTransaction();
 			partie.save(connTransaction);
 			for (PartiesVaisseaux pv : partieV)
 				pv.save(connTransaction);
+			for (ObjetsParties op : objetsP)
+				op.save(connTransaction);
 			Controller.commitTransaction();
 			System.out.print("Partie enregistrée et fin de la partie");
 		} catch (TorqueException e) {
