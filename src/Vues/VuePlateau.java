@@ -21,7 +21,12 @@ public class VuePlateau extends Vue {
 		super(c);
 		dimension = d;
 	}
-	
+	/**
+	 * Affiche le plateau de jeu
+	 * @param pv liste des vaisseaux en jeu
+	 * @param v liste des vaisseaux en jeu (pour le type de vaisseau : /-\, [-]...)
+	 * @param op liste des objets dans la partie
+	 */
 	public void afficher(List<PartiesVaisseaux> pv, List<Vaisseaux> v, List<ObjetsParties> op) {
 		//Construction du plateau
 		for (int j=0; j < dimension; j++) {
@@ -84,7 +89,11 @@ public class VuePlateau extends Vue {
 			System.out.println("|");
 		} //FIN CREATION
 	}//FIN FONCTION
-	
+	/**
+	 * Actions possible pour le joueur
+	 * @param numJoueur numéro du joueur
+	 * @return action à effectuer
+	 */
 	public int menu(int numJoueur) {
 		int menu = 0;
 		boolean cond = true; 
@@ -119,7 +128,11 @@ public class VuePlateau extends Vue {
 		} while (cond);
 		return menu;
 	}
-	
+	/**
+	 * Liste des déplacement possible
+	 * @param numJoueurActif numéro du joueur
+	 * @return la direction du déplacement
+	 */
 	public int deplacement(int numJoueurActif) {
 		List<Integer> p = new ArrayList<Integer>();
 		int d;

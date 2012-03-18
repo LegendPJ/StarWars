@@ -8,7 +8,10 @@ public class VueMenuStarWars extends Vue {
 	public VueMenuStarWars (Controller c) {
 		super(c);
 	}
-	
+	/**
+	 * Menu principal
+	 * @return choix
+	 */
 	public int menu () {
 		int choix = Vue.QUITTER;
 		do {

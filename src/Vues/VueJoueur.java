@@ -22,7 +22,12 @@ public class VueJoueur extends Vue {
 		super(c);
 		noms = new ArrayList<String>();
 	}
-	
+	/**
+	 * Menu de sélection de vaisseau
+	 * @param numJoueur numéro du joueur
+	 * @param nbVaisseaux nombre de vaisseaux déjà créé
+	 * @return action à faire, 1 => créer, 2 => utiliser, 0 => quitter
+	 */
 	public int menuJoueur (int numJoueur, int nbVaisseaux) {
 		int choix = Vue.QUITTER, choixMax = 1;
 		do{
@@ -43,11 +48,16 @@ public class VueJoueur extends Vue {
 		
 		return choix;
 	}
-	
+	/**
+	 * Créer un vaisseau pour un joueur
+	 * @param numJoueur numéro du joueur
+	 * @return le vaisseau créé
+	 */
 	public Vaisseaux nouveauVaisseau (int numJoueur) {
 		String nomVaisseau = new String();
 		int c1;
 		
+		// Nom du vaisseau
 		do {
 			System.out.print("Joueur "+numJoueur+", veuillez nommer votre vaisseau : ");
 			nomVaisseau = IO.lireChaine();
@@ -68,7 +78,11 @@ public class VueJoueur extends Vue {
 		
 		return new Vaisseaux (nomVaisseau, VAISSEAUX[c1-1]);
 	}
-	
+	/**
+	 * Enregistre les caractéristiques du vaisseau (attaque, champ de force...)
+	 * @param numJoueur numéro du joueur
+	 * @return Le vaisseau qui joue dans la partie (VaisseauPartie)
+	 */
 	public PartiesVaisseaux setCaracs (int numJoueur) {
 		int atq = 0, dgt = 0, cdf = 0, nrj = 0, coordX = 0, coordY = 0;
 		int sommeC = 40;
@@ -97,7 +111,12 @@ public class VueJoueur extends Vue {
 		
 		return new PartiesVaisseaux(atq, cdf, dgt, nrj, coordX, coordY);
 	}
-	
+	/**
+	 * Utiliser un vaisseau existant (nom+type)
+	 * @param numJoueur numéro du joueur
+	 * @param vaisseaux liste de tous les vaisseaux enregistrés
+	 * @return le vaisseau choisi
+	 */
 	public Vaisseaux chargerVaisseau (int numJoueur, List<Vaisseaux> vaisseaux) {
 		int numVaisseau = 1, menu = Vue.QUITTER;
 		int length = vaisseaux.size();
@@ -117,7 +136,14 @@ public class VueJoueur extends Vue {
 		else
 			return new Vaisseaux(vaisseaux.get(menu-1).getNom(), vaisseaux.get(menu-1).getType());
 	}
-
+	/**
+	 * Permet de choisir quel vaisseau attaquer
+	 * @param vais Liste des vaisseaux en jeu
+	 * @param coordX abscisse de l'attaquant
+	 * @param coordY ordonnée de l'attaquant
+	 * @param nom nom du vaisseau de l'attaquant
+	 * @return numéro du vaisseau à attaquer
+	 */
 	public int attaquer(List<PartiesVaisseaux> vais, int coordX, int coordY, String nom) {
 		int i = 1, j = 0, menu = 0;
 		for (PartiesVaisseaux v : vais) {
@@ -134,7 +160,12 @@ public class VueJoueur extends Vue {
 		
 		return menu;
 	}
-	
+	/**
+	 * Ramasser un objet
+	 * @param x Abscisse du vaisseau qui ramasse
+	 * @param y Ordonnée du vaisseau qui ramasse
+	 * @return numéro de l'objet ramassé
+	 */
 	public int ramasserObjet (int x, int y) {
 		List<ObjetsParties> objp = getController().getObjetsParties();
 		List<ObjetsParties> objc = new ArrayList<ObjetsParties>(); // Objets sur la case (x, y)
@@ -162,7 +193,10 @@ public class VueJoueur extends Vue {
 		} while (menu < 1 || menu > j);
 		return objp.indexOf(objc.get(menu-1));
 	}
-
+	/**
+	 * Lister les objets dans l'équipement du vaisseau
+	 * @param ov les objets du vaisseau
+	 */
 	public void listerObjets(List<ObjetsVaisseaux> ov) {
 		if (ov.size() == 0) 
 			System.out.println("Aucun objet dans votre équipement !");
@@ -183,12 +217,19 @@ public class VueJoueur extends Vue {
 			} 
 		} System.out.println();
 	}
-
+	/**
+	 * Affiche un message au joueur gagnant
+	 * @param nomVaisseau nom du vaisseau gagnant
+	 * @param nomPartie nom de la partie gagnée
+	 */
 	public void gagner(String nomVaisseau, String nomPartie) {
-		//Vue de partie gagner
 		System.out.println("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
 	}
-
+	/**
+	 * Liste les armes et le joueur choisi la quelle équiper
+	 * @param armes liste des armes
+	 * @return numéro de l'arme à équiper
+	 */
 	public int equiperArme(List<ObjetsVaisseaux> armes) {
 		int choix = 0, i = 1;
 		try {

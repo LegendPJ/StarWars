@@ -14,6 +14,7 @@ import Services.Fonctions;
 import Vues.Vue;
 import Vues.VueJoueur;
 import Vues.VueMenuStarWars;
+import Vues.VueObjet;
 import Vues.VuePartie;
 import Vues.VuePlateau;
 
@@ -61,6 +62,9 @@ public class Controller {
 		this.resetVues();
 	}
 	
+	/**
+	 * Menu principal et choix d'action (nouvelle partie, charger ou nouvel objet)
+	 */
 	public void menuPrincipal() {
 		int action = 0;
 		do {
@@ -69,17 +73,17 @@ public class Controller {
 			this.setVueMenuStarWars();
 			action = this._vueMenuStarwars.menu();
 			switch (action) {
-				case 1: // On veut créer une partie
+				case 1:		// On veut créer une partie
 					int a = this.nouvellePartie();
 					if (a != Vue.QUITTER)
 						this.jouer();
 					break;
-				case 2: // On veut charger une partie et ses vaisseaux
+				case 2:		// On veut charger une partie et ses vaisseaux
 					this.chargerPartie();
 					if (this.partie != null)
 						this.jouer();
 					break;
-				case 3:
+				case 3:		// Créer un objet
 					this.creerObjet();
 					break;
 			}
@@ -87,12 +91,15 @@ public class Controller {
 				this.gagner();
 			}
 		} while (action != Vue.QUITTER);
-		// ici on quitte
 	}
 	
 	//////////////////////////////////////////////////////
 	// POUR LES PARTIES
 	//////////////////////////////////////////////////////
+	/**
+	 * Créer une nouvelle partie, crée également les vaisseaux associés
+	 * @return action != Vue.QUITTER la partie est créée, sinon tout est annulé
+	 */
 	public int nouvellePartie() {
 		this.resetVues();
 		this.setVuePartie();
@@ -102,7 +109,7 @@ public class Controller {
 		this.setVueJoueur();
 		Controller.beginTransaction();
 		
-		this.nouveauTour(true);
+		this.nouveauTour(true);		// Tirage au sort de l'ordre de passage des joueurs
 		partie.setTour(this.ordreTour.get(0));
 		this.placeObjets();
 		try {
@@ -119,7 +126,7 @@ public class Controller {
 		}
 		
 		int action = 0;
-		for (int i = 1; i <= nb_joueurs; i++) {
+		for (int i = 1; i <= this.nb_joueurs; i++) {
 			Vaisseaux v = null;
 			PartiesVaisseaux pv = null;
 			
@@ -148,7 +155,7 @@ public class Controller {
 					} else {
 						Controller.rollBack();
 						this.resetJeu();
-						i = nb_joueurs+1;
+						i = this.nb_joueurs+1;
 						v = null;
 						pv = null;
 						action = Vue.QUITTER;
@@ -157,7 +164,7 @@ public class Controller {
 				case Vue.QUITTER:
 					Controller.rollBack();
 					this.resetJeu();
-					i = nb_joueurs+1;
+					i = this.nb_joueurs+1;
 					v = null;
 					pv = null;
 					break;
@@ -174,21 +181,20 @@ public class Controller {
 					pv.setCoordY(4);
 				}
 				
-				vaisseaux.add(v);
-				partieV.add(pv);
+				this.vaisseaux.add(v);
+				this.partieV.add(pv);
 				try {
 					pv.setNomPartie(partie.getNom());
 					pv.setNomVaisseau(v.getNom());
 					pv.setNumJoueur(i);
 					pv.save(connTransaction);
-					this.nouveauTour(true);
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
 			}
 		} // Fin sélection vaisseaux joueurs
 		
-		// Si on veut quitter la création de nouvelle partie
+		// Si n'a pas quitter à un moment (création ou chargement d'un vaisseau)
 		if (action != Vue.QUITTER) {
 			try {
 				Controller.commitTransaction();
@@ -199,28 +205,37 @@ public class Controller {
 		}
 		return action;
 	}
-
+	/**
+	 * Charger une partie (partie et éléments associés : vaisseaux, objets...)
+	 */
 	@SuppressWarnings("unchecked")
 	public void chargerPartie() {
 		this.resetVues();
 		this.setVuePartie();
 		try {
-			this.partie = this._vuePartie.chargerPartie(PartiesPeer.doSelectAll());
-			if (this.partie != null) {
-				this.partieV = this.partie.getPartiesVaisseauxsOrdered();
-				this.objetsP = this.partie.getObjetsPartiess();
-				for (PartiesVaisseaux v : this.partieV)
-					this.vaisseaux.add(v.getVaisseaux());
-				for (ObjetsParties op : this.objetsP)
-					this.objets.add(op.getObjets());
-				this.nouveauTour(true);
+			List<Parties> lp = PartiesPeer.doSelectAll();
+			if (lp.size() > 0) {
+				this.partie = this._vuePartie.chargerPartie(lp);
+				if (this.partie != null) {
+					this.partieV = this.partie.getPartiesVaisseauxsOrdered();
+					this.objetsP = this.partie.getObjetsPartiess();
+					for (PartiesVaisseaux v : this.partieV)
+						this.vaisseaux.add(v.getVaisseaux());
+					for (ObjetsParties op : this.objetsP)
+						this.objets.add(op.getObjets());
+					this.nouveauTour(true);
+				}
+			} else {
+				System.out.println("Aucune partie n'a été créée");
 			}
 			
 		} catch (TorqueException e) {
-			System.out.println("Aucune partie n'a été créée");
+			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Partie en cours : présente le menu, le plateau et détermine les actions du joueur
+	 */
 	public void jouer() {
 		this.resetVues();
 		this.setVuePlateau();
@@ -300,7 +315,11 @@ public class Controller {
 			}
 		} while (action != Vue.QUITTER);
 	}
-	
+	/**
+	 * Déplacement d'un jouer
+	 * @param numJoueur numéro du joueur en déplacement
+	 * @param deplct Direction du déplacement : 8 => haut, 2 => bas, 4 => gauche, 6 => droite 
+	 */
 	private void deplacer(int numJoueur, int deplct) {
 		if (memeCase(getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY(), getJoueur(numJoueur).getNomVaisseau())) {
 			getJoueur(numJoueur).setPa(getJoueur(numJoueur).getPa()-4);
@@ -328,12 +347,15 @@ public class Controller {
 			System.out.println(" /!\\ Echec critique /!\\ vous n'avez plus de poussière intergalactique !");
 		}
 	}
-	
+	/**
+	 * Attaquer un autre joueur
+	 * @param numJoueur numéro du joueur attaquant
+	 */
 	public void attaquer (int numJoueur) {
 		int v = this._vueJoueur.attaquer(this.partieV, getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY(), getJoueur(numJoueur).getNomVaisseau());
-		PartiesVaisseaux atq = this.getJoueur(numJoueur);
-		PartiesVaisseaux def = this.getJoueur(v-1);
-		if (def.getNomVaisseau().equals(atq.getNomVaisseau())) {
+		PartiesVaisseaux atq = this.getJoueur(numJoueur);	// Détermine l'attaquant
+		PartiesVaisseaux def = this.getJoueur(v-1);			// Détermine le défenseur
+		if (def.getNomVaisseau().equals(atq.getNomVaisseau())) {	// si l'attaquant s'attaque lui meme
 			System.out.println("Vous ne pouvez pas vous attaquer vous même");
 		} else {
 			atq.setPa(this.getJoueur(numJoueur).getPa()-4);
@@ -341,10 +363,9 @@ public class Controller {
 			if (this.loiReussite()) {
 				Random r = new Random();
 				int ptsDef = 0, ptsAtq = 0;
-				for (int i = 0; i < def.getChampImproved(); i++)
+				for (int i = 0; i < def.getChamp(); i++)
 					ptsDef += r.nextInt(3)+1;
-				System.out.println("Points Def :" +ptsDef);
-				for (int i = 0; i < atq.getAttaqueImproved(); i++)
+				for (int i = 0; i < atq.getAttaque(); i++)
 					ptsAtq += r.nextInt(3)+1;
 				for (ObjetsVaisseaux ov : this.getArmesEquipees(numJoueur)) {
 					Objets o;
@@ -355,16 +376,19 @@ public class Controller {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("Points Atq :" +ptsAtq);
-				if (ptsDef < ptsAtq)
-				{
+				
+				// Si le défenseur n'a pas paré l'attaque
+				if (ptsDef < ptsAtq) {
 					int ptsDeg = 0;
-					for (int i = 0; i < atq.getDegatsImproved(); i++)
+					for (int i = 0; i < atq.getDegats(); i++)
 						ptsDeg+= r.nextInt(3)+1;
+					System.out.println("Points Def :" +ptsDef);
+					System.out.println("Points Atq :" +ptsAtq);
 					System.out.println("Points Deg :" +ptsDeg);
-					def.setEnergie(def.getEnergieImproved()-ptsDeg);
+					def.setEnergie(def.getEnergie()-ptsDeg);
 					System.out.println("Touché !");
-					if (def.getEnergieImproved() <= 0) {
+					// Si le défenseur n'a plus d'énergie
+					if (def.getEnergie() <= 0) {
 						try {
 							gagnant = atq.getVaisseaux();
 						} catch (TorqueException e) {
@@ -379,13 +403,21 @@ public class Controller {
 				System.out.println(" /!\\ Echec critique /!\\ votre fusil à proton a surchauffé !");
 		}
 	}
-	
+	/**
+	 * Affiche un message au joueur gagnant 
+	 */
 	public void gagner () {
 		this._vueJoueur.gagner(this.gagnant.getNom(), partie.getNom());
 		PartiesPeer.doDeletePartie(this.partie);
 		this.resetJeu();
 	}
-
+	/**
+	 * Permet de savoir s'il y a un autre vaisseau sur la case
+	 * @param coordX Abscisse du joueur
+	 * @param coordY Ordonnée du joueur
+	 * @param nomVaisseau Nom du vaisseau
+	 * @return vrai s'il y a un autre joueur que nomVaisseau, faux sinon
+	 */
 	public boolean memeCase(int coordX, int coordY, String nomVaisseau) {
 		boolean mmcase = false;
 		for (PartiesVaisseaux pv : partieV) {
@@ -395,7 +427,10 @@ public class Controller {
 		}
 		return mmcase;
 	}
-	
+	/**
+	 * Permet de savoir si une action a échoée ou non
+	 * @return 80% de réussite
+	 */
 	public boolean loiReussite() {
 		Random r = new Random();
 		int i = r.nextInt(100)+1;
@@ -404,7 +439,9 @@ public class Controller {
 		else
 			return false;
 	}
-
+	/**
+	 * Enregistre la parte et les éléments associés (vaisseaux, objets...)
+	 */
 	private void sauverPartie() {
 		try {
 			Controller.beginTransaction();
@@ -421,9 +458,13 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Défini aléatoirement l'ordre de passage des joueurs
+	 * @param nouvPartie Si vrai, on ne remet pas à jour les points d'action
+	 */
 	public void nouveauTour(boolean nouvPartie) {
 		Random r = new Random();
+		this.ordreTour.clear();
 		int joueur;
 		if (!nouvPartie)
 			joueur = r.nextInt(nb_joueurs);
@@ -456,7 +497,9 @@ public class Controller {
 	//////////////////////////////////////////////////////
 	// POUR LES OBJETS
 	//////////////////////////////////////////////////////
-	
+	/**
+	 * Créer un objet
+	 */
 	public void creerObjet () {
 		this.resetVues();
 		this.setVueObjet();
@@ -467,7 +510,9 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Placer tire des objets aléotoirement et les place sur la grille aléatoirement
+	 */
 	private void placeObjets() {
 		//ici on ajoute un certain nombre d'objets présents dans la base de façon aleatoire dans le liste d'objets
 		List<Objets> obj;
@@ -498,7 +543,11 @@ public class Controller {
 			}
 		}
 	}
-	
+	/**
+	 * Ramasser un objet
+	 * Met à jour l'équipement du joueur et ses points d'action
+	 * @param numJoueur numéro du joueur
+	 */
 	public void ramasserObjet (int numJoueur) {
 		int c = this._vueJoueur.ramasserObjet(getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY());
 		ObjetsParties objetRamasse = this.getObjetPartie(c);
@@ -518,7 +567,10 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Lister les objets pour un joueur (action du menu en cours du jeu)
+	 * @param numJoueur numéro du joueur
+	 */
 	@SuppressWarnings("unchecked")
 	public void listerObjets(int numJoueur) {
 		try {
@@ -527,7 +579,11 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Equiper une arme pour un joueur
+	 * Met à jour les armes équipées ou non, leur durée restante et les points d'action
+	 * @param numJoueur numéro du joueur
+	 */
 	@SuppressWarnings("unchecked")
 	public void equiperArme(int numJoueur) {
 		try {
@@ -560,7 +616,12 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Savoir s'il y a un objet sur la case (x, y)
+	 * @param x Abscice de la case
+	 * @param y Ordonnée de la case
+	 * @return Vrai s'il y a un objet, faux sinon
+	 */
 	private boolean objetPresent(int x, int y) {
 		boolean r = false;
 		for (ObjetsParties op : this.objetsP) {
@@ -569,11 +630,19 @@ public class Controller {
 		}
 		return r;
 	}
-	
+	/**
+	 * Savoir si le joueur a des armes dans son équipement
+	 * @param numJoueur numéro du joueur
+	 * @return vrai si je le joueur a au moins une arme dans son équipement, faux sinon
+	 */
 	private boolean armesDansEquipement(int numJoueur) {
 		return this.getArmes(numJoueur).size() > 0;
 	}
-	
+	/**
+	 * Retourne la liste des armes d'un joueur
+	 * @param vaisseau Vaisseau concerné
+	 * @return Liste des armes
+	 */
 	@SuppressWarnings("unchecked")
 	private List<ObjetsVaisseaux> getArmes(PartiesVaisseaux vaisseau) {
 		List<ObjetsVaisseaux> armes = new ArrayList<ObjetsVaisseaux>();
@@ -589,7 +658,19 @@ public class Controller {
 		
 		return armes;
 	}
-	
+	/**
+	 * Retourne la liste des armes d'un joueur en jeu
+	 * @param numJoueur numéro du joueur
+	 * @return liste des armes
+	 */
+	public List<ObjetsVaisseaux> getArmes(int numJoueur) {
+		return this.getArmes(this.getJoueur(numJoueur));
+	}
+	/**
+	 * Retourne la liste des armes équipées d'un joueur en jeu
+	 * @param vaisseau Vaisseau concerné
+	 * @return Liste des armes équipées
+	 */
 	@SuppressWarnings("unchecked")
 	private List<ObjetsVaisseaux> getArmesEquipees(PartiesVaisseaux vaisseau) {
 		List<ObjetsVaisseaux> armes = new ArrayList<ObjetsVaisseaux>();
@@ -605,15 +686,20 @@ public class Controller {
 		
 		return armes;
 	}
-	
-	public List<ObjetsVaisseaux> getArmes(int numJoueur) {
-		return this.getArmes(this.getJoueur(numJoueur));
-	}
-	
+	/**
+	 * Retourne les objets equipés qui sont des armes d'un joueur de la partie
+	 * @param numJoueur numéro du joueur concerné
+	 * @return Liste des armes équipées
+	 */
 	public List<ObjetsVaisseaux> getArmesEquipees(int numJoueur) {
 		return this.getArmesEquipees(this.getJoueur(numJoueur));
 	}
 	
+	/**
+	 * Retourne les objets équipes d'un joueur en jeu
+	 * @param vaisseau Vaisseau concerné
+	 * @return Liste des objets équipés
+	 */
 	@SuppressWarnings("unchecked")
 	private List<ObjetsVaisseaux> getObjetsEquipe(PartiesVaisseaux vaisseau) {
 		List<ObjetsVaisseaux> objets = new ArrayList<ObjetsVaisseaux>();
@@ -629,7 +715,11 @@ public class Controller {
 		
 		return objets;
 	}
-	
+	/**
+	 * Retourne les objets équipes d'un joueur en jeu
+	 * @param numJoueur numero du joueur
+	 * @return list des objets equipes
+	 */
 	public List<ObjetsVaisseaux> getObjetsEquipe(int numJoueur) {
 		return this.getObjetsEquipe(this.getJoueur(numJoueur));
 	}
@@ -645,8 +735,6 @@ public class Controller {
 	//////////////////////////////////////////////////////
 	/**
 	 * Connexion à la base de donnée
-	 * @throws SQLException 
-	 * @throws TorqueException 
 	 */
 	public static void connexion() throws SQLException, TorqueException {
 		Torque.init(TORQUE_PROPS);
@@ -694,15 +782,17 @@ public class Controller {
 			e1.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Réinitialise les variables du jeu
+	 */
 	private void resetJeu() {
-		vaisseaux	= new ArrayList<Vaisseaux>();
-		partieV		= new ArrayList<PartiesVaisseaux>();
-		objets		= new ArrayList<Objets>();
-		objetsP		= new ArrayList<ObjetsParties>();
-		partie		= new Parties();
-		ordreTour	= new ArrayList<Integer>();
-		gagnant		= null;
+		this.vaisseaux.clear();
+		this.partieV.clear();
+		this.objets.clear();
+		this.objetsP.clear();
+		this.ordreTour.clear();
+		this.partie = new Parties();
+		this.gagnant		= null;
 	}
 	
 	//////////////////////////////////////////////////////
@@ -724,7 +814,9 @@ public class Controller {
 	public void setVueObjet() {
 		this._vueObjet = new VueObjet(this);
 	}
-	
+	/**
+	 * Réinitialise les vues
+	 */
 	public void resetVues() {
 		this._vueMenuStarwars	= null;
 		this._vuePartie			= null;
@@ -732,20 +824,44 @@ public class Controller {
 		this._vuePlateau		= null;
 		this._vueObjet			= null;
 	}
-
+	/**
+	 * Récupère un joueur dans la partie en cours
+	 * @param numJoueur numéro du joueur
+	 * @return PartiesVaisseaux numJoueur
+	 */
 	public PartiesVaisseaux getJoueur(int numJoueur) {
 		return this.partieV.get(numJoueur);
 	}
+	/**
+	 * Récupère un objet présent dans la partie en cours
+	 * @param numObjet numéro de l'objet
+	 * @return ObjetsParties numObjet
+	 */
 	public ObjetsParties getObjetPartie(int numObjet) {
 		return this.objetsP.get(numObjet);
 	}
+	/**
+	 * Retourne tous les objets de la partie en cours
+	 * Accessible depuis les vues
+	 * @return List<ObjetsParties>
+	 */
 	public List<ObjetsParties> getObjetsParties() {
 		return this.objetsP;
 	}
+	/**
+	 * Retourne un objet de la partie en cours
+	 * @param numObjet numéro de l'objet
+	 * @return Objets
+	 */
 	public Objets getObjet(int numObjet) {
 		return this.objets.get(numObjet);
 	}
-	
+	/**
+	 * Retourne le nombre de points de la caractéristique du joueur donné
+	 * @param numJoueur numéro du joueur
+	 * @param carac caractéristique à récupérer
+	 * @return le nombre de points pour la caractéristique
+	 */
 	private int getNouveauxPoints (int numJoueur, String carac) {
 		int pts = 0;
 		if (carac.equals("attaque"))

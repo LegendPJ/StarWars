@@ -1,4 +1,4 @@
-package Controllers;
+package Vues;
 
 import java.util.List;
 
@@ -6,15 +6,20 @@ import torque.generated.Caracteristiques;
 import torque.generated.Objets;
 import torque.generated.ObjetsPeer;
 import torque.generated.Types;
+import Controllers.Controller;
 import Services.IO;
-import Vues.Vue;
 
 public class VueObjet extends Vue {
 	
 	public VueObjet(Controller c) {
 		super(c);
 	}
-	
+	/**
+	 * Créer un objet
+	 * @param l liste des caractéristiques améliorables (attaque, champ, degats...)
+	 * @param t liste des types d'objet créables (armes, bonus...)
+	 * @return l'objet créé
+	 */
 	public Objets creer (List<Caracteristiques> l, List<Types> t) {
 		int pts = 0, 
 			i = 1, 
@@ -24,13 +29,13 @@ public class VueObjet extends Vue {
 			c2 =0;
 		String nom;
 		
-		//enregistrer le nom de l'objet
+		// le nom de l'objet
 		do {
 		System.out.print("Nom de l'objet : ");
 			nom = IO.lireChaine();
 		} while (ObjetsPeer.nomPris(nom));
 		
-		//enregistrer la caracteristique de l'objet
+		// la caracteristique de l'objet
 		do {
 			System.out.println("Caractéristique à modifier :");
 			for (Caracteristiques ca : l) {
@@ -42,7 +47,7 @@ public class VueObjet extends Vue {
 		} while (c < 1 || c > l.size());
 		
 		
-		//enregistrer le type de l'objet
+		// le type de l'objet
 		do {
 			System.out.println("Type d'objet :");
 			for (Types ty : t) {
@@ -54,14 +59,14 @@ public class VueObjet extends Vue {
 		} while (c2 < 1 || c2 > t.size());
 		
 		
-		//enregistrer le nombre de points augmenté par l'objet
+		// le nombre de points augmenté par l'objet
 		do {
 			System.out.print("Nombre de points (negatif pour un malus) : ");
 			pts = IO.lireEntier();
 		} while (pts == 0);
 		
 		
-		//enregistrer le nombre de tours de validité de l'objet
+		// le nombre de tours de validité de l'objet
 		do {
 			System.out.print("Nombre de tours : ");
 			nbTr = IO.lireEntier();

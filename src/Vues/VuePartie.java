@@ -12,7 +12,10 @@ public class VuePartie extends Vue {
 	public VuePartie(Controller c) {
 		super(c);
 	}
-	
+	/**
+	 * Créer une nouvelle partie
+	 * @return la partie créée
+	 */
 	public Parties nouvellePartie() {
 		String nom = new String();
 		
@@ -23,7 +26,11 @@ public class VuePartie extends Vue {
 		
 		return new Parties(nom);
 	}
-	
+	/**
+	 * Charger une partie
+	 * @param list liste des parties existantes
+	 * @return la partie sélectionnée
+	 */
 	public Parties chargerPartie(List<Parties> list) {
 		int numPartie = 1, menu = 0;
 		int length = list.size();
