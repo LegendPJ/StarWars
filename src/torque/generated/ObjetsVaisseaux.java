@@ -20,11 +20,12 @@ public  class ObjetsVaisseaux
     implements Persistent
 {
 	public ObjetsVaisseaux() { super(); }
-    public ObjetsVaisseaux(String nomJoueur, String nomPartie, String nomObjet) {
+    public ObjetsVaisseaux(String nomJoueur, String nomPartie, String nomObjet, int duree) {
 		try {
 			this.setNomObjet(nomObjet);
 			this.setNomPartie(nomPartie);
 			this.setNomVaisseau(nomJoueur);
+			this.setDureeRestante(duree);
 		} catch (TorqueException e) {
 			e.printStackTrace();
 		}

@@ -171,15 +171,9 @@ public class Controller {
 			}
 			
 			if (action != Vue.QUITTER) {
-				// TODO Faire une fonction pour trouver les coordonnées
-				if (i == 1) {
-					pv.setCoordX(2);
-					pv.setCoordY(0);
-				}
-				else if (i == 2) {
-					pv.setCoordX(2);
-					pv.setCoordY(4);
-				}
+				Random r = new Random();
+				pv.setCoordX(r.nextInt(dimension));
+				pv.setCoordY(r.nextInt(dimension));
 				
 				this.vaisseaux.add(v);
 				this.partieV.add(pv);
@@ -282,6 +276,15 @@ public class Controller {
 					}
 					break;
 				case 4:		// Utiliser
+					if (this.getJoueur(joueurActif).getPa() < 2)
+						System.out.println("Vous n'avez pas assez de point d'action");
+					else
+					{
+						if (this.bonusDansEquipement(joueurActif))
+							this.utiliserObjet(joueurActif, "bonus");
+						else
+							System.out.println("Vous n'avez pas de bonus dans votre équipement");
+					}
 					break;
 				case 5:		// Equiper
 					if (this.getJoueur(joueurActif).getPa() < 2)
@@ -289,7 +292,7 @@ public class Controller {
 					else
 					{
 						if (this.armesDansEquipement(joueurActif))
-							this.equiperArme(joueurActif);
+							this.utiliserObjet(joueurActif, "arme");
 						else
 							System.out.println("Vous n'avez pas d'armes dans votre équipement");
 					}
@@ -552,9 +555,10 @@ public class Controller {
 		int c = this._vueJoueur.ramasserObjet(getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY());
 		ObjetsParties objetRamasse = this.getObjetPartie(c);
 		
-		ObjetsVaisseaux objV = new ObjetsVaisseaux(this.getJoueur(numJoueur).getNomVaisseau(), partie.getNom(), objetRamasse.getNomObjet());
-		this.getJoueur(numJoueur).setPa(this.getJoueur(numJoueur).getPa()-1);
 		try {
+			ObjetsVaisseaux objV;
+			objV = new ObjetsVaisseaux(this.getJoueur(numJoueur).getNomVaisseau(), partie.getNom(), objetRamasse.getNomObjet(), objetRamasse.getObjets().getDuree());
+			this.getJoueur(numJoueur).setPa(this.getJoueur(numJoueur).getPa()-1);
 			if (this.loiReussite()) {
 				this.getJoueur(numJoueur).addObjetsVaisseaux(objV);
 				this.objetsP.remove(c);
@@ -563,8 +567,8 @@ public class Controller {
 			} else {
 				System.out.println(" /!\\ Echec critique /!\\ panne hydrolique imminente !");
 			}
-		} catch (TorqueException e) {
-			e.printStackTrace();
+		} catch (TorqueException e1) {
+			e1.printStackTrace();
 		}
 	}
 	/**
@@ -580,35 +584,38 @@ public class Controller {
 		}
 	}
 	/**
-	 * Equiper une arme pour un joueur
-	 * Met à jour les armes équipées ou non, leur durée restante et les points d'action
+	 * Utiliser ou equiper un objet pour un joueur (bonus/arme)
 	 * @param numJoueur numéro du joueur
 	 */
 	@SuppressWarnings("unchecked")
-	public void equiperArme(int numJoueur) {
+	public void utiliserObjet(int numJoueur, String type) {
 		try {
 			List<ObjetsVaisseaux> objets = getJoueur(numJoueur).getObjetsVaisseauxs();
-			int arme = this._vueJoueur.equiperArme(this.getArmes(numJoueur));
+			List<ObjetsVaisseaux> listeObjets = new ArrayList<ObjetsVaisseaux>();
+			if (type.equals("arme"))
+				listeObjets = this.getArmes(numJoueur);
+			else if (type.equals("bonus"))
+				listeObjets = this.getBonus(numJoueur);
+			int bonus = this._vueJoueur.utiliserObjet(listeObjets, type);
 			getJoueur(numJoueur).setPa(getJoueur(numJoueur).getPa()-2);
 			if (this.loiReussite()) {
-				objets.get(arme).setEquipe(true);
-				objets.get(arme).setDureeRestante(objets.get(arme).getObjets().getDuree());
+				objets.get(bonus).setEquipe(true);
 				StringBuffer liaison = new StringBuffer(" de ");
-				StringBuffer typeArme = new StringBuffer(objets.get(arme).getObjets().getType());
+				StringBuffer typeBonus= new StringBuffer(objets.get(bonus).getObjets().getType());
 				String tours = " tours.";
 				char voyelles[] = {'a', 'e', 'i', 'o', 'u', 'y'};
 				
-				if (objets.get(arme).getObjets().getDuree() == 1)
+				if (objets.get(bonus).getObjets().getDuree() == 1)
 					tours = " tour.";
-				if (Fonctions.in_array(typeArme.charAt(0), voyelles)) {
+				if (Fonctions.in_array(typeBonus.charAt(0), voyelles)) {
 					liaison.setCharAt(2, '\'');
 					liaison.deleteCharAt(3);
 				}
 				
-				System.out.print("Vous avez équiper " + objets.get(arme).getObjets().getNom());
-				System.out.print(" vous points " + liaison + objets.get(arme).getObjets().getCarac());
-				System.out.print(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(arme).getObjets().getCarac()));
-				System.out.println(" pour " + objets.get(arme).getObjets().getDuree() + tours);
+				System.out.print("Vous avez utilisé " + objets.get(bonus).getObjets().getNom());
+				System.out.print(" vous points " + liaison + objets.get(bonus).getObjets().getCarac());
+				System.out.print(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(bonus).getObjets().getCarac()));
+				System.out.println(" pour " + objets.get(bonus).getObjets().getDuree() + tours);
 			}
 			else
 				System.out.println("/!\\ Echec critique /!\\ Vous avez cassé une pièce !");
@@ -639,9 +646,17 @@ public class Controller {
 		return this.getArmes(numJoueur).size() > 0;
 	}
 	/**
-	 * Retourne la liste des armes d'un joueur
+	 * Savoir si le joueur a des bonus dans son équipement
+	 * @param numJoueur numéro du joueur
+	 * @return vrai si le joueur a au moins un bonus dans son équipement, faux sinon
+	 */
+	private boolean bonusDansEquipement (int numJoueur) {
+		return this.getBonus(numJoueur).size() > 0;
+	}
+	/**
+	 * Retourne la liste des armes non équipées d'un joueur
 	 * @param vaisseau Vaisseau concerné
-	 * @return Liste des armes
+	 * @return Liste des armes non équipées
 	 */
 	@SuppressWarnings("unchecked")
 	private List<ObjetsVaisseaux> getArmes(PartiesVaisseaux vaisseau) {
@@ -649,7 +664,7 @@ public class Controller {
 		try {
 			List<ObjetsVaisseaux> objV = vaisseau.getObjetsVaisseauxs();
 			for (ObjetsVaisseaux o : objV) {
-				if (o.getObjets().getType().equalsIgnoreCase("arme"))
+				if (o.getObjets().getType().equalsIgnoreCase("arme") && !o.getEquipe())
 					armes.add(o);
 			}
 		} catch (TorqueException e) {
@@ -694,6 +709,63 @@ public class Controller {
 	public List<ObjetsVaisseaux> getArmesEquipees(int numJoueur) {
 		return this.getArmesEquipees(this.getJoueur(numJoueur));
 	}
+	/**
+	 * Retourne la liste des bonus non utilisés
+	 * @param v vaisseau concerné
+	 * @return liste des bonus equipes
+	 */
+	@SuppressWarnings("unchecked")
+	private List<ObjetsVaisseaux> getBonus(PartiesVaisseaux v) {
+		List<ObjetsVaisseaux> bonus = new ArrayList<ObjetsVaisseaux>();
+		try {
+			List<ObjetsVaisseaux> objV = v.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objV) {
+				if (o.getObjets().getType().equalsIgnoreCase("bonus") && !o.getEquipe())
+					bonus.add(o);
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		return bonus;
+	}
+	/**
+	 * Retourne la liste des bonus non utilisés
+	 * @param numJoueur numéro du joueur
+	 * @return liste des bonus non equipes
+	 */
+	public List<ObjetsVaisseaux> getBonus(int numJoueur) {
+		return this.getBonus(this.getJoueur(numJoueur));
+	}
+	/**
+	 * Retourne la liste des bonus équipées d'un joueur en jeu
+	 * @param vaisseau Vaisseau concerné
+	 * @return Liste des armes équipées
+	 */
+	@SuppressWarnings("unchecked")
+	private List<ObjetsVaisseaux> getBonusEquipes(PartiesVaisseaux vaisseau) {
+		List<ObjetsVaisseaux> armes = new ArrayList<ObjetsVaisseaux>();
+		try {
+			List<ObjetsVaisseaux> objV = vaisseau.getObjetsVaisseauxs();
+			for (ObjetsVaisseaux o : objV) {
+				if (o.getObjets().getType().equalsIgnoreCase("bonus") && o.getEquipe())
+					armes.add(o);
+			}
+		} catch (TorqueException e) {
+			e.printStackTrace();
+		}
+		
+		return armes;
+	}
+	/**
+	 * Retourne les bonus utilisés d'un joueur de la partie
+	 * @param numJoueur numéro du joueur concerné
+	 * @return Liste des bonus utilisés
+	 */
+	public List<ObjetsVaisseaux> getBonusEquipes(int numJoueur) {
+		return this.getBonusEquipes(this.getJoueur(numJoueur));
+	}
+	
 	
 	/**
 	 * Retourne les objets équipes d'un joueur en jeu
@@ -786,12 +858,12 @@ public class Controller {
 	 * Réinitialise les variables du jeu
 	 */
 	private void resetJeu() {
-		this.vaisseaux.clear();
-		this.partieV.clear();
-		this.objets.clear();
-		this.objetsP.clear();
-		this.ordreTour.clear();
-		this.partie = new Parties();
+		this.vaisseaux		= new ArrayList<Vaisseaux>();
+		this.partieV		= new ArrayList<PartiesVaisseaux>();
+		this.objets			= new ArrayList<Objets>();
+		this.objetsP		= new ArrayList<ObjetsParties>();
+		this.ordreTour		= new ArrayList<Integer>();
+		this.partie			= new Parties();
 		this.gagnant		= null;
 	}
 	

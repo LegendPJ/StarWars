@@ -206,11 +206,18 @@ public class VueJoueur extends Vue {
 				try {
 					Objets obj = o.getObjets();
 					String tour = " tours.";
-					if (obj.getDuree() == 1)
+					if (o.getDureeRestante() == 1)
 						tour = " tour.";
 					
-					System.out.println("- " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
-	
+					System.out.print("- " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour encore " + o.getDureeRestante() + tour);
+					if (o.getEquipe() && obj.getType().equals("arme"))
+						System.out.println(" (équipé)");
+					else if (!o.getEquipe() && obj.getType().equals("arme"))
+						System.out.println(" (non équipé)");
+					else if (o.getEquipe() && obj.getType().equals("bonus"))
+						System.out.println(" (utilisé)");
+					else if (!o.getEquipe() && obj.getType().equals("bonus"))
+						System.out.println(" (nun utilisé)");
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
@@ -226,15 +233,14 @@ public class VueJoueur extends Vue {
 		System.out.println("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
 	}
 	/**
-	 * Liste les armes et le joueur choisi la quelle équiper
-	 * @param armes liste des armes
-	 * @return numéro de l'arme à équiper
+	 * Liste les objets utilisables et le joueur choisi le quel équiper ou utiliser (arme/bonus)
+	 * @param objetsliste des objets
+	 * @return numéro de l'objet à équiper ou utiliser (arme/bonus)
 	 */
-	public int equiperArme(List<ObjetsVaisseaux> armes) {
+	public int utiliserObjet(List<ObjetsVaisseaux> objet, String type) {
 		int choix = 0, i = 1;
 		try {
-			for (ObjetsVaisseaux o : armes) {
-			
+			for (ObjetsVaisseaux o : objet) {
 				Objets obj = o.getObjets();
 				String tour = " tours.";
 				if (obj.getDuree() == 1)
@@ -247,11 +253,14 @@ public class VueJoueur extends Vue {
 		}
 		
 		do {
-			System.out.print("Quelle arme voulez-vous équiper ? [1.."+armes.size()+"] ");
+			if (type.equals("arme"))
+				System.out.print("Quelle arme voulez-vous utiliser ? [1.."+objet.size()+"] ");
+			else if (type.equals("bonus"))
+				System.out.print("Quel bonus voulez-vous utiliser ? [1.."+objet.size()+"] ");
 			choix = IO.lireEntier();
-		} while (choix < 1 && choix > armes.size());
+		} while (choix < 1 && choix > objet.size());
 		
-		return armes.indexOf(armes.get(choix-1));
+		return objet.indexOf(objet.get(choix-1));
 	}
 	
 }
