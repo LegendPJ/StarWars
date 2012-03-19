@@ -86,6 +86,12 @@ public class Controller {
 				case 3:		// Créer un objet
 					this.creerObjet();
 					break;
+				case 4:		// Lister les objets
+					this.listerObjets();
+					break;
+				case 5:		// Supprimer un objet
+					// TODO supprimer objet
+					break;
 			}
 			if (gagnant != null) {
 				this.gagner();
@@ -93,6 +99,7 @@ public class Controller {
 		} while (action != Vue.QUITTER);
 	}
 	
+
 	//////////////////////////////////////////////////////
 	// POUR LES PARTIES
 	//////////////////////////////////////////////////////
@@ -208,6 +215,7 @@ public class Controller {
 		this.setVuePartie();
 		try {
 			List<Parties> lp = PartiesPeer.doSelectAll();
+			this.partie = null;
 			if (lp.size() > 0) {
 				this.partie = this._vuePartie.chargerPartie(lp);
 				if (this.partie != null) {
@@ -224,6 +232,7 @@ public class Controller {
 			}
 			
 		} catch (TorqueException e) {
+			System.out.print("ET BIM");
 			e.printStackTrace();
 		}
 	}
@@ -374,7 +383,18 @@ public class Controller {
 					Objets o;
 					try {
 						o = ov.getObjets();
-						ptsAtq += o.getPoints();
+						if (o.getCarac().equals("attaque"))
+							ptsAtq += o.getPoints();
+					} catch (TorqueException e) {
+						e.printStackTrace();
+					}
+				}
+				for (ObjetsVaisseaux ov : this.getArmesEquipees(v-1)) {
+					Objets o;
+					try {
+						o = ov.getObjets();
+						if (o.getCarac().equals("champ"))
+							ptsAtq += o.getPoints();
 					} catch (TorqueException e) {
 						e.printStackTrace();
 					}
@@ -384,14 +404,24 @@ public class Controller {
 				if (ptsDef < ptsAtq) {
 					int ptsDeg = 0;
 					for (int i = 0; i < atq.getDegats(); i++)
-						ptsDeg+= r.nextInt(3)+1;
+						ptsDeg += r.nextInt(3)+1;
+					for (ObjetsVaisseaux ov : this.getArmesEquipees(v-1)) {
+						Objets o;
+						try {
+							o = ov.getObjets();
+							if (o.getCarac().equals("degats"))
+								ptsAtq += o.getPoints();
+						} catch (TorqueException e) {
+							e.printStackTrace();
+						}
+					}
 					System.out.println("Points Def :" +ptsDef);
 					System.out.println("Points Atq :" +ptsAtq);
 					System.out.println("Points Deg :" +ptsDeg);
 					def.setEnergie(def.getEnergie()-ptsDeg);
 					System.out.println("Touché !");
 					// Si le défenseur n'a plus d'énergie
-					if (def.getEnergie() <= 0) {
+					if (def.getEnergieImproved() <= 0) {
 						try {
 							gagnant = atq.getVaisseaux();
 						} catch (TorqueException e) {
@@ -478,14 +508,22 @@ public class Controller {
 			if (!nouvPartie) {
 				this.getJoueur(i).setPa(6);
 				for (ObjetsVaisseaux o : this.getObjetsEquipe(i)) {
-					o.setDureeRestante(o.getDureeRestante()-1);
-					if (o.getDureeRestante() == 0) {
-						try {
-							this.getJoueur(i).getObjetsVaisseauxs().remove(o);
-							ObjetsVaisseauxPeer.doDelete(o);
-						} catch (TorqueException e) {
-							e.printStackTrace();
+					Objets obj;
+					try {
+						obj = o.getObjets();
+						if (!obj.getCarac().equals("energie")) {
+							o.setDureeRestante(o.getDureeRestante()-1);
+							if (o.getDureeRestante() == 0) {
+								try {
+									this.getJoueur(i).getObjetsVaisseauxs().remove(o);
+									ObjetsVaisseauxPeer.doDelete(o);
+								} catch (TorqueException e) {
+									e.printStackTrace();
+								}
+							}
 						}
+					} catch (TorqueException e1) {
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -599,6 +637,7 @@ public class Controller {
 			int bonus = this._vueJoueur.utiliserObjet(listeObjets, type);
 			getJoueur(numJoueur).setPa(getJoueur(numJoueur).getPa()-2);
 			if (this.loiReussite()) {
+				bonus = objets.indexOf(listeObjets.get(bonus));
 				objets.get(bonus).setEquipe(true);
 				StringBuffer liaison = new StringBuffer(" de ");
 				StringBuffer typeBonus= new StringBuffer(objets.get(bonus).getObjets().getType());
@@ -797,11 +836,12 @@ public class Controller {
 	}
 	
 	
-	
-	
-	
-	
-	
+	private void listerObjets() {
+		this.setVueObjet();
+		List<Objets> lo = ObjetsPeer.doSelectAll();
+		this._vueObjet.listerObjets(lo);
+		
+	}
 	//////////////////////////////////////////////////////
 	// POUR LA BD
 	//////////////////////////////////////////////////////
@@ -938,7 +978,7 @@ public class Controller {
 		int pts = 0;
 		if (carac.equals("attaque"))
 			pts = this.getJoueur(numJoueur).getAttaqueImproved();
-		else if (carac.equals("degats"))
+		else if (carac.equals("degat"))
 			pts = this.getJoueur(numJoueur).getDegatsImproved();
 		else if (carac.equals("champ"))
 			pts = this.getJoueur(numJoueur).getChampImproved();

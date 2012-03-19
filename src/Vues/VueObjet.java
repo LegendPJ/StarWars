@@ -33,7 +33,7 @@ public class VueObjet extends Vue {
 		do {
 		System.out.print("Nom de l'objet : ");
 			nom = IO.lireChaine();
-		} while (ObjetsPeer.nomPris(nom));
+		} while (ObjetsPeer.nomPris(nom) || nom.length() > 40);
 		
 		// la caracteristique de l'objet
 		do {
@@ -67,12 +67,27 @@ public class VueObjet extends Vue {
 		
 		
 		// le nombre de tours de validité de l'objet
-		do {
-			System.out.print("Nombre de tours : ");
-			nbTr = IO.lireEntier();
-		} while (nbTr <= 0);
+		if (!t.get(c2-1).equals("energie")) {
+			do {
+				System.out.print("Nombre de tours : ");
+				nbTr = IO.lireEntier();
+			} while (nbTr <= 0);
+		} else
+			nbTr = 1;
 		
 		return new Objets(nom, pts, l.get(c-1).getNom(), nbTr, t.get(c2-1).getNom());
+	}
+	
+	public void listerObjets(List<Objets> lo) {
+
+		System.out.println("\nObjets enregistrés en BD : ");
+		for (Objets ob : lo) {
+			String tour = " tours.";
+			if (ob.getDuree() == 1)
+				tour = " tour.";
+			System.out.println("- " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
+			
+		}
 	}
 
 }

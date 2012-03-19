@@ -83,8 +83,9 @@ public  class PartiesVaisseaux
 			List<ObjetsVaisseaux> objets;
 			objets = this.getObjetsVaisseauxs();
 			for (ObjetsVaisseaux o : objets) {
-	    		if (o.getObjets().getCarac().equals("degats") && o.getEquipe())
+	    		if (o.getObjets().getCarac().equals("degat") && o.getEquipe()) {
 	    			r += o.getObjets().getPoints();
+	    		}
 	    	}
 		} catch (TorqueException e) {
 			e.printStackTrace();
@@ -93,7 +94,7 @@ public  class PartiesVaisseaux
     	return r;
     }
     
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public int getEnergieImproved() {
     	int r = super.getEnergie();
 		try {

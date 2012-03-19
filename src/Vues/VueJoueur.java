@@ -70,7 +70,9 @@ public class VueJoueur extends Vue {
 			int nb = i+1;
 			System.out.println(nb+". "+VAISSEAUX[i]);
 		}
+		System.out.println();
 		do {
+			System.out.print("Choix : ");
 			c1 = IO.lireEntier();
 		} while (c1 > 5 || c1 < 1);
 		
@@ -180,7 +182,10 @@ public class VueJoueur extends Vue {
 					String tour = " tours.";
 					if (ob.getDuree() == 1)
 						tour = " tour.";
-					System.out.println(j + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
+					if (ob.getCarac().equals("energie"))
+						System.out.println(j + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
+					else
+						System.out.println(j + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " jusqu'à la fin de la partie");
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
@@ -209,7 +214,10 @@ public class VueJoueur extends Vue {
 					if (o.getDureeRestante() == 1)
 						tour = " tour.";
 					
-					System.out.print("- " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour encore " + o.getDureeRestante() + tour);
+					if (obj.getCarac().equals("energie"))
+						System.out.println("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+					else
+						System.out.println("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " jusqu'à la fin de la partie");
 					if (o.getEquipe() && obj.getType().equals("arme"))
 						System.out.println(" (équipé)");
 					else if (!o.getEquipe() && obj.getType().equals("arme"))
@@ -217,7 +225,7 @@ public class VueJoueur extends Vue {
 					else if (o.getEquipe() && obj.getType().equals("bonus"))
 						System.out.println(" (utilisé)");
 					else if (!o.getEquipe() && obj.getType().equals("bonus"))
-						System.out.println(" (nun utilisé)");
+						System.out.println(" (non utilisé)");
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
@@ -245,7 +253,10 @@ public class VueJoueur extends Vue {
 				String tour = " tours.";
 				if (obj.getDuree() == 1)
 					tour = " tour.";
-				System.out.println(i + ". " +  obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+				if (obj.getCarac().equals("energie"))
+					System.out.println(i + ". " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+				else
+					System.out.println(i + ". " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " jusqu'à la fin de la partie");
 				i++;
 			}
 		} catch (TorqueException e) {
@@ -260,7 +271,7 @@ public class VueJoueur extends Vue {
 			choix = IO.lireEntier();
 		} while (choix < 1 && choix > objet.size());
 		
-		return objet.indexOf(objet.get(choix-1));
+		return choix-1;
 	}
 	
 }

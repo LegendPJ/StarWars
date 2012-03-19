@@ -104,8 +104,8 @@ public class VuePlateau extends Vue {
 			System.out.println("     * 1. Déplacer le vaisseau          *");
 			System.out.println("     * 2. Attaquer                      *");
 			System.out.println("     * 3. Ramasser Objet                *");
-			System.out.println("     * 4. Utiliser un Objet             *");
-			System.out.println("     * 5. Equiper un Objet              *");
+			System.out.println("     * 4. Utiliser un Bonus             *");
+			System.out.println("     * 5. Equiper une Arme              *");
 			System.out.println("     * 6. Lister les Objets             *");
 		}
 		System.out.println("     * 7. Fin du tour                   *");
