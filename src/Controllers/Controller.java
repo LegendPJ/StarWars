@@ -228,12 +228,9 @@ public class Controller {
 						this.objets.add(op.getObjets());
 					this.nouveauTour(true);
 				}
-			} else {
-				System.out.println("Aucune partie n'a été créée");
-			}
-			
+			} else
+				Messages.setMessage("Aucune partie n'a été créée");
 		} catch (TorqueException e) {
-			System.out.print("ET BIM");
 			e.printStackTrace();
 		}
 	}
@@ -367,7 +364,7 @@ public class Controller {
 	public void attaquer (int numJoueur) {
 		int v = this._vueJoueur.attaquer(this.partieV, getJoueur(numJoueur).getCoordX(), getJoueur(numJoueur).getCoordY(), getJoueur(numJoueur).getNomVaisseau());
 		PartiesVaisseaux atq = this.getJoueur(numJoueur);	// Détermine l'attaquant
-		PartiesVaisseaux def = this.getJoueur(v-1);			// Détermine le défenseur
+		PartiesVaisseaux def = this.getJoueur(v);			// Détermine le défenseur
 		if (def.getNomVaisseau().equals(atq.getNomVaisseau())) {	// si l'attaquant s'attaque lui meme
 			Messages.setMessage("Vous ne pouvez pas vous attaquer vous même");
 		} else {
@@ -390,7 +387,7 @@ public class Controller {
 						e.printStackTrace();
 					}
 				}
-				for (ObjetsVaisseaux ov : this.getArmesEquipees(v-1)) {
+				for (ObjetsVaisseaux ov : this.getArmesEquipees(v)) {
 					Objets o;
 					try {
 						o = ov.getObjets();
@@ -406,7 +403,7 @@ public class Controller {
 					int ptsDeg = 0;
 					for (int i = 0; i < atq.getDegats(); i++)
 						ptsDeg += r.nextInt(3)+1;
-					for (ObjetsVaisseaux ov : this.getArmesEquipees(v-1)) {
+					for (ObjetsVaisseaux ov : this.getArmesEquipees(v)) {
 						Objets o;
 						try {
 							o = ov.getObjets();
@@ -419,8 +416,8 @@ public class Controller {
 					Messages.setMessage("Points Def :" +ptsDef);
 					Messages.appendln("Points Atq :" +ptsAtq);
 					Messages.appendln("Points Deg :" +ptsDeg);
+					Messages.appendln("Touché !");
 					def.setEnergie(def.getEnergie()-ptsDeg);
-					System.out.println("Touché !");
 					// Si le défenseur n'a plus d'énergie
 					if (def.getEnergieImproved() <= 0) {
 						try {
@@ -651,8 +648,10 @@ public class Controller {
 					liaison.setCharAt(2, '\'');
 					liaison.deleteCharAt(3);
 				}
-				
-				System.out.print("Vous avez utilisé " + objets.get(bonus).getObjets().getNom());
+				if (objets.get(bonus).getObjets().getType().equals("arme"))
+					System.out.print("Vous avez équipé " + objets.get(bonus).getObjets().getNom());
+				else if (objets.get(bonus).getObjets().getType().equals("bonus"))
+					System.out.print("Vous avez utilisé " + objets.get(bonus).getObjets().getNom());
 				System.out.print(" vous points " + liaison + objets.get(bonus).getObjets().getCarac());
 				System.out.print(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(bonus).getObjets().getCarac()));
 				System.out.println(" pour " + objets.get(bonus).getObjets().getDuree() + tours);

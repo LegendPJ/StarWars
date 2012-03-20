@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.torque.TorqueException;
 
 import Services.IO;
+import Services.Messages;
 import torque.generated.Objets;
 import torque.generated.ObjetsParties;
 import torque.generated.ObjetsVaisseaux;
@@ -147,20 +148,22 @@ public class VueJoueur extends Vue {
 	 * @return numéro du vaisseau à attaquer
 	 */
 	public int attaquer(List<PartiesVaisseaux> vais, int coordX, int coordY, String nom) {
-		int i = 1, j = 0, menu = 0;
+		int i = 1, menu = 0;
+		List<PartiesVaisseaux> vDispo = new ArrayList<PartiesVaisseaux>();
 		for (PartiesVaisseaux v : vais) {
-			if (getController().memeCase(coordX, coordY, nom)) {
+			if (getController().memeCase(coordX, coordY, nom)
+					&& !v.getNomVaisseau().equals(nom)) {
 				System.out.println(i + ". " + v.getNomVaisseau());
-				j++;
+				vDispo.add(v);
+				i++;
 			}
-			i++;
 		}
 		do {
-			System.out.print("Quel vaisseau attaquer ? [1.." + j + "] ");
+			System.out.print("Quel vaisseau attaquer ? [1.." + vDispo.size() + "] ");
 			menu = IO.lireEntier();
-		} while (menu < 1 || menu > j);
+		} while (menu < 1 || menu > vDispo.size());
 		
-		return menu;
+		return vais.indexOf(vDispo.get(menu-1));
 	}
 	/**
 	 * Ramasser un objet
@@ -204,9 +207,9 @@ public class VueJoueur extends Vue {
 	 */
 	public void listerObjets(List<ObjetsVaisseaux> ov) {
 		if (ov.size() == 0) 
-			System.out.println("Aucun objet dans votre équipement !");
+			Messages.setMessage("Aucun objet dans votre équipement !");
 		else {
-			System.out.println("Objets dans votre équipement :\n");
+			Messages.setMessage("Objets dans votre équipement :\n");
 			for (ObjetsVaisseaux o : ov) {
 				try {
 					Objets obj = o.getObjets();
@@ -215,22 +218,22 @@ public class VueJoueur extends Vue {
 						tour = " tour.";
 					
 					if (obj.getCarac().equals("energie"))
-						System.out.println("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
+						Messages.append("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " pour " + obj.getDuree() + tour);
 					else
-						System.out.println("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " jusqu'à la fin de la partie");
+						Messages.append("- " + obj.getNom() + " modifie de " + obj.getPoints() + " points votre " + obj.getCarac() + " jusqu'à la fin de la partie");
 					if (o.getEquipe() && obj.getType().equals("arme"))
-						System.out.println(" (équipé)");
+						Messages.append(" (équipé)\n");
 					else if (!o.getEquipe() && obj.getType().equals("arme"))
-						System.out.println(" (non équipé)");
+						Messages.append(" (non équipé)\n");
 					else if (o.getEquipe() && obj.getType().equals("bonus"))
-						System.out.println(" (utilisé)");
+						Messages.append(" (utilisé)\n");
 					else if (!o.getEquipe() && obj.getType().equals("bonus"))
-						System.out.println(" (non utilisé)");
+						Messages.append(" (non utilisé)\n");
 				} catch (TorqueException e) {
 					e.printStackTrace();
 				}
 			} 
-		} System.out.println();
+		} Messages.appendln("");
 	}
 	/**
 	 * Affiche un message au joueur gagnant
@@ -238,7 +241,7 @@ public class VueJoueur extends Vue {
 	 * @param nomPartie nom de la partie gagnée
 	 */
 	public void gagner(String nomVaisseau, String nomPartie) {
-		System.out.println("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
+		Messages.setMessage("Félicitations "+nomVaisseau+", vous avez gagné la partie "+nomPartie+" !!");
 	}
 	/**
 	 * Liste les objets utilisables et le joueur choisi le quel équiper ou utiliser (arme/bonus)

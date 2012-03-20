@@ -2,7 +2,7 @@ package Services;
 
 public class Messages {
 	
-	private static String message;
+	private static String message = new String();
 
 	public static void print() {
 		System.out.print(message);

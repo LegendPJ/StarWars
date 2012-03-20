@@ -31,8 +31,9 @@ public class VueObjet extends Vue {
 		
 		// le nom de l'objet
 		do {
-		System.out.print("Nom de l'objet : ");
+			System.out.print("Nom de l'objet : ");
 			nom = IO.lireChaine();
+			nom = nom.trim();
 		} while (ObjetsPeer.nomPris(nom) || nom.length() > 40);
 		
 		// la caracteristique de l'objet
@@ -42,28 +43,38 @@ public class VueObjet extends Vue {
 				System.out.println(i + ". " + ca.getNom());
 				i++;
 			}
-			i =1;
-				c = IO.lireEntier();
+			i = 1;
+			c = IO.lireEntier();
 		} while (c < 1 || c > l.size());
 		
 		
 		// le type de l'objet
-		do {
-			System.out.println("Type d'objet :");
-			for (Types ty : t) {
-				System.out.println(k + ". " + ty.getNom());
-				k++;
-			}
-			k =1;
-				c2 = IO.lireEntier();
-		} while (c2 < 1 || c2 > t.size());
+		if (l.get(c-1).getNom().equals("attaque"))
+			c2 = 1;
+		else {
+			do {
+				System.out.println("Type d'objet :");
+				for (Types ty : t) {
+					System.out.println(k + ". " + ty.getNom());
+					k++;
+				}
+				k =1;
+					c2 = IO.lireEntier();
+			} while (c2 < 1 || c2 > t.size());
+		}
 		
 		
 		// le nombre de points augmenté par l'objet
+		String condition = new String();
+		boolean cond = false;
+		if (t.get(c2-1).equals("arme"))
+			condition = " (negatif pour un malus)";
 		do {
-			System.out.print("Nombre de points (negatif pour un malus) : ");
+			System.out.print("Nombre de points" +condition+" : ");
 			pts = IO.lireEntier();
-		} while (pts == 0);
+			if (t.get(c2-1).getNom().equals("arme"))
+				cond = pts < 0;
+		} while (pts == 0 || cond);
 		
 		
 		// le nombre de tours de validité de l'objet
