@@ -123,7 +123,7 @@ public class VuePlateau extends Vue {
 		System.out.println("Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
 		
 		do {
-			System.out.print("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ? ");
+			System.out.print("Joueur "+(numJoueur+1)+" que voulez-vous faire ? ");
 			menu = IO.lireEntier();
 			if (getController().getJoueur(numJoueur).getPa() > 0)
 				cond = (menu > 7 || menu < 0);

@@ -18,13 +18,25 @@ public class VuePartie extends Vue {
 	 */
 	public Parties nouvellePartie() {
 		String nom = new String();
-		
+		int dimension = 0;
+		boolean cond = false;
 		do {
 			System.out.print("Nom de la partie (40 caracteres maximum) : ");
 			nom = IO.lireChaine();
-		} while (nom.length() > 40 || PartiesPeer.nomPris(nom));
+			nom = nom.trim();
+			cond = PartiesPeer.nomPris(nom);
+			if (PartiesPeer.nomPris(nom))
+				System.out.println("Ce nom de partie est deja pris");
+			else if (nom.length() > 40)
+				System.out.println("Le nom comporte plus de 40 caractères");
+		} while (nom.length() > 40 || cond);
 		
-		return new Parties(nom);
+		do {
+			System.out.print("Dimension du plateau [5..10] : ");
+			dimension = IO.lireEntier();
+		} while (dimension < 5 || dimension > 10);
+		
+		return new Parties(nom, dimension);
 	}
 	/**
 	 * Charger une partie

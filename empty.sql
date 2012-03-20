@@ -1,6 +1,5 @@
-TRUNCATE objets_vaisseaux CASCADE;
-TRUNCATE parties_vaisseaux CASCADE;
-TRUNCATE objets_parties CASCADE;
+TRUNCATE caracteristiques CASCADE;
+TRUNCATE types CASCADE;
+TRUNCATE objets CASCADE;
 TRUNCATE parties CASCADE;
 TRUNCATE vaisseaux CASCADE;
-TRUNCATE objets CASCADE;

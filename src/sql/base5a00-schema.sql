@@ -92,6 +92,7 @@ CREATE TABLE parties
     nom VARCHAR(40) NOT NULL,
     tour INTEGER NOT NULL,
     numJoueur INTEGER NOT NULL,
+    dimension INTEGER default 5 NOT NULL,
     PRIMARY KEY (nom)
 );
 
@@ -100,6 +101,7 @@ COMMENT ON TABLE parties IS 'parties';
 COMMENT ON COLUMN parties.nom IS 'Nom de la partie';
 COMMENT ON COLUMN parties.tour IS 'loto a qui le tour ?';
 COMMENT ON COLUMN parties.numJoueur IS 'numero avec qui on sest arrete';
+COMMENT ON COLUMN parties.dimension IS 'Taille du plateau';
 
 
 -----------------------------------------------------------------------------

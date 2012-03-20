@@ -25,10 +25,11 @@ public  class Parties
 {
 	public Parties() { super(); }
 	
-    public Parties(String nom) {
+    public Parties(String nom, int dim) {
     	super();
 		try {
 			this.setNom(nom);
+			this.setDimension(dim);
 		} catch (TorqueException e) {
 			e.printStackTrace();
 		}

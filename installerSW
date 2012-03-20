@@ -1,0 +1,19 @@
+#/bin/bash
+echo '********************************************************';
+echo '*                    GENERATION DES CLASSES            *';
+echo '********************************************************';
+ant -f torque-gen-3.3/build-torque.xml
+echo '********************************************************';
+echo '*               GENERATION DE LA BASE DE DONNEES       *';
+echo '********************************************************';
+ant -f torque-gen-3.3/build-torque.xml insert-sql
+echo '********************************************************';
+echo '*              INSERTIONS OBLIGATOIRES EN BASE         *';
+echo '********************************************************';
+read -p 'Nom de votre serveur PostgreSQL : ' host;
+read -p 'Nom de votre base de donnée : ' base;
+read -p 'Nom dutilisateur : ' login;
+
+psql -h $host -U $login $base -f obligatoire.sql
+
+

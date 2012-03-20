@@ -37,6 +37,9 @@ import torque.generated.VaisseauxPeer;
 public class Controller {
 	protected static Connection conn, connTransaction;
 	private final static String TORQUE_PROPS = new String("torque-3.3//Torque.properties");
+	private static String base = "jdbc:postgresql://postgres-info/base5a00";
+	private static String user = "user5a00";
+	private static String pass = "p00";
 	
 	private final int nb_joueurs = 2;
 	private List<Integer> ordreTour;
@@ -64,7 +67,7 @@ public class Controller {
 	}
 	
 	/**
-	 * Menu principal et choix d'action (nouvelle partie, charger ou nouvel objet)
+	 * Menu principal et choix d'action (nouvelle partie, charger, nouvel objet...)
 	 */
 	public void menuPrincipal() {
 		int action = 0;
@@ -111,6 +114,7 @@ public class Controller {
 		this.resetVues();
 		this.setVuePartie();
 		this.partie = this._vuePartie.nouvellePartie();
+		this.dimension = this.partie.getDimension();
 		
 		this.resetVues();
 		this.setVueJoueur();
@@ -221,6 +225,7 @@ public class Controller {
 				if (this.partie != null) {
 					this.partieV = this.partie.getPartiesVaisseauxsOrdered();
 					this.objetsP = this.partie.getObjetsPartiess();
+					this.dimension = this.partie.getDimension();
 					for (PartiesVaisseaux v : this.partieV)
 						this.vaisseaux.add(v.getVaisseaux());
 					for (ObjetsParties op : this.objetsP)
@@ -372,11 +377,11 @@ public class Controller {
 			if (this.loiReussite()) {
 				Random r = new Random();
 				int ptsDef = 0, ptsAtq = 0;
-				for (int i = 0; i < def.getChamp(); i++)
-					ptsDef += r.nextInt(3)+1;
+				// Pints d'attaque
 				for (int i = 0; i < atq.getAttaque(); i++)
 					ptsAtq += r.nextInt(3)+1;
-				for (ObjetsVaisseaux ov : this.getArmesEquipees(numJoueur)) {
+				// Définition de l'attaque (Bonus)
+				for (ObjetsVaisseaux ov : this.getObjetsEquipe(numJoueur)) {
 					Objets o;
 					try {
 						o = ov.getObjets();
@@ -386,12 +391,16 @@ public class Controller {
 						e.printStackTrace();
 					}
 				}
-				for (ObjetsVaisseaux ov : this.getArmesEquipees(v)) {
+				// Points de défense
+				for (int i = 0; i < def.getChamp(); i++)
+					ptsDef += r.nextInt(3)+1;
+				// Définition de la défense (bonus)
+				for (ObjetsVaisseaux ov : this.getObjetsEquipe(v)) {
 					Objets o;
 					try {
 						o = ov.getObjets();
 						if (o.getCarac().equals("champ"))
-							ptsAtq += o.getPoints();
+							ptsDef += o.getPoints();
 					} catch (TorqueException e) {
 						e.printStackTrace();
 					}
@@ -400,22 +409,32 @@ public class Controller {
 				// Si le défenseur n'a pas paré l'attaque
 				if (ptsDef < ptsAtq) {
 					int ptsDeg = 0;
+					// Définition des points de dégats
 					for (int i = 0; i < atq.getDegats(); i++)
 						ptsDeg += r.nextInt(3)+1;
-					for (ObjetsVaisseaux ov : this.getArmesEquipees(v)) {
+					// Points de dégats (bonus)
+					for (ObjetsVaisseaux ov : this.getObjetsEquipe(numJoueur)) {
 						Objets o;
 						try {
 							o = ov.getObjets();
-							if (o.getCarac().equals("degats"))
-								ptsAtq += o.getPoints();
+							if (o.getCarac().equals("degat"))
+								ptsDeg += o.getPoints();
 						} catch (TorqueException e) {
 							e.printStackTrace();
 						}
 					}
-					Messages.setMessage("Points Def :" +ptsDef);
-					Messages.appendln("Points Atq :" +ptsAtq);
-					Messages.appendln("Points Deg :" +ptsDeg);
-					Messages.appendln("Touché !");
+					String pts = " points ";
+					if (ptsDef <= 1)
+						pts = " point ";
+					Messages.setMessage(def.getNomVaisseau() + " s'est défendu avec " +ptsDef+ pts);
+					pts = " points ";
+					if (ptsAtq <= 1)
+						pts = " point ";
+					Messages.appendln("Mais " + atq.getNomVaisseau() + " a attaqué avec " +ptsAtq+ pts);
+					pts = " points ";
+					if (ptsDeg <= 1)
+						pts = " point ";
+					Messages.appendln(atq.getNomVaisseau() + " a infligé " +ptsDeg+ pts + "de dégats à "+def.getNomVaisseau());
 					def.setEnergie(def.getEnergie()-ptsDeg);
 					// Si le défenseur n'a plus d'énergie
 					if (def.getEnergieImproved() <= 0) {
@@ -430,7 +449,7 @@ public class Controller {
 					Messages.setMessage("Votre ennemi est trop fort pour vous...");
 			}
 			else 			// TODO Changer le "fusil à proton"
-				Messages.setMessage(" /!\\ Echec critique /!\\ votre fusil à proton a surchauffé !");
+				Messages.setMessage(" /!\\ Echec critique /!\\ vous n'avez plus de munitions intergalactique !");
 		}
 	}
 	/**
@@ -648,12 +667,15 @@ public class Controller {
 					liaison.deleteCharAt(3);
 				}
 				if (objets.get(bonus).getObjets().getType().equals("arme"))
-					System.out.print("Vous avez équipé " + objets.get(bonus).getObjets().getNom());
+					Messages.setMessage("Vous avez équipé " + objets.get(bonus).getObjets().getNom());
 				else if (objets.get(bonus).getObjets().getType().equals("bonus"))
-					System.out.print("Vous avez utilisé " + objets.get(bonus).getObjets().getNom());
-				System.out.print(" vous points " + liaison + objets.get(bonus).getObjets().getCarac());
-				System.out.print(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(bonus).getObjets().getCarac()));
-				System.out.println(" pour " + objets.get(bonus).getObjets().getDuree() + tours);
+					Messages.setMessage("Vous avez utilisé " + objets.get(bonus).getObjets().getNom());
+				Messages.append(" vous points" + liaison + objets.get(bonus).getObjets().getCarac());
+				Messages.append(" son maintenant de " + this.getNouveauxPoints(numJoueur, objets.get(bonus).getObjets().getCarac()));
+				if (!objets.get(bonus).getObjets().getCarac().equals("energie"))
+					Messages.append(" pour " + objets.get(bonus).getObjets().getDuree() + tours+"\n");
+				else
+					Messages.append(" jusqu'à la fin de la partie.\n");
 			}
 			else
 				Messages.setMessage("/!\\ Echec critique /!\\ Vous avez cassé une pièce !");
@@ -865,8 +887,7 @@ public class Controller {
 	 */
 	public static void connexion() throws SQLException, TorqueException {
 		Torque.init(TORQUE_PROPS);
-		String url = "jdbc:postgresql://postgres-info/base5a00";
-		conn = DriverManager.getConnection(url, "user5a00", "p00");
+		conn = DriverManager.getConnection(Controller.base, Controller.user, Controller.pass);
 	}
 	/**
 	 * Fermer la connexion à la base de donnée

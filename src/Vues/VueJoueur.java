@@ -31,19 +31,18 @@ public class VueJoueur extends Vue {
 	 */
 	public int menuJoueur (int numJoueur, int nbVaisseaux) {
 		int choix = Vue.QUITTER, choixMax = 1;
+		System.out.println("\n     **************************************");
+		System.out.println("     *  Star Wars 1.0 | Nouvelle partie   *");
+		System.out.println("     *                                    *");
+		System.out.println("     * 1. Créer un vaisseau               *");
+		if (nbVaisseaux != 0) {
+			System.out.println("     * 2. Utiliser un vaisseau            *");
+			choixMax = 2;
+		}
+		System.out.println("     * 0. Menu Principal                  *");
+		System.out.println("     **************************************");
 		do{
-			System.out.println("\n     **************************************");
-			System.out.println("     *  Star Wars 1.0 | Nouvelle partie   *");
-			System.out.println("     *                                    *");
-			System.out.println("     * 1. Créer un vaisseau               *");
-			if (nbVaisseaux != 0) {
-				System.out.println("     * 2. Utiliser un vaisseau            *");
-				choixMax = 2;
-			}
-			System.out.println("     * 0. Menu Principal                  *");
-			System.out.println("     **************************************");
-			System.out.print("\nJoueur "+numJoueur+" que voulez-vous faire ? [0.."+choixMax+"] ");
-
+			System.out.print("Joueur "+numJoueur+" que voulez-vous faire ? [0.."+choixMax+"] ");
 			choix = IO.lireEntier();
 		} while (choix < Vue.QUITTER || choix > choixMax);
 		
@@ -62,6 +61,7 @@ public class VueJoueur extends Vue {
 		do {
 			System.out.print("Joueur "+numJoueur+", veuillez nommer votre vaisseau : ");
 			nomVaisseau = IO.lireChaine();
+			nomVaisseau = nomVaisseau.trim();
 		} while (nomVaisseau.length() > 40 || VaisseauxPeer.nomPris(nomVaisseau, noms));
 		noms.add(nomVaisseau);
 		

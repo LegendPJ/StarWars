@@ -116,6 +116,12 @@
       required="true"
       type="INTEGER"
       description="numero avec qui on sest arrete" />
+    <column
+      name="dimension"
+      required="true"
+      type="INTEGER"
+      default="5"
+      description="Taille du plateau" />
   </table>
   
 <!-- TABLE PARTIES_VAISSEAUX -->
