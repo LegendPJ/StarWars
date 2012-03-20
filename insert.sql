@@ -40,7 +40,7 @@ insert into parties_vaisseaux values ('Champ de Bataille', 'Xwing', 5, 5, 10, 10
 insert into objets_vaisseaux values ('Vaisseau Imperial', 'Champ de Bataille', 'Batterie à combustion', 0, 1);
 
 --TODO PARTIE TRUQUEE !!!!!!!!!!!!
-insert into parties ('Fin du Monde', 0, 0, 5)
+insert into parties values ('Fin du Monde', 0, 0, 5)
 insert into parties_vaisseaux values ('Fin du Monde', 'Faucon Millenium', 3, 2, 17, 17, 3, 30, 6, 1);
 insert into parties_vaisseaux values ('Fin du Monde', 'Vaisseau Imperial', 3, 3, 17, 17, 3, 30, 6, 2);
 insert into objets_vaisseaux values ('Fin du Monde', 'Faucon Millenium', 'Canon à protons', 1, 2);
