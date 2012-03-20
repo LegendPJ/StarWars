@@ -97,8 +97,27 @@ public class VueObjet extends Vue {
 			if (ob.getDuree() == 1)
 				tour = " tour.";
 			System.out.println("- " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
-			
 		}
 	}
+	public int supprimerObjet(List<Objets> lo) {
+		int i = 1, choix = 0;
+		System.out.println("Objets enregistrés : ");
+		for (Objets ob : lo) {
+			String tour = " tours.";
+			if (ob.getDuree() == 1)
+				tour = " tour.";
+			System.out.println(i + ". " + ob.getNom() + " modifie de " + ob.getPoints() + " points votre " + ob.getCarac() + " pour " + ob.getDuree() + tour);
+			i++;
+		}
+		
+		do {
+			System.out.print("Objet à supprime : [1.." + lo.size() + "] ");
+			choix = IO.lireEntier();
+		} while (choix < 1 || choix > lo.size());
+		
+		return choix-1;
+	}
+	
+	
 
 }

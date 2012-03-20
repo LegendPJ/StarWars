@@ -8,6 +8,8 @@ import org.apache.torque.TooManyRowsException;
 import org.apache.torque.TorqueException;
 import org.apache.torque.util.Criteria;
 
+import Services.Messages;
+
 /**
  * objets
  *
@@ -49,6 +51,17 @@ public class ObjetsPeer
 			e.printStackTrace();
 		}
 		return o;
+	}
+	
+	public static void doDelete(Objets o) {
+		Criteria c = new Criteria();
+		c.add(ObjetsPeer.NOM, o.getNom());
+		try {
+			ObjetsPeer.doDelete(c);
+			Messages.setMessage("L'objet " + o.getNom() + " a bien été supprimé");
+		} catch (TorqueException e) {
+			Messages.setMessage("L'objet " + o.getNom() + " n'a pas été supprimé, il est peut être utilisé dans une partie");
+		}
 	}
     
 

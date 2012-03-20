@@ -91,7 +91,7 @@ public class Controller {
 					this.listerObjets();
 					break;
 				case 5:		// Supprimer un objet
-					// TODO supprimer objet
+					this.supprimerObjet();
 					break;
 			}
 			if (gagnant != null) {
@@ -99,7 +99,6 @@ public class Controller {
 			}
 		} while (action != Vue.QUITTER);
 	}
-	
 
 	//////////////////////////////////////////////////////
 	// POUR LES PARTIES
@@ -835,13 +834,29 @@ public class Controller {
 		return this.getObjetsEquipe(this.getJoueur(numJoueur));
 	}
 	
-	
-	private void listerObjets() {
+	/**
+	 * Liste les objets enregistrés en bd
+	 */
+	public void listerObjets() {
 		this.setVueObjet();
 		List<Objets> lo = ObjetsPeer.doSelectAll();
 		this._vueObjet.listerObjets(lo);
-		
 	}
+	
+	/**
+	 * Permet de supprimer un objet en bd
+	 */
+	public void supprimerObjet() {
+		List<Objets> lo = ObjetsPeer.doSelectAll();
+		if (lo.isEmpty())
+			Messages.setMessage("Il n'y a aucun message enregistré");
+		else {
+			this.setVueObjet();
+			int o = this._vueObjet.supprimerObjet(lo);
+			ObjetsPeer.doDelete(lo.get(o));
+		}
+	}
+	
 	//////////////////////////////////////////////////////
 	// POUR LA BD
 	//////////////////////////////////////////////////////
