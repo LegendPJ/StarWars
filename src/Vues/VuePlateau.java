@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Services.IO;
+import Services.Messages;
 
 import Controllers.Controller;
 
@@ -112,19 +113,23 @@ public class VuePlateau extends Vue {
 		System.out.println("     * 0. Menu Principal                *");
 		System.out.println("     ************************************");
 		
+		if (!Messages.isEmpty()) {
+			Messages.println();
+		}
+		
 		System.out.println("\nPoints d'attaque : " + getController().getJoueur(numJoueur).getAttaqueImproved());
 		System.out.println("Points de dégats : " + getController().getJoueur(numJoueur).getDegatsImproved());
 		System.out.println("Points de champ de force : " + getController().getJoueur(numJoueur).getChampImproved());
 		System.out.println("Points d'énergie : " + getController().getJoueur(numJoueur).getEnergieImproved());
 		System.out.println("Points d'action restants : " + getController().getJoueur(numJoueur).getPa());
 		
+		if (getController().getJoueur(numJoueur).getPa() > 0)
+			cond = (menu > 7 || menu < 0);
+		else
+			cond = (menu != 0 && menu != 7);
 		do {
 			System.out.print("\nJoueur "+(numJoueur+1)+" que voulez-vous faire ? ");
-			menu = IO.lireEntier();
-			if (getController().getJoueur(numJoueur).getPa() > 0)
-				cond = (menu > 7 || menu < 0);
-			else
-				cond = (menu != 0 && menu != 7); 
+			menu = IO.lireEntier(); 
 		} while (cond);
 		return menu;
 	}

@@ -11,6 +11,7 @@ import org.apache.torque.TorqueException;
 import org.apache.torque.util.Transaction;
 
 import Services.Fonctions;
+import Services.Messages;
 import Vues.Vue;
 import Vues.VueJoueur;
 import Vues.VueMenuStarWars;
@@ -255,7 +256,7 @@ public class Controller {
 				case 1:		// deplacer ==> loi de reussite dans la fonction deplacer() car retrait de PA différent suivant le cas
 					if (this.memeCase(this.getJoueur(joueurActif).getCoordX(), this.getJoueur(joueurActif).getCoordY(), this.getJoueur(joueurActif).getNomVaisseau())
 							&& this.getJoueur(joueurActif).getPa() < 4)
-						System.out.println("Vous ne pouvez pas vous déplacer, vous devez avoir au moins 4 points d'action");
+						Messages.setMessage("Vous ne pouvez pas vous déplacer, vous devez avoir au moins 4 points d'action");
 					else
 					{
 						int deplct = this._vuePlateau.deplacement(joueurActif);
@@ -264,10 +265,10 @@ public class Controller {
 					break;
 				case 2:		// Attaquer
 					if (!this.memeCase(this.getJoueur(joueurActif).getCoordX(), this.getJoueur(joueurActif).getCoordY(), this.getJoueur(joueurActif).getNomVaisseau())) {
-						System.out.println("Vous ne pouvez pas attaquer, vous devez être sur la même case qu'un adversaire");
+						Messages.setMessage("Vous ne pouvez pas attaquer, vous devez être sur la même case qu'un adversaire");
 					} else {
 						if (this.getJoueur(joueurActif).getPa() < 4)
-							System.out.println("Vous n'avez pas assez de point d'action");
+							Messages.setMessage("Vous n'avez pas assez de point d'action");
 						else {
 							this.attaquer(joueurActif);
 							if (gagnant != null) {
@@ -279,31 +280,31 @@ public class Controller {
 					break;
 				case 3:		// Ramasser
 					if (!this.objetPresent(this.getJoueur(joueurActif).getCoordX(), this.getJoueur(joueurActif).getCoordY())) {
-						System.out.println("Vous ne pouvez pas ramasser d'objet, il n'y en a pas sur votre case");
+						Messages.setMessage("Vous ne pouvez pas ramasser d'objet, il n'y en a pas sur votre case");
 					} else {
 						this.ramasserObjet(joueurActif);
 					}
 					break;
 				case 4:		// Utiliser
 					if (this.getJoueur(joueurActif).getPa() < 2)
-						System.out.println("Vous n'avez pas assez de point d'action");
+						Messages.setMessage("Vous n'avez pas assez de point d'action");
 					else
 					{
 						if (this.bonusDansEquipement(joueurActif))
 							this.utiliserObjet(joueurActif, "bonus");
 						else
-							System.out.println("Vous n'avez pas de bonus dans votre équipement");
+							Messages.setMessage("Vous n'avez pas de bonus dans votre équipement");
 					}
 					break;
 				case 5:		// Equiper
 					if (this.getJoueur(joueurActif).getPa() < 2)
-						System.out.println("Vous n'avez pas assez de point d'action");
+						Messages.setMessage("Vous n'avez pas assez de point d'action");
 					else
 					{
 						if (this.armesDansEquipement(joueurActif))
 							this.utiliserObjet(joueurActif, "arme");
 						else
-							System.out.println("Vous n'avez pas d'armes dans votre équipement");
+							Messages.setMessage("Vous n'avez pas d'armes dans votre équipement");
 					}
 					break;
 				case 6:		// Lister les objets
@@ -356,7 +357,7 @@ public class Controller {
 					break;
 			}
 		} else {
-			System.out.println(" /!\\ Echec critique /!\\ vous n'avez plus de poussière intergalactique !");
+			Messages.setMessage(" /!\\ Echec critique /!\\ vous n'avez plus de poussière intergalactique !");
 		}
 	}
 	/**
@@ -368,7 +369,7 @@ public class Controller {
 		PartiesVaisseaux atq = this.getJoueur(numJoueur);	// Détermine l'attaquant
 		PartiesVaisseaux def = this.getJoueur(v-1);			// Détermine le défenseur
 		if (def.getNomVaisseau().equals(atq.getNomVaisseau())) {	// si l'attaquant s'attaque lui meme
-			System.out.println("Vous ne pouvez pas vous attaquer vous même");
+			Messages.setMessage("Vous ne pouvez pas vous attaquer vous même");
 		} else {
 			atq.setPa(this.getJoueur(numJoueur).getPa()-4);
 			// loi de reussite
@@ -415,9 +416,9 @@ public class Controller {
 							e.printStackTrace();
 						}
 					}
-					System.out.println("Points Def :" +ptsDef);
-					System.out.println("Points Atq :" +ptsAtq);
-					System.out.println("Points Deg :" +ptsDeg);
+					Messages.setMessage("Points Def :" +ptsDef);
+					Messages.appendln("Points Atq :" +ptsAtq);
+					Messages.appendln("Points Deg :" +ptsDeg);
 					def.setEnergie(def.getEnergie()-ptsDeg);
 					System.out.println("Touché !");
 					// Si le défenseur n'a plus d'énergie
@@ -430,10 +431,10 @@ public class Controller {
 					}
 				}
 				else
-					System.out.println("Votre ennemi est trop fort pour vous...");
+					Messages.setMessage("Votre ennemi est trop fort pour vous...");
 			}
-			else
-				System.out.println(" /!\\ Echec critique /!\\ votre fusil à proton a surchauffé !");
+			else 			// TODO Changer le "fusil à proton"
+				Messages.setMessage(" /!\\ Echec critique /!\\ votre fusil à proton a surchauffé !");
 		}
 	}
 	/**
@@ -484,10 +485,10 @@ public class Controller {
 			for (ObjetsParties op : objetsP)
 				op.save(connTransaction);
 			Controller.commitTransaction();
-			System.out.print("Partie enregistrée et fin de la partie");
+			Messages.setMessage("Partie enregistrée et fin de la partie");
 		} catch (TorqueException e) {
 			Controller.rollBack();
-			System.out.println("La partie n'a pas pu être sauvegardée");
+			Messages.setMessage("La partie n'a pas pu être sauvegardée");
 			e.printStackTrace();
 		}
 	}
@@ -603,7 +604,7 @@ public class Controller {
 				this.objets.remove(objetRamasse.getObjets());
 				ObjetsPartiesPeer.doDelete(objetRamasse);
 			} else {
-				System.out.println(" /!\\ Echec critique /!\\ panne hydrolique imminente !");
+				Messages.setMessage(" /!\\ Echec critique /!\\ panne hydrolique imminente !");
 			}
 		} catch (TorqueException e1) {
 			e1.printStackTrace();
@@ -657,7 +658,7 @@ public class Controller {
 				System.out.println(" pour " + objets.get(bonus).getObjets().getDuree() + tours);
 			}
 			else
-				System.out.println("/!\\ Echec critique /!\\ Vous avez cassé une pièce !");
+				Messages.setMessage("/!\\ Echec critique /!\\ Vous avez cassé une pièce !");
 		} catch (TorqueException e) {
 			e.printStackTrace();
 		}

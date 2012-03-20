@@ -1,6 +1,7 @@
 package Vues;
 
 import Services.IO;
+import Services.Messages;
 import Controllers.Controller;
 
 public class VueMenuStarWars extends Vue {
@@ -25,6 +26,9 @@ public class VueMenuStarWars extends Vue {
 			System.out.println("     * 5. Supprimer un Objet              *");
 			System.out.println("     * 0. Quitter                         *");
 			System.out.println("     **************************************");
+			
+			if (!Messages.isEmpty())
+				Messages.println();
 			
 			System.out.print("Que voulez-vous faire ? ");
 	
