@@ -862,7 +862,10 @@ public class Controller {
 	public void listerObjets() {
 		this.setVueObjet();
 		List<Objets> lo = ObjetsPeer.doSelectAll();
-		this._vueObjet.listerObjets(lo);
+		if (lo.isEmpty())
+			Messages.setMessage("Il n'y a aucun objet enregistré");
+		else
+			this._vueObjet.listerObjets(lo);
 	}
 	
 	/**
@@ -871,7 +874,7 @@ public class Controller {
 	public void supprimerObjet() {
 		List<Objets> lo = ObjetsPeer.doSelectAll();
 		if (lo.isEmpty())
-			Messages.setMessage("Il n'y a aucun message enregistré");
+			Messages.setMessage("Il n'y a aucun objet enregistré");
 		else {
 			this.setVueObjet();
 			int o = this._vueObjet.supprimerObjet(lo);

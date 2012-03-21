@@ -17,6 +17,7 @@ insert into objets values ('Nuage de poussière', 5, 'champ', 1, 'bonus');
 insert into objets values ('Canon à protons', 15, 'degat', 3, 'arme');
 insert into objets values ('Batterie à combustion', 15, 'energie', 1, 'bonus');
 insert into objets values ('Pile à combustion', 5, 'energie', 1, 'bonus');
+insert into objets values ('Bouclier intergalactique', 20, 'champ', 3, 'bonus');
 
 -- ObjetsParties(NomPartie, NomObjet, CoordX, CoordY)
 insert into objets_parties values ('Partie de M. Brunet Manquat', 'Fusil laser', 5, 3);
@@ -40,9 +41,9 @@ insert into parties_vaisseaux values ('Champ de Bataille', 'Xwing', 5, 5, 10, 10
 insert into objets_vaisseaux values ('Vaisseau Imperial', 'Champ de Bataille', 'Batterie à combustion', 0, 1);
 
 --TODO PARTIE TRUQUEE !!!!!!!!!!!!
-insert into parties values ('Fin du Monde', 0, 0, 5)
+insert into parties values ('Fin du Monde', 0, 0, 5);
 insert into parties_vaisseaux values ('Fin du Monde', 'Faucon Millenium', 3, 2, 17, 17, 3, 30, 6, 1);
 insert into parties_vaisseaux values ('Fin du Monde', 'Vaisseau Imperial', 3, 3, 17, 17, 3, 30, 6, 2);
-insert into objets_vaisseaux values ('Fin du Monde', 'Faucon Millenium', 'Canon à protons', 1, 2);
-insert into objets_vaisseaux values ('Fin du Monde', 'Faucon Millenium', 'Fusil laser', 1, 2);
-insert into objets_vaisseaux values ('Fin du Monde', 'Vaisseau Imperial', 'Pile à combustion', 1, 1);
+insert into objets_vaisseaux values ('Faucon Millenium', 'Fin du Monde', 'Canon à protons', 1, 2);
+insert into objets_vaisseaux values ('Faucon Millenium', 'Fin du Monde', 'Fusil laser', 1, 2);
+insert into objets_vaisseaux values ('Vaisseau Imperial', 'Fin du Monde', 'Pile à combustion', 1, 1);
